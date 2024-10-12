@@ -1,5 +1,5 @@
 // API URLs para movimientos actuales, julio, y agosto (movimientos a conciliar)
-const urlMovimientosAConciliarActual = 'https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-JUNIO-24/MOVACONCILIAR.json'; // MES ULTIMO
+const urlMovimientosAConciliarActual = 'https://cesarcruz-coto.github.io/coto/DATOS-JUNIO-24/MOVACONCILIAR.json'; // MES ULTIMO
 
 // Variables de datos para cada mes (movimientos a conciliar)
 let pendientesConciliarActual = 0;
@@ -86,7 +86,7 @@ obtenerMovimientosConciliar();
 // ------------------------
 
 // API URLs para errores operativos actuales, julio, y agosto (errores operativos)
-const urlErroresOperativosActual = 'https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-JUNIO-24/ERROROPERATIVO.json'; // MES ULTIMO
+const urlErroresOperativosActual = 'https://cesarcruz-coto.github.io/coto/DATOS-JUNIO-24/ERROROPERATIVO.json'; // MES ULTIMO
 
 // Variables de datos para cada mes (errores operativos)
 let pendientesErroresActual = 0;

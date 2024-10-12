@@ -1,4 +1,4 @@
-const apiUrl = 'https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-AGOSTO-24/MOVACONCILIAR.json';
+const apiUrl = 'https://cesarcruz-coto.github.io/coto/DATOS-AGOSTO-24/MOVACONCILIAR.json';
 const itemsPerPage = 20;
 let currentPageCompensados = 1;
 let currentPageNoCompensados = 1;

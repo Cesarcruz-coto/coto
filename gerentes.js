@@ -4,6 +4,6 @@ export const usuarios = [
       "nombre": "tete",
       "puesto": "Gerente",
       "legajo": "24909",
-      "fotoPerfil": "https://recaudaciones.s3.us-east-2.amazonaws.com/img/24909.jpeg"
+      "fotoPerfil": "https://cesarcruz-coto.github.io/coto/img/24909.jpeg"
   }
 ];

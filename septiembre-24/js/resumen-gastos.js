@@ -1,6 +1,6 @@
 async function cargarGastos() {
     try {
-        const response = await fetch('https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-SEPTIEMBRE-24/GASTOSUC.json');
+        const response = await fetch('https://cesarcruz-coto.github.io/coto/DATOS-SEPTIEMBRE-24/GASTOSUC.json');
         const data = await response.json();
         
         mostrarGastosPorSucursal(data, 'todas');

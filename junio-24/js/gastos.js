@@ -112,7 +112,7 @@ function mostrarRankingSucursales(data) {
 
 async function cargarGastos() {
     try {
-        const response = await fetch('https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-JUNIO-24/GASTOSUC.json');
+        const response = await fetch('https://cesarcruz-coto.github.io/coto/DATOS-JUNIO-24/GASTOSUC.json');
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
 

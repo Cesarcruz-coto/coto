@@ -1,6 +1,6 @@
 async function obtenerTopFallosDeCaja() {
     try {
-        const respuesta = await fetch('https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-JUNIO-24/FALLOSOBRANTEFALTANTE.json');
+        const respuesta = await fetch('https://cesarcruz-coto.github.io/coto/DATOS-JUNIO-24/FALLOSOBRANTEFALTANTE.json');
         const datos = await respuesta.json();
 
         //const fallosFaltante = datos.filter(mov => mov.TAjuste === "Fallo De Caja - Faltante");

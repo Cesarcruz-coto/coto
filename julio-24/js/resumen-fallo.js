@@ -1,5 +1,5 @@
 // API URL para movimientos actuales
-const urlMovimientosActualFallo = 'https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-JULIO-24/FALLOSOBRANTEFALTANTE.json'; // MES ULTIMO
+const urlMovimientosActualFallo = 'https://cesarcruz-coto.github.io/coto/DATOS-JULIO-24/FALLOSOBRANTEFALTANTE.json'; // MES ULTIMO
 
 // Variables de datos
 let totalAjustes = 0;

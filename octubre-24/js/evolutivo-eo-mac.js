@@ -1,11 +1,11 @@
 // URLs de las APIs
 const apiErroresActual = 'https://sheetlabs.com/COTO/COTOERROROP';
-const apiErroresJulio = 'https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-AGOSTO-24/ERROROPERATIVO.json';
-const apiErroresAgosto = 'https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-SEPTIEMBRE-24/ERROROPERATIVO.json';
+const apiErroresJulio = 'https://cesarcruz-coto.github.io/coto/DATOS-AGOSTO-24/ERROROPERATIVO.json';
+const apiErroresAgosto = 'https://cesarcruz-coto.github.io/coto/DATOS-SEPTIEMBRE-24/ERROROPERATIVO.json';
 
 const apiMovimientosActual = 'https://sheetlabs.com/COTO/MOVACONCOTO';
-const apiMovimientosJulio = 'https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-AGOSTO-24/MOVACONCILIAR.json';
-const apiMovimientosAgosto = 'https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-SEPTIEMBRE-24/MOVACONCILIAR.json';
+const apiMovimientosJulio = 'https://cesarcruz-coto.github.io/coto/DATOS-AGOSTO-24/MOVACONCILIAR.json';
+const apiMovimientosAgosto = 'https://cesarcruz-coto.github.io/coto/DATOS-SEPTIEMBRE-24/MOVACONCILIAR.json';
 
 // Obtener los datos de las APIs
 const obtenerDatos = async () => {

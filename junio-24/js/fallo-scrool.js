@@ -3,7 +3,7 @@ const codigos = [3]; // Solo nos interesa el código 3
 // Función principal para obtener y procesar los fallos
 async function obtenerFallosDeCodigo() {
     try {
-        const respuesta = await fetch('https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-JUNIO-24/FALLOSOBRANTEFALTANTE.json');
+        const respuesta = await fetch('https://cesarcruz-coto.github.io/coto/DATOS-JUNIO-24/FALLOSOBRANTEFALTANTE.json');
         const datos = await respuesta.json();
 
         // Filtrar solo los fallos con código 3

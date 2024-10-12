@@ -1,5 +1,5 @@
 // URL de la API
-const apiURL = 'https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-JUNIO-24/AJUSTESOBRANTEFALTANTE.json';
+const apiURL = 'https://cesarcruz-coto.github.io/coto/DATOS-JUNIO-24/AJUSTESOBRANTEFALTANTE.json';
 
 // Datos fijos por mes
 const monthlyData = {

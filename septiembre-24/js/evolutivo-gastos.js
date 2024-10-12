@@ -197,7 +197,7 @@ function generarGrafico(totales) {
 }
 
 async function cargarYMostrarGastos() {
-    const urlMesActual = 'https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-SEPTIEMBRE-24/GASTOSUC.json';
+    const urlMesActual = 'https://cesarcruz-coto.github.io/coto/DATOS-SEPTIEMBRE-24/GASTOSUC.json';
     const gastosMesActual = await cargarGastos(urlMesActual);
 
     // Datos fijos para los meses de enero a septiembre

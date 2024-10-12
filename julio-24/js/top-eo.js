@@ -1,6 +1,6 @@
 async function obtenerErroresOperativos() {
     try {
-        const respuesta = await fetch('https://recaudaciones.s3.us-east-2.amazonaws.com/DATOS-JULIO-24/ERROROPERATIVO.json');
+        const respuesta = await fetch('https://cesarcruz-coto.github.io/coto/DATOS-JULIO-24/ERROROPERATIVO.json');
         const datos = await respuesta.json();
 
         const erroresSinResolver = datos.filter(mov => mov.TAjuste === "Error Operativo Sin Resolver");
