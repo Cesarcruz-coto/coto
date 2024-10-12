@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flujo de Aprobaciones</title>
+
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Estilo del formulario */
+        #formContainer {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #solicitudForm input,
+        #solicitudForm select {
+            width: 94.5%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border 0.3s;
+        }
+
+        
+        #solicitudForm button {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border 0.3s;
+        }
+
+        #solicitudForm input:focus,
+        #solicitudForm select:focus {
+            border-color: #007bff;
+        }
+
+        #solicitudForm button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #solicitudForm button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilo de las solicitudes */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .solicitud-card {
+            background-color: #fff;
+            border-radius: 5px;
+            width: 300px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .solicitud-card p {
+            margin: 5px 0;
+        }
+
+        .solicitud-card hr {
+            margin: 20px 0;
+            border: 0;
+            height: 1px;
+            background-color: #eee;
+        }
+
+        .solicitud-card button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .solicitud-card button:hover {
+            background-color: #45a049;
+        }
+
+        .aprobado-info {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        /* Estilo de notificaciones */
+        .notification {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .notification.sending {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .notification.success {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .notification.error {
+            background-color: #f44336;
+            color: white;
+        }
+
+        /* Estilo para el botón de mostrar formulario */
+        #toggleButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        #toggleButton:hover {
+            background-color: #0056b3;
+        }
+
+        /* Ocultar el formulario por defecto */
+        #hiddenFormContainer {
+            display: none;
+            /* Ocultado inicialmente */
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 3px 30px;
+            font-size: 1.2em;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            outline: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Estilo cuando el <select> está en foco */
+        select:focus {
+            border-color: #0056b3;
+            /* Borde más oscuro al hacer focus */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+            /* Sombra más pronunciada */
+        }
+
+        /* Estilo cuando se pasa el mouse por encima */
+        select:hover {
+            background-color: #e9e9e9;
+            /* Fondo más claro al hacer hover */
+        }
+
+        /* Flecha personalizada para el select */
+        select {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray"><path d="M7 10l5 5 5-5H7z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px;
+        }
+
+        /* Asegura que la flecha se muestre correctamente en dispositivos móviles */
+        select::-ms-expand {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="notification" class="notification"></div>
+    <div class="container">
+        <div id="hiddenFormContainer">
+            <div id="formContainer">
+                <h2>Enviar Solicitud</h2>
+                <form id="solicitudForm" onsubmit="enviarSolicitud(event)">
+                    <input type="text" id="nombre" placeholder="Nombre" required pattern="[A-Za-z\s]+"
+                        title="Solo se permiten letras y espacios">
+                    <input type="number" id="legajo" placeholder="Legajo" required>
+                    <input type="number" id="sucursal" placeholder="Sucursal" required>
+                    <input type="text" id="puesto" placeholder="Puesto" value="ADMINISTRACION" readonly>
+                    <input type="text" id="descripcion" placeholder="Descripción" required>
+                    <input type="number" id="importe" placeholder="Importe" required>
+                    <input type="file" id="archivo" required>
+                    <button type="submit">Enviar Solicitud</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="filtros">
+            <label for="sucursalFilter">Filtrar por Sucursal:</label>
+            <select id="sucursalFilter" onchange="mostrarSolicitudesFiltradas()">
+                <option value="todas">Todas</option>
+            </select>
+        </div>
+
+        <div id="solicitudesContainer" class="card-container">
+            <header>
+                <h1>Solicitudes</h1>
+            </header>
+            <!-- Aquí se mostrarán las solicitudes -->
+        </div>
+    </div>
+
+    <button id="toggleButton">Enviar Solicitud</button>
+
+    <script type="module">
+        // Importar Firebase y el archivo de usuarios
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js"; // Agregar importación
+        import { usuarios } from 'https://recaudaciones.s3.us-east-2.amazonaws.com/usuarios.js'; // Asegúrate de que la ruta sea correcta
+
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBjDElF__Bcgo137GGf6hPRXhEp4BatD10",
+            authDomain: "recaudaciones-26766.firebaseapp.com",
+            projectId: "recaudaciones-26766",
+            storageBucket: "recaudaciones-26766.appspot.com",
+            messagingSenderId: "793331710217",
+            appId: "1:793331710217:web:93d036faa48032a6f53bd8"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth();
+        const storage = getStorage(app); // Inicializar Firebase Storage
+
+        // Variable global para verificar si el usuario es admin
+        let isAdmin = false;
+
+        // Verificar si el usuario está autenticado
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = 'index.html'; // Redirigir al login si no hay sesión
+            } else {
+                const userEmail = user.email; // Obtener el correo electrónico del usuario autenticado
+
+                // Verificar si el usuario está en la lista de autorizados
+                const userData = usuarios.find(u => u.email === userEmail);
+                isAdmin = !!userData; // true si el usuario está en la lista, false si no
+
+                await cargarSucursales(); // Cargar sucursales al iniciar
+                await mostrarSolicitudesFiltradas(); // Actualizar la lista de solicitudes
+            }
+        });
+
+        // Función para comprobar si ya existe una solicitud
+        // async function existeSolicitud(nombre, legajo) {
+        //  const querySnapshot = await getDocs(collection(db, "solicitudes"));
+        // return querySnapshot.docs.some(doc => {
+        //     const data = doc.data();
+        //     return data.nombre === nombre && data.legajo === legajo; // Modifica las condiciones según sea necesario
+        // });
+        // }
+
+        // Función para enviar una solicitud
+        async function enviarSolicitud(e) {
+            e.preventDefault(); // Prevenir el envío del formulario por defecto
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            submitButton.disabled = true; // Deshabilitar el botón
+
+            const nombre = document.getElementById("nombre").value;
+            const legajo = document.getElementById("legajo").value;
+            const sucursal = document.getElementById("sucursal").value;
+            const puesto = document.getElementById("puesto").value;
+            const descripcion = document.getElementById("descripcion").value;
+            const importe = document.getElementById("importe").value;
+            const archivo = document.getElementById("archivo").files[0]; // Obtener el archivo del input
+
+            // Mostrar notificación de "Enviando"
+            showNotification("Enviando solicitud...", "sending");
+
+            // Verificar si la solicitud ya existe
+            // if (await existeSolicitud(nombre, legajo)) {
+            //  alert("La solicitud ya existe.");
+            //    submitButton.disabled = false; // Rehabilitar el botón
+            //  return;
+            //   }
+
+            try {
+                // Subir el archivo a Firebase Storage
+                const archivoRef = ref(storage, `archivos/${archivo.name}`);
+                await uploadBytes(archivoRef, archivo);
+                const archivoURL = await getDownloadURL(archivoRef); // Obtener la URL del archivo
+
+                // Agregar documento a Firestore con estado pendiente
+                await addDoc(collection(db, "solicitudes"), {
+                    nombre: nombre,
+                    legajo: legajo,
+                    sucursal: sucursal,
+                    puesto: puesto,
+                    descripcion: descripcion,
+                    importe: importe,
+                    archivoURL: archivoURL, // Guardar la URL del archivo en Firestore
+                    estado: "pendiente", // Estado por defecto
+                    fecha: new Date() // Guardar la fecha actual
+                });
+                // Mostrar notificación de éxito
+                showNotification("Solicitud enviada con éxito", "success");
+                // Limpiar el formulario después de enviar
+                document.getElementById("solicitudForm").reset();
+                await cargarSucursales(); // Actualizar las sucursales después de enviar
+                await mostrarSolicitudesFiltradas(); // Actualizar la lista de solicitudes
+            } catch (error) {
+                console.error("Error al enviar la solicitud: ", error);
+                alert("Error al enviar la solicitud: " + error.message);
+            } finally {
+                submitButton.disabled = false; // Rehabilitar el botón al finalizar
+            }
+        }
+
+        // Función para cargar sucursales
+        async function cargarSucursales() {
+            const sucursalFilter = document.getElementById("sucursalFilter");
+
+            // Limpiar opciones previas
+            sucursalFilter.innerHTML = '';
+
+            const querySnapshot = await getDocs(collection(db, "solicitudes"));
+
+            const sucursales = new Set();
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                sucursales.add(data.sucursal); // Agregar sucursal única
+            });
+
+            // Convertir el Set a un array, ordenar alfabéticamente y agregar al select
+            const sortedSucursales = Array.from(sucursales).sort();
+            sortedSucursales.forEach(sucursal => {
+                const option = document.createElement("option");
+                option.value = sucursal;
+                option.textContent = sucursal;
+                sucursalFilter.appendChild(option);
+            });
+
+            // Agregar opción "Todas" al principio
+            const allOption = document.createElement("option");
+            allOption.value = "todas";
+            allOption.textContent = "Todas";
+            sucursalFilter.insertBefore(allOption, sucursalFilter.firstChild);
+        }
+
+        // Función para mostrar las solicitudes filtradas
+        window.mostrarSolicitudesFiltradas = async function () {
+            const sucursalFilter = document.getElementById("sucursalFilter").value;
+            const solicitudesContainer = document.getElementById("solicitudesContainer");
+
+            // Limpiar el contenedor para evitar duplicados
+            solicitudesContainer.innerHTML = ''; // Limpiar el contenedor
+
+            const querySnapshot = await getDocs(collection(db, "solicitudes"));
+
+            // Crear un array para almacenar las solicitudes
+            const solicitudes = [];
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                // Si el filtro está activado y no coincide con la sucursal, saltar la solicitud
+                if (sucursalFilter !== "todas" && data.sucursal !== sucursalFilter) {
+                    return;
+                }
+                // Agregar la solicitud al array, incluyendo el ID del documento
+                solicitudes.push({ id: doc.id, ...data });
+            });
+
+            // Ordenar las solicitudes por fecha de forma ascendente
+            solicitudes.sort((a, b) => a.fecha.toDate() - b.fecha.toDate());
+
+            // Mostrar las solicitudes ordenadas
+            solicitudes.forEach(solicitud => {
+                const solicitudElement = document.createElement("div");
+                solicitudElement.classList.add("solicitud-card"); // Clase de tarjeta
+
+                solicitudElement.innerHTML = `
+        <p><strong>Nombre:</strong> ${solicitud.nombre}</p>
+        <p><strong>Legajo:</strong> ${solicitud.legajo}</p>
+        <p><strong>Sucursal:</strong> ${solicitud.sucursal}</p>
+        <p><strong>Puesto:</strong> ${solicitud.puesto}</p>
+        <p><strong>Descripcion:</strong> ${solicitud.descripcion}</p>
+        <p><strong>Importe:</strong> $${solicitud.importe}</p>
+        <p><strong>Estado:</strong> ${solicitud.estado}</p>
+        <p><strong>Fecha:</strong> ${solicitud.fecha.toDate().toLocaleString()}</p>
+        ${solicitud.archivoURL ? `<p><strong>Archivo:</strong> <a href="${solicitud.archivoURL}" target="_blank">Ver archivo</a></p>` : ''}
+        ${solicitud.estado === "aprobado" ? `
+            <p class="aprobado-info"><strong>Aprobado por:</strong> ${solicitud.aprobadoPor}</p>
+            <p class="aprobado-info"><strong>Fecha de aprobación:</strong> ${solicitud.fechaAprobacion.toDate().toLocaleString()}</p>
+        ` : ''}
+        ${solicitud.estado === "pendiente" && isAdmin ? `
+            <button onclick="aprobarSolicitud('${solicitud.id}')">Aprobar</button>
+            <button onclick="rechazarSolicitud('${solicitud.id}')">Rechazar</button>
+        ` : ''}
+        `;
+
+                // Agregar el elemento de solicitud al contenedor
+                solicitudesContainer.appendChild(solicitudElement);
+            });
+        }
+
+
+        // Función para mostrar notificaciones
+        const notificationQueue = [];
+        let isNotificationVisible = false;
+
+        function showNotification(message, type) {
+            notificationQueue.push({ message, type });
+            displayNextNotification();
+        }
+
+        function displayNextNotification() {
+            if (isNotificationVisible || notificationQueue.length === 0) {
+                return;
+            }
+
+            const { message, type } = notificationQueue.shift();
+            const notification = document.getElementById("notification");
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            isNotificationVisible = true;
+
+            setTimeout(() => {
+                notification.textContent = '';
+                notification.className = 'notification'; // Reiniciar clase
+                isNotificationVisible = false;
+                displayNextNotification(); // Mostrar la siguiente notificación
+            }, 3000);
+        }
+
+
+        // Función para aprobar una solicitud
+        window.aprobarSolicitud = async function (id) {
+            const solicitudRef = doc(db, "solicitudes", id);
+            try {
+                await updateDoc(solicitudRef, {
+                    estado: "aprobado",
+                    aprobadoPor: auth.currentUser.email, // Guardar el email del aprobador
+                    fechaAprobacion: new Date() // Guardar la fecha de aprobación
+                });
+                showNotification("Solicitud aprobada.", "success");
+                await mostrarSolicitudesFiltradas(); // Actualizar la lista de solicitudes
+            } catch (error) {
+                console.error("Error al aprobar la solicitud: ", error);
+                alert("Error al aprobar la solicitud: " + error.message);
+            }
+        }
+
+        // Función para rechazar una solicitud
+        window.rechazarSolicitud = async function (id) {
+            const solicitudRef = doc(db, "solicitudes", id);
+            try {
+                await updateDoc(solicitudRef, {
+                    estado: "rechazada"
+                });
+                showNotification("Solicitud rechazada.", "error");
+                await mostrarSolicitudesFiltradas(); // Actualizar la lista de solicitudes
+            } catch (error) {
+                console.error("Error al rechazar la solicitud: ", error);
+                alert("Error al rechazar la solicitud: " + error.message);
+            }
+        }
+
+        // Mostrar y ocultar el formulario al hacer clic en el botón
+        document.getElementById("toggleButton").addEventListener("click", () => {
+            const hiddenFormContainer = document.getElementById("hiddenFormContainer");
+            hiddenFormContainer.style.display = hiddenFormContainer.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Event listener para el formulario
+        document.getElementById("solicitudForm").addEventListener("submit", enviarSolicitud);
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COTO - Gerencia de Recaudaciones</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="./ico/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./ico/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./ico/favicon-16x16.png">
+  <link rel="manifest" href="./ico/site.webmanifest">
+  <link rel="mask-icon" href="./ico/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="manifest" href="/manifest.json">
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(function (registration) {
+            console.log('Service Worker registrado con éxito:', registration.scope);
+          })
+          .catch(function (error) {
+            console.error('Error al registrar el Service Worker:', error);
+          });
+      });
+    }
+
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+
+      const installButton = document.querySelector('#install-button');
+      installButton.style.display = 'block';
+
+      installButton.addEventListener('click', () => {
+        deferredPrompt.prompt();
+
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('El usuario aceptó instalar la PWA');
+          } else {
+            console.log('El usuario rechazó instalar la PWA');
+          }
+          deferredPrompt = null;
+        });
+      });
+    });
+  </script>
+
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 300px;
+      text-align: center;
+    }
+
+    .container img {
+      width: 60%;
+    }
+
+    .container h1 {
+      text-align: center;
+      color: #333;
+      margin-block-start: 5px;
+      margin-block-end: 40px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    input {
+      padding: 10px;
+      border: 1px solid #e2e2e2;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #f33c3c;
+      color: white;
+      border: none;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 1s;
+    }
+
+    button:hover {
+      background-color: #ff2929;
+    }
+
+    button:disabled {
+      background-color: #ddd;
+      cursor: not-allowed;
+    }
+
+    .loading-spinner {
+      display: none;
+      width: 30px;
+      height: 30px;
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-left-color: #4CAF50;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 10px auto;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .perfil-container {
+      display: flex;
+      width: 200px;
+      margin: 0 auto;
+      align-items: center;
+      margin-bottom: 40px;
+      border-radius: 5px;
+      transition: 1s;
+    }
+
+    img.perfil-foto {
+      display: block;
+      width: 90px;
+      height: 80px;
+      border-radius: 50%;
+      margin-top: 0;
+      transition: 2s;
+    }
+
+    .perfil-foto {
+      display: inline-block;
+      padding: 5px;
+      background: linear-gradient(272deg, rgba(255, 41, 41, 0), #ff2929);
+      border-radius: 50%;
+    }
+
+    .perfil-info {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.81em;
+      padding-left: 20px;
+    }
+
+    .puesto,
+    .nombre,
+    .legajo {
+      margin: 2px 0;
+      color: #232323;
+    }
+
+    .nombre {
+      font-size: 1.13em;
+      font-weight: bold;
+      color: #121212;
+    }
+
+    .notification {
+      display: none;
+      padding: 15px;
+      margin: 10px 0;
+      border: 1px solid transparent;
+      border-radius: 4px;
+    }
+
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+      border-color: #c3e6cb;
+    }
+
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border-color: #f5c6cb;
+    }
+  </style>
+</head>
+
+<body>
+  <button id="install-button" style="display: none;">Instalar PWA</button>
+  <div class="container">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Logo_Supermercado_Coto.svg/1198px-Logo_Supermercado_Coto.svg.png"
+      alt="">
+    <h1>Gerencia de<br>Recaudaciones</h1>
+
+    <!-- Formulario de inicio de sesión -->
+    <div id="loginContainer" class="hidden">
+      <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="legajo@coto.com.ar" required>
+        <input type="password" id="loginPassword" placeholder="Contraseña" required>
+        <button type="submit" id="loginButton">Iniciar Sesión</button>
+      </form>
+      <div class="loading-spinner" id="loadingSpinner"></div> <!-- Spinner de carga -->
+      <div id="notification" class="notification"></div>
+    </div>
+
+    <!-- Botón de cerrar sesión -->
+    <div id="perfilContainer" class="hidden">
+      <div class="perfil-container">
+        <img id="perfilFoto" src="default.jpg" alt="Foto de perfil" class="perfil-foto">
+        <div class="perfil-info">
+          <div class="puesto" id="puesto">Puesto</div>
+          <div class="nombre" id="nombre">Nombre del Usuario</div>
+          <div class="legajo" id="legajo">Legajo</div>
+          <div class="logout"><a id="logout">Cerrar Sesión</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="logoutContainer" class="hidden">
+      <button id="inicioButton" class="hidden">Inicio</button>
+      <button id="logoutButton">Cerrar Sesión</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+    import { usuarios } from 'https://recaudaciones.s3.us-east-2.amazonaws.com/usuarios.js'; // Importa los usuarios desde el archivo
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjDElF__Bcgo137GGf6hPRXhEp4BatD10",
+      authDomain: "recaudaciones-26766.firebaseapp.com",
+      projectId: "recaudaciones-26766",
+      storageBucket: "recaudaciones-26766.appspot.com",
+      messagingSenderId: "793331710217",
+      appId: "1:793331710217:web:93d036faa48032a6f53bd8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+
+    const loginForm = document.getElementById("loginForm");
+    const loginButton = document.getElementById("loginButton");
+    const loadingSpinner = document.getElementById("loadingSpinner");
+    const loginContainer = document.getElementById("loginContainer");
+    const logoutContainer = document.getElementById("logoutContainer");
+    const perfilContainer = document.getElementById("perfilContainer");
+    const notificationDiv = document.getElementById("notification");
+
+    const nombreElement = document.getElementById("nombre");
+    const puestoElement = document.getElementById("puesto");
+    const legajoElement = document.getElementById("legajo");
+    const perfilFotoElement = document.getElementById("perfilFoto");
+
+    // Función para mostrar notificaciones
+    function showNotification(message, type) {
+      notificationDiv.textContent = message;
+      notificationDiv.className = `notification ${type}`;
+      notificationDiv.style.display = 'block';
+      setTimeout(() => {
+        notificationDiv.style.display = 'none';
+      }, 3000); // Oculta la notificación después de 3 segundos
+    }
+
+    // Verificar si el usuario ya está autenticado
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loginContainer.classList.add('hidden');
+        logoutContainer.classList.remove('hidden');
+        perfilContainer.classList.remove('hidden');
+
+        const userEmail = user.email;
+        const userData = usuarios.find(u => u.email === userEmail);
+
+        if (userData) {
+          nombreElement.textContent = userData.nombre;
+          puestoElement.textContent = userData.puesto;
+          legajoElement.textContent = userData.legajo;
+          perfilFotoElement.src = userData.fotoPerfil;
+
+          // Obtener mes y año actual para el botón "Inicio"
+          const date = new Date();
+          const month = date.toLocaleString('es-ES', { month: 'long' });
+          const year = date.getFullYear().toString().slice(-2);
+
+          // Crear URL dinámica
+          const dynamicUrl = `${month}-${year}/inicio.html`;
+
+          // Configurar el botón "Inicio"
+          const inicioButton = document.getElementById("inicioButton");
+          inicioButton.classList.remove('hidden');
+          inicioButton.onclick = () => {
+            window.location.href = dynamicUrl;
+          };
+        } else {
+          showNotification("No se encontraron datos para este usuario.", "error");
+        }
+      } else {
+        loginContainer.classList.remove('hidden');
+        logoutContainer.classList.add('hidden');
+        perfilContainer.classList.add('hidden');
+      }
+    });
+
+    // Iniciar sesión
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      loadingSpinner.style.display = 'block';
+      loginButton.disabled = true;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          loadingSpinner.style.display = 'none';
+
+          // Obtener mes y año actual para el botón "Inicio"
+          const date = new Date();
+          const month = date.toLocaleString('es-ES', { month: 'long' });
+          const year = date.getFullYear().toString().slice(-2);
+
+          // Crear URL dinámica
+          const dynamicUrl = `${month}-${year}/inicio.html`;
+
+          // Redirigir a la URL generada
+          window.location.href = dynamicUrl;
+        })
+        .catch((error) => {
+          loadingSpinner.style.display = 'none';
+          loginButton.disabled = false;
+          showNotification(`Error al iniciar sesión: ${error.message}`, "error");
+        });
+    });
+
+    // Cerrar sesión
+    const logoutButton = document.getElementById("logoutButton");
+    logoutButton.addEventListener("click", () => {
+      signOut(auth).then(() => {
+        showNotification("Sesión cerrada exitosamente", "success");
+        setTimeout(() => {
+          window.location.href = 'index.html'; // Redirigir al login después de cerrar sesión
+        }, 3000); // Espera 3 segundos antes de redirigir
+      }).catch((error) => {
+        showNotification(`Error al cerrar sesión: ${error.message}`, "error");
+      });
+    });
+
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COTO - Gerencia de Recaudaciones</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../ico/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../ico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../ico/favicon-16x16.png">
+    <link rel="manifest" href="../ico/site.webmanifest">
+    <link rel="mask-icon" href="../ico/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://kit.fontawesome.com/9a289aa4a3.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="loader">
+        <div class="loader-content">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Logo_Supermercado_Coto.svg/1198px-Logo_Supermercado_Coto.svg.png"
+                alt="Cargando">
+            <div id="progress">0%</div>
+        </div>
+    </div>
+
+    <div id="container-main">
+
+        <div class="sidebar">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Logo_Supermercado_Coto.svg/1198px-Logo_Supermercado_Coto.svg.png"
+                alt="">
+            <h1>Gerencia de<br>Recaudaciones</h1>
+
+            <!-- Menú hamburguesa -->
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <ul>
+                <li><a href="inicio.html">Inicio</a></li>
+                <li><a href="aconciliar.html">Mov. Conciliados</a></li>
+                <li><a href="erroroperativo.html">Errores Operativos</a></li>
+                <li><a href="fallos.html">Fallos de Caja</a></li> <li><a href="gastos.html">Gastos</a></li>
+            </ul>
+
+            <div class="perfil-container">
+                <img id="perfilFoto" src="default.jpg" alt="Foto de perfil" class="perfil-foto">
+                <div class="perfil-info">
+                    <div class="puesto" id="puesto">Puesto</div>
+                    <div class="nombre" id="nombre">Nombre del Usuario</div>
+                    <div class="legajo" id="legajo">Legajo</div>
+                    <div class="logout"><a id="logout">Cerrar Sesión</a></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-container">
+
+            <section id="info">
+                <div class="info-item-fecha">
+                    <div class="dropdown">
+                        <p id="selected-month-display">Mes seleccionado: Ninguno</p>
+
+                        <div class="dropdown-content" id="dropdown-content">
+                            <!-- Los meses se agregarán aquí con JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                <div id="incidencias-container">
+                    <div id="titulo-incidencias">
+                        Incidencias Ms
+                    </div>
+                    <div id="incidencias-ms" class="marquee">
+                        <!-- Aquí se agregarán los ajustes por incidencias -->
+                    </div>
+                </div>
+            </section>
+
+            <section id="info">
+                <div class="info-item">
+                    <br><br>
+                    <select id="sucursal-select">
+                        <option value="todas">Seleccionar sucursal</option>
+                    </select>
+
+                    <br> <br> <br>
+                    <div id="resumen-sucursal" class="resumen">
+                        <!-- Aquí se mostrará el resumen de la sucursal seleccionada -->
+                    </div>
+
+                </div>
+
+                <div class="info-item">
+                    <div class="container">
+                        <div class="comparison">Sucursales con mas</div>
+                        <h2>Fallos de Caja - Sobrante / Faltante</h2>
+
+                        <div class="header">
+                            <div>#</div>
+                            <div>Suc</div>
+                            <div>T. Errores</div>
+                            <div>Legajo</div>
+                            <div>Errores</div>
+                            <div>Observacion</div>
+                            <div id="observacion" class="observacion">
+                                <button id="cerrar-observacion" class="cerrar-observacion">&times;</button>
+                            </div>
+
+                        </div>
+
+                        <div id="top-fallos">
+                            <!-- Las filas generadas por el script JavaScript aparecerán aquí -->
+                        </div>
+                        <button id="mostrar-mas-i">Ver más</button>
+                        <a href="#" id="enlace-exportar-fallos" title="Exportar a Excel">
+                            <i class="fa-solid fa-file-excel"></i> Generar Reporte
+                        </a>
+
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="js/mov.js" async></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/top-axi.js" async></script>
+    <script src="js/top-eo.js" async></script>
+    <script src="js/evolutivo-sf.js" async></script>
+    <script src="js/evolutivo-eo-mac.js" async></script>
+    <script src="js/fallos-suc.js" async></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.0/dist/xlsx.full.min.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+        import { usuarios } from 'https://recaudaciones.s3.us-east-2.amazonaws.com/usuarios.js';  // Importa los usuarios desde el archivo
+    
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBjDElF__Bcgo137GGf6hPRXhEp4BatD10",
+            authDomain: "recaudaciones-26766.firebaseapp.com",
+            projectId: "recaudaciones-26766",
+            storageBucket: "recaudaciones-26766.appspot.com",
+            messagingSenderId: "793331710217",
+            appId: "1:793331710217:web:93d036faa48032a6f53bd8"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+    
+        // Referencias a los elementos del perfil
+        const nombreElement = document.getElementById("nombre");
+        const puestoElement = document.getElementById("puesto");
+        const legajoElement = document.getElementById("legajo");
+        const perfilFotoElement = document.getElementById("perfilFoto");
+    
+        // Verificar si hay un usuario autenticado
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Obtener el correo electrónico del usuario autenticado
+                const userEmail = user.email;
+    
+                // Buscar los datos del usuario en el JSON
+                const userData = usuarios.find(u => u.email === userEmail);
+    
+                if (userData) {
+                    // Mostrar los datos en la interfaz
+                    nombreElement.textContent = userData.nombre;
+                    puestoElement.textContent = userData.puesto;
+                    legajoElement.textContent = userData.legajo;
+                    perfilFotoElement.src = userData.fotoPerfil;
+                } else {
+                    alert("No se encontraron datos para este usuario.");
+                }
+            } else {
+                // Si no hay usuario autenticado, redirigir al login
+                window.location.href = '../index.html';
+            }
+        });
+
+        // Cerrar sesión
+        // Referencia al enlace de cerrar sesión
+        const logoutLink = document.getElementById("logout");
+
+        // Añadir evento click al enlace de cerrar sesión
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            signOut(auth).then(() => {
+                // Redirigir al login después de cerrar sesión
+                window.location.href = '../index.html';
+            }).catch((error) => {
+                console.error("Error al cerrar sesión:", error);
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Costos de Servicio por Sucursal</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Costos de Servicio por Sucursal</h1>
+        <form id="serviceForm">
+            <label for="branch">Sucursal:</label>
+            <input type="text" id="branch" required>
+
+            <label for="deposits">Depositos Sobres (cantidad):</label>
+            <input type="number" id="deposits" value="0">
+
+            <label for="maeDeposits">Depositos Equipos MAE (cantidad):</label>
+            <input type="number" id="maeDeposits" value="0">
+
+            <label for="additionalDeposits">Depositos Adicionales (cantidad):</label>
+            <input type="number" id="additionalDeposits" value="0">
+
+            <label for="moneyCounting">Recuento de Dinero (%):</label>
+            <input type="number" id="moneyCounting" value="0">
+
+            <label for="tickets">Tickets (cantidad):</label>
+            <input type="number" id="tickets" value="0">
+
+            <label for="collectionFrequency">Frecuencia de Recaudación:</label>
+            <select id="collectionFrequency">
+                <option value="5">5 veces por semana</option>
+                <option value="4">4 veces por semana</option>
+                <option value="3">3 veces por semana</option>
+                <option value="2">2 veces por semana</option>
+                <option value="1">1 vez por semana</option>
+                <option value="0.5">2 veces por mes</option>
+            </select>
+
+            <label for="distanceCharge">Sucursal lejana:</label>
+            <select id="distanceCharge">
+                <option value="0">Ninguna</option>
+                <option value="shared">Kilómetro Compartido</option>
+                <option value="exclusive">Kilómetro Exclusivo</option>
+                <option value="holiday">Kilómetro Feriado</option>
+            </select>
+
+            <button type="button" onclick="calculateCosts()">Calcular Costos</button>
+        </form>
+        
+        <h2 id="result"></h2>
+    </div>
+    <script>
+        const serviceCosts = {
+    deposits: 277.09,
+    maeDeposits: 414.01,
+    additionalDeposits: 23828.75,
+    moneyCounting: 4.80,
+    tickets: 1388.97,
+    fixedCosts: {
+        5: 1751349.37,
+        4: 1432674.26,
+        3: 1050894.00,
+        2: 700600.78,
+        1: 382138.03,
+        0.5: 268142.41,
+    },
+    distanceCharges: {
+        shared: 282.26,
+        exclusive: 556.12,
+        holiday: 837.04,
+    }
+};
+
+function calculateCosts() {
+    const deposits = parseInt(document.getElementById('deposits').value) || 0;
+    const maeDeposits = parseInt(document.getElementById('maeDeposits').value) || 0;
+    const additionalDeposits = parseInt(document.getElementById('additionalDeposits').value) || 0;
+    const moneyCounting = parseFloat(document.getElementById('moneyCounting').value) || 0;
+    const tickets = parseInt(document.getElementById('tickets').value) || 0;
+    const collectionFrequency = parseFloat(document.getElementById('collectionFrequency').value);
+    const distanceCharge = document.getElementById('distanceCharge').value;
+
+    let totalCost = 0;
+
+    // Calcular costos de servicios
+    totalCost += deposits * serviceCosts.deposits;
+    totalCost += maeDeposits * serviceCosts.maeDeposits;
+    totalCost += additionalDeposits * serviceCosts.additionalDeposits;
+    totalCost += (moneyCounting * serviceCosts.moneyCounting) / 100;
+    totalCost += Math.ceil(tickets / 1000) * serviceCosts.tickets;
+
+    // Agregar costo fijo
+    totalCost += serviceCosts.fixedCosts[collectionFrequency];
+
+    // Agregar cargo adicional si corresponde
+    if (distanceCharge !== "0") {
+        totalCost += serviceCosts.distanceCharges[distanceCharge];
+    }
+
+    document.getElementById('result').innerText = `Costo total para la sucursal: $${totalCost.toFixed(2)}`;
+}
+
+    </script>
+</body>
+</html>

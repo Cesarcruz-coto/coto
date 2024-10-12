@@ -1,0 +1,4 @@
+<script>
+        // Eliminar luego de dos dias
+        window.location.href = "../septiembre-24/inicio.html";
+    </script>

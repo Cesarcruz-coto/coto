@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de QR</title>
+</head>
+<body>
+    <h1>Generador de Código QR</h1>
+    <input type="text" id="link" placeholder="Ingresa tu enlace aquí">
+    <button id="generate">Generar QR</button>
+    <canvas id="qrCanvas"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script>
+        document.getElementById('generate').addEventListener('click', function() {
+            const link = document.getElementById('link').value;
+            const qr = new QRious({
+                element: document.getElementById('qrCanvas'),
+                value: link,
+                size: 200
+            });
+        });
+    </script>
+</body>
+</html>
