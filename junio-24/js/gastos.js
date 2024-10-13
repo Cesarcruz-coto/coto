@@ -1,11 +1,18 @@
 import { apis } from './api.js';
+
 // Función para parsear valores monetarios
-function parseCurrency(value) {
+const parseCurrency = (value) => {
     return parseFloat(value.replace('$', '').replace(/\./g, '').replace(',', '.')) || 0;
-}
+};
+
+// Función para parsear fechas en formato DD/MM/YYYY a objetos Date
+const parseFecha = (fechaStr) => {
+    const [dia, mes, anio] = fechaStr.split('/');
+    return new Date(`${anio}-${mes}-${dia}`);
+};
 
 // Función para crear opciones del select
-function crearOpcionesSelect(sucursales, selectElement) {
+const crearOpcionesSelect = (sucursales, selectElement) => {
     const fragment = document.createDocumentFragment();
     sucursales.forEach(sucursal => {
         const option = document.createElement('option');
@@ -14,27 +21,27 @@ function crearOpcionesSelect(sucursales, selectElement) {
         fragment.appendChild(option);
     });
     selectElement.appendChild(fragment);
-}
+};
 
 // Función para crear un elemento de lista de resumen
-function crearResumenItem(descr, total, porcentaje, iconMap) {
+const crearResumenItem = (descr, total, porcentaje, iconMap) => {
     const li = document.createElement('li');
     li.className = 'gasto-resumen-item';
-    
+
     const icon = iconMap[descr] ? `<i class="fas ${iconMap[descr]}"></i>` : '';
-    
+
     li.innerHTML = `
         <span class="gasto-descripcion">${icon} ${descr}</span>
         <span class="gasto-total">$ ${total.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         <span class="gasto-porcentaje">${porcentaje}%</span>
     `;
     return li;
-}
+};
 
 // Función para mostrar el ranking de sucursales
-function mostrarRankingSucursales(data) {
+const mostrarRankingSucursales = (data) => {
     const rankingList = document.getElementById('ranking-list');
-    
+
     // Limpiar el contenido anterior, excepto el encabezado
     rankingList.innerHTML = `
         <div class="gasto-header">
@@ -45,57 +52,42 @@ function mostrarRankingSucursales(data) {
             <span>% del Total</span>
         </div>
     `;
-    
+
     // Calcular el total de gastos por sucursal y encontrar el gasto principal
     const totalGastosPorSucursal = {};
     const gastoPrincipalPorSucursal = {};
-    
-    data.forEach(gasto => {
-        const sucursal = gasto.SUCGCIA;
-        const total = parseCurrency(gasto.Total);
-        const descripcion = gasto.Descr;
-        
+
+    data.forEach(({ SUCGCIA: sucursal, Total: totalStr, Descr: descripcion }) => {
+        const total = parseCurrency(totalStr);
+
         // Acumular el total por sucursal
-        if (!totalGastosPorSucursal[sucursal]) {
-            totalGastosPorSucursal[sucursal] = 0;
-        }
-        totalGastosPorSucursal[sucursal] += total;
-        
+        totalGastosPorSucursal[sucursal] = (totalGastosPorSucursal[sucursal] || 0) + total;
+
         // Acumular el total por descripción dentro de la sucursal
-        if (!gastoPrincipalPorSucursal[sucursal]) {
-            gastoPrincipalPorSucursal[sucursal] = {};
-        }
-        if (!gastoPrincipalPorSucursal[sucursal][descripcion]) {
-            gastoPrincipalPorSucursal[sucursal][descripcion] = 0;
-        }
-        gastoPrincipalPorSucursal[sucursal][descripcion] += total;
+        gastoPrincipalPorSucursal[sucursal] = gastoPrincipalPorSucursal[sucursal] || {};
+        gastoPrincipalPorSucursal[sucursal][descripcion] = (gastoPrincipalPorSucursal[sucursal][descripcion] || 0) + total;
     });
-    
+
     // Calcular el total de todos los gastos para los porcentajes
     const totalGastosGeneral = Object.values(totalGastosPorSucursal).reduce((acc, val) => acc + val, 0);
-    
+
     // Convertir el objeto a un array para poder ordenarlo
-    const rankingArray = Object.entries(totalGastosPorSucursal).map(([sucursal, total]) => ({
-        sucursal,
-        total
-    }));
-    
-    // Ordenar el array de mayor a menor gasto
-    rankingArray.sort((a, b) => b.total - a.total);
-    
+    const rankingArray = Object.entries(totalGastosPorSucursal)
+        .map(([sucursal, total]) => ({ sucursal, total }))
+        .sort((a, b) => b.total - a.total);
+
     // Crear y agregar elementos al DOM
     const fragment = document.createDocumentFragment();
     rankingArray.forEach((item, index) => {
-        const sucursal = item.sucursal;
-        const total = item.total;
-        
+        const { sucursal, total } = item;
+
         // Encontrar la descripción con el mayor gasto en la sucursal
         const gastosPorDescripcion = gastoPrincipalPorSucursal[sucursal];
         const gastoPrincipal = Object.entries(gastosPorDescripcion).reduce((a, b) => a[1] > b[1] ? a : b)[0];
-        
+
         // Calcular el porcentaje respecto al total general
         const porcentaje = totalGastosGeneral > 0 ? ((total / totalGastosGeneral) * 100).toFixed(2) : '0.00';
-        
+
         const li = document.createElement('div');
         li.className = 'gasto-item';
         li.innerHTML = `
@@ -107,11 +99,11 @@ function mostrarRankingSucursales(data) {
         `;
         fragment.appendChild(li);
     });
-    
-    rankingList.appendChild(fragment);
-}
 
-async function cargarGastos() {
+    rankingList.appendChild(fragment);
+};
+
+const cargarGastos = async () => {
     try {
         const response = await fetch(apis.apiGastosActual);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -134,9 +126,9 @@ async function cargarGastos() {
         console.error("Error al cargar los gastos:", error);
         // Opcional: Mostrar mensaje de error en la UI
     }
-}
+};
 
-function mostrarGastosPorSucursal(data, sucursalSeleccionada) {
+const mostrarGastosPorSucursal = (data, sucursalSeleccionada) => {
     const gastosDiv = document.getElementById('top-gastos');
     const resumenList = document.getElementById('resumen-list');
     const nombreSucursal = document.getElementById('nombre-sucursal');
@@ -150,82 +142,69 @@ function mostrarGastosPorSucursal(data, sucursalSeleccionada) {
     porcentajeGastosDiv.innerHTML = '';
     totalSucursalDiv.innerHTML = '';
 
-    let gastosFiltrados = data;
-    if (sucursalSeleccionada !== 'todas') {
-        gastosFiltrados = data.filter(gasto => gasto.SUCGCIA === sucursalSeleccionada);
-    }
+    const gastosFiltrados = sucursalSeleccionada !== 'todas'
+        ? data.filter(gasto => gasto.SUCGCIA === sucursalSeleccionada)
+        : data;
 
     nombreSucursal.textContent = sucursalSeleccionada === 'todas' ? 'Todas' : sucursalSeleccionada;
 
-    const totalGastos = data.reduce((total, gasto) => {
-        return total + parseCurrency(gasto.Total);
-    }, 0);
+    const totalGastos = data.reduce((total, gasto) => total + parseCurrency(gasto.Total), 0);
+    const totalGastosSucursal = gastosFiltrados.reduce((total, gasto) => total + parseCurrency(gasto.Total), 0);
 
-    const totalGastosSucursal = gastosFiltrados.reduce((total, gasto) => {
-        return total + parseCurrency(gasto.Total);
-    }, 0);
+    porcentajeGastosDiv.textContent = totalGastos > 0
+        ? `El gasto de esta sucursal representa el ${(totalGastosSucursal / totalGastos * 100).toFixed(2)}% del total.`
+        : "No hay gastos registrados.";
 
-    if (totalGastos > 0) {
-        const porcentaje = ((totalGastosSucursal / totalGastos) * 100).toFixed(2);
-        porcentajeGastosDiv.textContent = `El gasto de esta sucursal representa el ${porcentaje}% del total.`;
-    } else {
-        porcentajeGastosDiv.textContent = "No hay gastos registrados.";
-    }
-
-    const totalGastosSucursalFormatted = `$ ${totalGastosSucursal.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    totalSucursalDiv.textContent = `Total gastos de la sucursal: ${totalGastosSucursalFormatted}`;
+    totalSucursalDiv.textContent = `Total gastos de la sucursal: $ ${totalGastosSucursal.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
     // Calcular resumenPorDescripcion
-const resumenPorDescripcion = gastosFiltrados.reduce((acc, gasto) => {
-    const descr = gasto.Descr;
-    const total = parseCurrency(gasto.Total);
-    acc[descr] = (acc[descr] || 0) + total; // Sumar el total al acumulado por descripción
-    return acc;
-}, {});
+    const resumenPorDescripcion = gastosFiltrados.reduce((acc, { Descr: descr, Total: totalStr }) => {
+        const total = parseCurrency(totalStr);
+        acc[descr] = (acc[descr] || 0) + total;
+        return acc;
+    }, {});
 
-// Convertir resumenPorDescripcion en un array de [descripcion, total] y ordenarlo
-const resumenArray = Object.entries(resumenPorDescripcion).sort((a, b) => b[1] - a[1]);
+    // Convertir resumenPorDescripcion en un array de [descripcion, total] y ordenarlo
+    const resumenArray = Object.entries(resumenPorDescripcion).sort((a, b) => b[1] - a[1]);
 
-// Mapa de descripciones a iconos de Font Awesome
-const iconMap = {
-    "Gtos. Manten. Ordinario": "fa-tools",
-    "Gtos. Varios Administración": "fa-briefcase",
-    "Viáticos Extraordinarios": "fa-plane",
-    "Viaticos y Movilidad": "fa-car",
-    "Gtos. Adicionales Serv. Medic": "fa-heartbeat",
-    "Mantenimiento de Rodados": "fa-truck-pickup",
-    "Combustibles y Lubricantes": "fa-gas-pump",
-    "Gtos. Peaje y Estacionamiento": "fa-parking",
-    "Otros Serv. Contratados": "fa-handshake",
-    "Gtos. Manteni. Extraordinarios": "fa-exclamation-circle",
-    "Serv. y Atencion Medica": "fa-user-md",
-    "Fletes y Acarreos": "fa-truck",
-    "Servicio de Vigilancia": "fa-shield-alt",
-    "Fletes de Envio-Suc. y Domicil": "fa-shipping-fast",
-    "Tasa por Seguridad e Higiene": "fa-lock",
-    "Ropa y Elementos de Trabajo": "fa-tshirt",
-    "Alq. Pagados": "fa-file-invoice",
-    "Gtos. de Comedor": "fa-utensils",
-    "Consumos Varios": "fa-ellipsis-h",
-    "Consumos Insumos Elaboración": "fa-industry",
-    "Otros Gtos. de Personal": "fa-users",
-    "Gtos. de Capacitacion": "fa-chalkboard-teacher",
-    "Multas e Infracciones en Sucur": "fa-gavel",
-    "Gtos. Analisis Bacteriológico": "fa-flask",
-    "Gtos. de Repuestos": "fa-cogs",
-    "Papeleria y Utiles de Oficina": "fa-pencil-alt"
-};
+    // Mapa de descripciones a iconos de Font Awesome
+    const iconMap = {
+        "Gtos. Manten. Ordinario": "fa-tools",
+        "Gtos. Varios Administración": "fa-briefcase",
+        "Viáticos Extraordinarios": "fa-plane",
+        "Viaticos y Movilidad": "fa-car",
+        "Gtos. Adicionales Serv. Medic": "fa-heartbeat",
+        "Mantenimiento de Rodados": "fa-truck-pickup",
+        "Combustibles y Lubricantes": "fa-gas-pump",
+        "Gtos. Peaje y Estacionamiento": "fa-parking",
+        "Otros Serv. Contratados": "fa-handshake",
+        "Gtos. Manteni. Extraordinarios": "fa-exclamation-circle",
+        "Serv. y Atencion Medica": "fa-user-md",
+        "Fletes y Acarreos": "fa-truck",
+        "Servicio de Vigilancia": "fa-shield-alt",
+        "Fletes de Envio-Suc. y Domicil": "fa-shipping-fast",
+        "Tasa por Seguridad e Higiene": "fa-lock",
+        "Ropa y Elementos de Trabajo": "fa-tshirt",
+        "Alq. Pagados": "fa-file-invoice",
+        "Gtos. de Comedor": "fa-utensils",
+        "Consumos Varios": "fa-ellipsis-h",
+        "Consumos Insumos Elaboración": "fa-industry",
+        "Otros Gtos. de Personal": "fa-users",
+        "Gtos. de Capacitacion": "fa-chalkboard-teacher",
+        "Multas e Infracciones en Sucur": "fa-gavel",
+        "Gtos. Analisis Bacteriológico": "fa-flask",
+        "Gtos. de Repuestos": "fa-cogs",
+        "Papeleria y Utiles de Oficina": "fa-pencil-alt"
+    };
 
-// Crear fragmento para el resumen ordenado
-const resumenFragment = document.createDocumentFragment();
-for (const [descr, total] of resumenArray) {
-    const porcentajeGasto = ((total / totalGastosSucursal) * 100).toFixed(2);
-
-    const li = crearResumenItem(descr, total, porcentajeGasto, iconMap);
-    resumenFragment.appendChild(li);
-}
-resumenList.appendChild(resumenFragment);
-
+    // Crear fragmento para el resumen ordenado
+    const resumenFragment = document.createDocumentFragment();
+    resumenArray.forEach(([descr, total]) => {
+        const porcentajeGasto = ((total / totalGastosSucursal) * 100).toFixed(2);
+        const li = crearResumenItem(descr, total, porcentajeGasto, iconMap);
+        resumenFragment.appendChild(li);
+    });
+    resumenList.appendChild(resumenFragment);
 
     // Crear y agregar la cabecera de gastos
     const headerDiv = document.createElement('div');
@@ -239,24 +218,32 @@ resumenList.appendChild(resumenFragment);
     `;
     gastosDiv.appendChild(headerDiv);
 
+    // Ordenar los gastos filtrados por FechaFactura de más nueva a más vieja
+    gastosFiltrados.sort((a, b) => parseFecha(b.FechaFactura) - parseFecha(a.FechaFactura));
+
     let contador = 0;
     const limite = 30;
 
     const mostrarGastosLimitados = () => {
         const gastosParaMostrar = gastosFiltrados.slice(contador, contador + limite);
-        gastosParaMostrar.forEach(gasto => {
+        const fragment = document.createDocumentFragment();
+
+        gastosParaMostrar.forEach(({ SUCGCIA, FechaFactura, Factura, Descr, Total }) => {
             const gastoDiv = document.createElement('div');
             gastoDiv.className = 'gasto-item';
             gastoDiv.innerHTML = `
-                <span>${gasto.SUCGCIA}</span>
-                <span>${gasto.FechaFactura}</span>
-                <span>${gasto.Factura}</span>
-                <span>${gasto.Descr}</span>
-                <span>${gasto.Total}</span>
+                <span>${SUCGCIA}</span>
+                <span>${FechaFactura}</span>
+                <span>${Factura}</span>
+                <span>${Descr}</span>
+                <span>$ ${parseCurrency(Total).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             `;
-            gastosDiv.appendChild(gastoDiv);
+            fragment.appendChild(gastoDiv);
         });
+
+        gastosDiv.appendChild(fragment);
         contador += gastosParaMostrar.length;
+
         if (contador >= gastosFiltrados.length) {
             cargarMasBtn.style.display = 'none';
         }
@@ -264,37 +251,47 @@ resumenList.appendChild(resumenFragment);
 
     mostrarGastosLimitados();
     cargarMasBtn.onclick = mostrarGastosLimitados;
-}
+};
 
 // Función para mostrar el tab correspondiente
-function showTab(tabId) {
-    // Primero ocultamos todos los contenidos
-    let tabs = document.querySelectorAll('.tab-content');
-    tabs.forEach(tab => {
-        tab.classList.remove('active');  // Eliminar clase 'active' de todos los contenidos
-        tab.style.display = 'none';      // Ocultar todos los contenidos
+const showTab = (tabId) => {
+    // Ocultar todos los contenidos
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+        tab.style.display = 'none';
     });
 
-    // Luego mostramos el tab correspondiente
-    let tabToShow = document.getElementById(tabId);
-    tabToShow.classList.add('active');  // Mostrar solo el tab seleccionado
-    tabToShow.style.display = 'block'; // Aseguramos que el contenido se muestre
+    // Mostrar el tab correspondiente
+    const tabToShow = document.getElementById(tabId);
+    tabToShow.classList.add('active');
+    tabToShow.style.display = 'block';
 
-    // Aseguramos que el botón correspondiente esté activado
-    let buttons = document.querySelectorAll('.tab-button');
-    buttons.forEach(button => {
-        button.classList.remove('active');  // Eliminar clase 'active' de todos los botones
+    // Desactivar todos los botones
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
     });
 
-    // Activar el botón de la pestaña correspondiente
-    let activeButton = document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`);
-    activeButton.classList.add('active');  // Activar el botón del tab seleccionado
-}
+    // Activar el botón correspondiente
+    const activeButton = document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`);
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
+};
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     showTab('columna-gastos');
     cargarGastos();
 });
 
-
+// Exponer la función showTab al ámbito global
 window.showTab = showTab;
+
+const response = await fetch(apis.apiGastosActual);
+if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+}
+
+const data = await response.json();
+if (!data || data.length === 0) {
+    throw new Error("No data returned from API");
+}

@@ -4,6 +4,9 @@ const apiURL = apis.apiAjusteSFActual;
 
 // Datos fijos por mes
 const monthlyData = {
+    'Enero': 1970,
+    'Febrero': 1817,
+    'Marzo': 1862,
     'Abril': 2286,
     'Mayo': 2053,
     'Junio': 1304
@@ -100,26 +103,26 @@ fetch(apiURL)
         // Calcular la diferencia en porcentaje con respecto al mes anterior (Julio)
         diferencia = cmovimientos[cmovimientos.length - 1] - cmovimientos[cmovimientos.length - 2];
         porcentajeCambio = ((diferencia / cmovimientos[cmovimientos.length - 2]) * 100).toFixed(2);
-        
+
         signo = diferencia > 0 ? "+" : "";
 
         // Mostrar la cantidad total de ajustes
         document.getElementById('total-adjustments').innerText = formatNumber(sumaAjustes);
 
         // Mostrar los resultados de las clasificaciones en la interfaz con estilos solo para los importes
-document.getElementById('prosegur-total').innerHTML = `
+        document.getElementById('prosegur-total').innerHTML = `
 Prosegur: ${cantidadProsegur} Ajustes <br> 
 <i class="fa-solid ${importeProsegur > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up'}" style="color: ${importeProsegur > 0 ? '#D50000' : '#2E7D32'};"></i>
 <span style="color: ${importeProsegur > 0 ? '#D50000' : '#2E7D32'};">${formatCurrency(importeProsegur)}</span>
 `;
 
-document.getElementById('redondeo-total').innerHTML = `
+        document.getElementById('redondeo-total').innerHTML = `
 Redondeo: ${cantidadRedondeo} Ajustes <br> 
 <i class="fa-solid ${importeRedondeo > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up'}" style="color: ${importeRedondeo > 0 ? '#D50000' : '#2E7D32'};"></i>
 <span style="color: ${importeRedondeo > 0 ? '#D50000' : '#2E7D32'};">${formatCurrency(importeRedondeo)}</span>
 `;
 
-document.getElementById('operativo-total').innerHTML = `
+        document.getElementById('operativo-total').innerHTML = `
 Operativo: ${cantidadOperativo} Ajustes <br> 
 <i class="fa-solid ${importeOperativo > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up'}" style="color: ${importeOperativo > 0 ? '#D50000' : '#2E7D32'};"></i>
 <span style="color: ${importeOperativo > 0 ? '#D50000' : '#2E7D32'};">${formatCurrency(importeOperativo)}</span>
@@ -127,8 +130,8 @@ Operativo: ${cantidadOperativo} Ajustes <br>
 
         // Determinar el icono y el color para suc-no-venta-total
         const isNoVentaPositive = ajusteNoVenta < 0; // Cambiar la condición
-        const noVentaIcon = isNoVentaPositive ? 
-            '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>' : 
+        const noVentaIcon = isNoVentaPositive ?
+            '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>' :
             '<i class="fa-solid fa-arrow-trend-down" style="color: #D50000;"></i>';
         const formattedAjusteNoVenta = formatCurrency(ajusteNoVenta);
 
@@ -137,8 +140,8 @@ Operativo: ${cantidadOperativo} Ajustes <br>
 
         // Determinar el icono y el color para suc-venta-total
         const isVentaPositive = ajusteVenta < 0; // Cambiar la condición
-        const ventaIcon = isVentaPositive ? 
-            '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>' : 
+        const ventaIcon = isVentaPositive ?
+            '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>' :
             '<i class="fa-solid fa-arrow-trend-down" style="color: #D50000;"></i>';
         const formattedAjusteVenta = formatCurrency(ajusteVenta);
 
@@ -147,8 +150,8 @@ Operativo: ${cantidadOperativo} Ajustes <br>
 
         // Determinar el icono y el color basados en el signo del importe total
         const isTotalPositive = totalImporte < 0; // Cambiar la condición
-        const totalIcon = isTotalPositive ? 
-            '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>' : 
+        const totalIcon = isTotalPositive ?
+            '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>' :
             '<i class="fa-solid fa-arrow-trend-down" style="color: #D50000;"></i>';
         const formattedTotal = formatCurrency(totalImporte);
 
@@ -162,7 +165,7 @@ Operativo: ${cantidadOperativo} Ajustes <br>
         loadChart();
     })
     .catch(error => console.error('Error al obtener los datos:', error));
-    
+
 
 // Función para inicializar o actualizar el gráfico con ApexCharts
 function loadChart() {
@@ -178,7 +181,7 @@ function loadChart() {
         }],
         chart: {
             height: 300,
-            
+
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
@@ -193,13 +196,14 @@ function loadChart() {
                 dynamicAnimation: {
                     speed: 1000    // Duración de la animación dinámica (cuando cambia el gráfico)
                 }
-            },            
+            },
         },
         dataLabels: { enabled: false },
-        stroke: { curve: 'straight',
+        stroke: {
+            curve: 'straight',
             width: 3,
-         },
-         markers: {
+        },
+        markers: {
             size: 4, // Tamaño de los puntos
             colors: ['#D50000'], // Color de los puntos
             strokeColors: '#fff', // Color del borde de los puntos
