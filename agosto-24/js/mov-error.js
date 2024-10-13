@@ -1,4 +1,5 @@
-const apiUrl = 'https://cesarcruz-coto.github.io/coto/DATOS-AGOSTO-24/ERROROPERATIVO.json';
+import { apis } from './api.js';
+const apiUrl = apis.apiErroresActual;
 const itemsPerPage = 20;
 let currentPageCompensados = 1;
 let currentPageNoCompensados = 1;
@@ -39,7 +40,7 @@ function procesarMovimientos(movimientos) {
         // Si el movimiento ya fue compensado, lo ignoramos
         if (movAConciliar.compensado) return;
 
-        const movConciliado = movimientos.find(mov => 
+        const movConciliado = movimientos.find(mov =>
             (mov.TAjuste === 'Error Operativo Resuelto' || mov.TAjuste === 'Error Operativo Caja Resuelto') &&
             !mov.compensado && // Buscar solo los que no han sido compensados
             mov.Suc === movAConciliar.Suc &&
@@ -99,8 +100,8 @@ function renderPage(type) {
                     <div class="card-eo">
                         <p><strong>Sucursal:</strong> ${par.Suc}</p>
                         <p><strong>Importe:</strong> ${par.Importe}</p>
-                        <p><strong>T.Ajuste:</strong> ${par.TAjuste}</p>
-                        <p><strong>Ajus:</strong> ${par.Ajus}</p>
+                        <p><strong>T. Ajuste:</strong> ${par.TAjuste}</p>
+                        <p><strong>Ajuste:</strong> ${par.Ajus}</p>
                         <p><strong>Fecha:</strong> ${par.Fecha}</p>
                         <button class="ver-obs-eo" onclick="toggleObservacion(this)">VER OBS.</button>
                         <div class="observacion-eo">${par.Observacion}</div>
@@ -198,9 +199,9 @@ function showTab(tab) {
 // Función para buscar movimientos no compensados por sucursal
 function buscarNoCompensados() {
     const searchTerm = document.getElementById('searchInputNoCompensados').value.toLowerCase();
-    
+
     // Filtrar movimientos que coincidan con el nombre de la sucursal
-    const filteredMovimientos = movimientosNoCompensados.filter(mov => 
+    const filteredMovimientos = movimientosNoCompensados.filter(mov =>
         mov.Suc && mov.Suc.toLowerCase().includes(searchTerm)
     );
 
@@ -235,6 +236,12 @@ function renderMovimientosFiltrados(movimientosFiltrados) {
     }
 }
 
+window.showTab = showTab;
+window.prevPage = prevPage;
+window.nextPage = nextPage;
+window.buscarNoCompensados = buscarNoCompensados;
+window.toggleObservacion = toggleObservacion;
+window.exportToExcel = exportToExcel;
 
 // Cargar los datos al inicio
 fetchMovimientos();

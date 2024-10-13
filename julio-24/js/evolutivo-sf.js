@@ -1,10 +1,9 @@
 // URL de la API
-const apiURL = 'https://cesarcruz-coto.github.io/coto/DATOS-JULIO-24/AJUSTESOBRANTEFALTANTE.json';
+import { apis } from './api.js';
+const apiURL = apis.apiAjusteSFActual;
 
 // Datos fijos por mes
 const monthlyData = {
-    'Febrero': 1817,
-    'Marzo': 1862,
     'Abril': 2286,
     'Mayo': 2053,
     'Junio': 1304
@@ -163,6 +162,7 @@ Operativo: ${cantidadOperativo} Ajustes <br>
         loadChart();
     })
     .catch(error => console.error('Error al obtener los datos:', error));
+    
 
 // Función para inicializar o actualizar el gráfico con ApexCharts
 function loadChart() {

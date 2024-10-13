@@ -1,6 +1,7 @@
+import { apis } from './api.js';
 async function obtenerAjustesPorIncidencia() {
     try {
-        const respuesta = await fetch('https://sheetlabs.com/COTO/COTOERROROP');
+        const respuesta = await fetch(apis.apiErroresActual);
         const datos = await respuesta.json();
 
         // Filtramos los ajustes por incidencia Ms

@@ -1,5 +1,6 @@
+import { apis } from './api.js';
 // API URL para movimientos actuales
-const urlMovimientosActualFallo = 'https://cesarcruz-coto.github.io/coto/DATOS-JUNIO-24/FALLOSOBRANTEFALTANTE.json'; // MES ULTIMO
+const urlMovimientosActualFallo = apis.apiFallosActual; // MES ULTIMO
 
 // Variables de datos
 let totalAjustes = 0;
@@ -35,7 +36,6 @@ async function obtenerFalloMovimientos() {
             !(mov.Observacion && mov.Observacion.toLowerCase().includes("deja vuelto")));
         falloFaltantes = movimientos.filter(mov => mov.TAjuste === 'Fallo De Caja - Faltante' && 
             !(mov.Observacion && mov.Observacion.toLowerCase().includes("deja vuelto")));
-
 
     // Contar la cantidad de ajustes y sumar los importes para ambos tipos
     totalAjustes = falloSobrantes.length + falloFaltantes.length;

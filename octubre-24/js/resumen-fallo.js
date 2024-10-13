@@ -1,5 +1,6 @@
+import { apis } from './api.js';
 // API URL para movimientos actuales
-const urlMovimientosActualFallo = 'https://app.sheetlabs.com/COTO/COTOFALLOSF'; // MES ULTIMO
+const urlMovimientosActualFallo = apis.apiFallosActual; // MES ULTIMO
 
 // Variables de datos
 let totalAjustes = 0;

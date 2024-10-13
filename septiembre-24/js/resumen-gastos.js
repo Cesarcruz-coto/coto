@@ -1,6 +1,7 @@
+import { apis } from './api.js';
 async function cargarGastos() {
     try {
-        const response = await fetch('https://cesarcruz-coto.github.io/coto/DATOS-SEPTIEMBRE-24/GASTOSUC.json');
+        const response = await fetch(apis.apiGastosActual);
         const data = await response.json();
         
         mostrarGastosPorSucursal(data, 'todas');

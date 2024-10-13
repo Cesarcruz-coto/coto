@@ -1,6 +1,7 @@
+import { apis } from './api.js';
 async function obtenerErroresOperativos() {
     try {
-        const respuesta = await fetch('https://cesarcruz-coto.github.io/coto/DATOS-SEPTIEMBRE-24/ERROROPERATIVO.json');
+        const respuesta = await fetch(apis.apiErroresActual);
         const datos = await respuesta.json();
 
         const erroresSinResolver = datos.filter(mov => mov.TAjuste === "Error Operativo Sin Resolver");

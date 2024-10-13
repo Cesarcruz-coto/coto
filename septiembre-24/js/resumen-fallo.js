@@ -1,5 +1,6 @@
+import { apis } from './api.js';
 // API URL para movimientos actuales
-const urlMovimientosActualFallo = 'https://cesarcruz-coto.github.io/coto/DATOS-SEPTIEMBRE-24/FALLOSOBRANTEFALTANTE.json'; // MES ULTIMO
+const urlMovimientosActualFallo = apis.apiFallosActual; // MES ULTIMO
 
 // Variables de datos
 let totalAjustes = 0;

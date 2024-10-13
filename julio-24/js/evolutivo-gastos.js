@@ -1,3 +1,5 @@
+import { apis } from './api.js';
+
 async function cargarGastos(url) {
     try {
         const response = await fetch(url);
@@ -37,6 +39,8 @@ function calcularDiferencias(totales) {
 function formatCurrency(value) {
     return `$ ${value.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
+
+
 
 function generarGrafico(totales) {
     const diferencias = calcularDiferencias(totales); // Calcular diferencias porcentuales
@@ -89,6 +93,12 @@ function generarGrafico(totales) {
         },
         grid: {
             show: true,
+            padding: {
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+              },
             borderColor: '#e0e0e0',
             strokeDashArray: 5, // Líneas en puntos
             xaxis: {
@@ -112,7 +122,7 @@ function generarGrafico(totales) {
             },
             axisTicks: {
                 show: false // Eliminar las marcas del eje x
-            }
+            },
         },
         yaxis: {
             title: {
@@ -178,7 +188,7 @@ function generarGrafico(totales) {
 }
 
 async function cargarYMostrarGastos() {
-    const urlMesActual = 'https://cesarcruz-coto.github.io/coto/DATOS-JULIO-24/GASTOSUC.json';
+    const urlMesActual = apis.apiGastosActual;
     const gastosMesActual = await cargarGastos(urlMesActual);
 
     // Datos fijos para los meses de enero a septiembre

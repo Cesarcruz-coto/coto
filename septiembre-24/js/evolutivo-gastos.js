@@ -1,3 +1,5 @@
+import { apis } from './api.js';
+
 async function cargarGastos(url) {
     try {
         const response = await fetch(url);
@@ -26,24 +28,19 @@ function procesarGastos(gastosFiltrados) {
 
 function calcularDiferencias(totales) {
     const diferencias = [];
-
     for (let i = 1; i < totales.length; i++) {
-        if (totales[i - 1] === 0 || totales[i - 1] === undefined) {
-            diferencias.push(null); // o algún valor predeterminado
-        } else {
-            const diferencia = ((totales[i] - totales[i - 1]) / totales[i - 1]) * 100;
-            diferencias.push(diferencia);
-        }
+        const diferencia = ((totales[i] - totales[i - 1]) / totales[i - 1]) * 100;
+        diferencias.push(diferencia);
     }
-
     diferencias.unshift(0); // Agregar un 0% para el primer mes
     return diferencias;
 }
 
-
 function formatCurrency(value) {
     return `$ ${value.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
+
+
 
 function generarGrafico(totales) {
     const diferencias = calcularDiferencias(totales); // Calcular diferencias porcentuales
@@ -56,8 +53,6 @@ function generarGrafico(totales) {
         chart: {
             height: 200,
             
-            margin: 0,
-            padding: 0,
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
@@ -127,7 +122,7 @@ function generarGrafico(totales) {
             },
             axisTicks: {
                 show: false // Eliminar las marcas del eje x
-            }
+            },
         },
         yaxis: {
             title: {
@@ -165,39 +160,35 @@ function generarGrafico(totales) {
 
     // Agregar anotaciones de las diferencias porcentuales y totales
     for (let i = 0; i < diferencias.length; i++) {
-        if (typeof diferencias[i] === 'number' && !isNaN(diferencias[i])) {
-            const textoDiferencia = diferencias[i].toFixed(2) + '%';
-    
-            options.annotations.points.push({
-                x: options.xaxis.categories[i], // Mes correspondiente
-                y: totales[i], // Valor del mes
-                marker: {
-                    size: 8, // Tamaño del marcador
-                    fillColor: '#450091', // Cambiar a cualquier color deseado
-                    strokeColor: '#fff', // Color del borde del marcador
-                    strokeWidth: 4, // Grosor del borde del marcador
-                },
-                label: {
-                    text: `${textoDiferencia}`, // Texto de la diferencia
-                    style: {
-                        color: '#000',
-                        background: '#fff',
-                        border: '1px solid #000',
-                        fontSize: '12px',
-                        whiteSpace: 'nowrap' // Evitar el ajuste de línea
-                    }
+        const textoDiferencia = diferencias[i].toFixed(2) + '%';
+        options.annotations.points.push({
+            x: options.xaxis.categories[i], // Mes correspondiente
+            y: totales[i], // Valor del mes
+            marker: {
+                size: 8, // Tamaño del marcador
+                fillColor: '#450091', // Cambiar a cualquier color deseado
+                strokeColor: '#fff', // Color del borde del marcador
+                strokeWidth: 4, // Grosor del borde del marcador
+            },
+            label: {
+                text: `${textoDiferencia}`, // Texto de la diferencia
+                style: {
+                    color: '#000',
+                    background: '#fff',
+                    border: '1px solid #000',
+                    fontSize: '12px',
+                    whiteSpace: 'nowrap' // Evitar el ajuste de línea
                 }
-            });
-        }
+            }
+        });
     }
-    
 
     var chart = new ApexCharts(document.querySelector("#chartGastos"), options);
     chart.render();
 }
 
 async function cargarYMostrarGastos() {
-    const urlMesActual = 'https://cesarcruz-coto.github.io/coto/DATOS-SEPTIEMBRE-24/GASTOSUC.json';
+    const urlMesActual = apis.apiGastosActual;
     const gastosMesActual = await cargarGastos(urlMesActual);
 
     // Datos fijos para los meses de enero a septiembre

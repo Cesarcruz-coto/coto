@@ -1,6 +1,7 @@
+import { apis } from './api.js';
 async function obtenerTopFallosDeCaja() {
     try {
-        const respuesta = await fetch('https://cesarcruz-coto.github.io/coto/DATOS-AGOSTO-24/FALLOSOBRANTEFALTANTE.json');
+        const respuesta = await fetch(apis.apiFallosActual);
         const datos = await respuesta.json();
 
         //const fallos = datos.filter(mov => mov.TAjuste.includes("Fallo De Caja"));
@@ -130,50 +131,50 @@ async function obtenerTopFallosDeCaja() {
                 .sort(([, a], [, b]) => b.fallosEmpleado - a.fallosEmpleado)
                 .slice(0, 3);
 
-            // Mostrar resumen con botón de observaciones
-            resumenSucursalDiv.innerHTML = `
-                <div class="card-container">
-                    <!-- Card 1: Resumen Sucursal -->
-                    <div class="card">
-                        <h2><i class="fas fa-store"></i> Sucursal ${sucursalSeleccionada}</h2>
-                        <p>Cantidad de Fallos: <b>${resumenData.totalFallos}</b></p>
-                        <p>Importe Total: <b>$${resumenData.totalImporte.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></p>
-                    </div>
-        
-                    <!-- Card 2: Top empleados con más Fallos -->
-                    <div class="card">
-                        <h2><i class="fas fa-user"></i> Top empleados con más Fallos</h2>
-                        
-                            ${top3Empleados.map(([empleado, empData]) => `
-                               <div class="codigo-detalle">
-                                    <div><i class="fa-solid fa-circle-user"></i> ${empleado}</div>
-                                    <div>${empData.fallosEmpleado} fallos - $${empData.totalImporteEmpleado.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                                    <div><a href="#" class="ver-obs" data-sucursal="${sucursalSeleccionada}" data-empleado="${empleado}">Ver Obs.</a></div>
-                                 </div>
-                            `).join('')}
-                       
-                    </div>
-        
-                    <!-- Card 3: Total de errores por código -->
-                    <div class="card">
-                        <h2><i class="fas fa-exclamation-triangle"></i> Total de errores por código</h2>
-                        <div class="codigo-grid">
-                            ${Object.entries(codigos).map(([codigoKey, { cantidad, legajos, importes }]) => `
-                                <div class="codigo-column">
-                                    <div class="codigo-header">${codigoKey} - ${cantidad} errores</div>
-                                    ${legajos.map((legajo, index) => `
-                                        <div class="codigo-detalle">
-                                            <div><i class="fa-solid fa-circle-user"></i> ${legajo}</div>
-                                            <div>$${importes[index].toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                                            <div><a href="#" class="ver-obs" data-sucursal="${sucursalSeleccionada}" data-empleado="${legajo}">Ver Obs.</a></div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                </div>
-            `;
+           // Mostrar resumen con botón de observaciones
+           resumenSucursalDiv.innerHTML = `
+           <div class="card-container">
+               <!-- Card 1: Resumen Sucursal -->
+               <div class="card">
+                   <h2><i class="fas fa-store"></i> Sucursal ${sucursalSeleccionada}</h2>
+                   <p>Cantidad de Fallos: <b>${resumenData.totalFallos}</b></p>
+                   <p>Importe Total: <b>$${resumenData.totalImporte.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></p>
+               </div>
+   
+               <!-- Card 2: Top empleados con más Fallos -->
+               <div class="card">
+                   <h2><i class="fas fa-user"></i> Top empleados con más Fallos</h2>
+                   
+                       ${top3Empleados.map(([empleado, empData]) => `
+                          <div class="codigo-detalle">
+                               <div><i class="fa-solid fa-circle-user"></i> ${empleado}</div>
+                               <div>${empData.fallosEmpleado} fallos - $${empData.totalImporteEmpleado.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                               <div><a href="#" class="ver-obs" data-sucursal="${sucursalSeleccionada}" data-empleado="${empleado}">Ver Obs.</a></div>
+                            </div>
+                       `).join('')}
+                  
+               </div>
+   
+               <!-- Card 3: Total de errores por código -->
+               <div class="card">
+                   <h2><i class="fas fa-exclamation-triangle"></i> Total de errores por código</h2>
+                   <div class="codigo-grid">
+                       ${Object.entries(codigos).map(([codigoKey, { cantidad, legajos, importes }]) => `
+                           <div class="codigo-column">
+                               <div class="codigo-header">${codigoKey} - ${cantidad} errores</div>
+                               ${legajos.map((legajo, index) => `
+                                   <div class="codigo-detalle">
+                                       <div><i class="fa-solid fa-circle-user"></i> ${legajo}</div>
+                                       <div>$${importes[index].toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                                       <div><a href="#" class="ver-obs" data-sucursal="${sucursalSeleccionada}" data-empleado="${legajo}">Ver Obs.</a></div>
+                                   </div>
+                               `).join('')}
+                           </div>
+                       `).join('')}
+                   </div>
+               </div>
+           </div>
+       `;
 
             // Agregar evento de "Ver Observaciones" en empleados del top y en códigos
             const verObsLinks = resumenSucursalDiv.querySelectorAll('.ver-obs');
@@ -231,6 +232,9 @@ async function obtenerTopFallosDeCaja() {
                 });
             });
         };
+
+
+
 
 
         mostrarFallos(sucursalMasFallos); // Mostrar la sucursal con más fallos al cargar

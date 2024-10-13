@@ -1,4 +1,5 @@
-const apiUrl = 'https://sheetlabs.com/COTO/COTOERROROP';
+import { apis } from './api.js';
+const apiUrl = apis.apiErroresActual;
 const itemsPerPage = 20;
 let currentPageCompensados = 1;
 let currentPageNoCompensados = 1;
@@ -39,7 +40,7 @@ function procesarMovimientos(movimientos) {
         // Si el movimiento ya fue compensado, lo ignoramos
         if (movAConciliar.compensado) return;
 
-        const movConciliado = movimientos.find(mov => 
+        const movConciliado = movimientos.find(mov =>
             (mov.TAjuste === 'Error Operativo Resuelto' || mov.TAjuste === 'Error Operativo Caja Resuelto') &&
             !mov.compensado && // Buscar solo los que no han sido compensados
             mov.Suc === movAConciliar.Suc &&
@@ -198,9 +199,9 @@ function showTab(tab) {
 // Función para buscar movimientos no compensados por sucursal
 function buscarNoCompensados() {
     const searchTerm = document.getElementById('searchInputNoCompensados').value.toLowerCase();
-    
+
     // Filtrar movimientos que coincidan con el nombre de la sucursal
-    const filteredMovimientos = movimientosNoCompensados.filter(mov => 
+    const filteredMovimientos = movimientosNoCompensados.filter(mov =>
         mov.Suc && mov.Suc.toLowerCase().includes(searchTerm)
     );
 
@@ -234,6 +235,13 @@ function renderMovimientosFiltrados(movimientosFiltrados) {
         div.innerHTML = '<p>No hay movimientos que coincidan con el término de búsqueda.</p>';
     }
 }
+
+window.showTab = showTab;
+window.prevPage = prevPage;
+window.nextPage = nextPage;
+window.buscarNoCompensados = buscarNoCompensados;
+window.toggleObservacion = toggleObservacion;
+window.exportToExcel = exportToExcel;
 
 // Cargar los datos al inicio
 fetchMovimientos();

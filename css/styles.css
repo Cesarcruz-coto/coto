@@ -388,6 +388,11 @@ body {
     /* Suavizado de fuente para Opera */
 }
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+
 * {
     -moz-osx-font-smoothing: grayscale;
     /* Suavizado de fuente en macOS */

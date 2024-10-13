@@ -1,9 +1,10 @@
+import { apis } from './api.js';
 const codigos = [3]; // Solo nos interesa el código 3
 
 // Función principal para obtener y procesar los fallos
 async function obtenerFallosDeCodigo() {
     try {
-        const respuesta = await fetch('https://app.sheetlabs.com/COTO/COTOFALLOSF');
+        const respuesta = await fetch(apis.apiFallosActual);
         const datos = await respuesta.json();
 
         // Filtrar solo los fallos con código 3

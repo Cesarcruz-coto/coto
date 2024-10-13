@@ -1,3 +1,4 @@
+import { apis } from './api.js';
 // Función para parsear valores monetarios
 function parseCurrency(value) {
     return parseFloat(value.replace('$', '').replace(/\./g, '').replace(',', '.')) || 0;
@@ -112,7 +113,7 @@ function mostrarRankingSucursales(data) {
 
 async function cargarGastos() {
     try {
-        const response = await fetch('https://app.sheetlabs.com/TREE/COTOGASTOSUC');
+        const response = await fetch(apis.apiGastosActual);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
 
@@ -290,13 +291,10 @@ function showTab(tabId) {
     activeButton.classList.add('active');  // Activar el botón del tab seleccionado
 }
 
-// Mostrar el tab de Ranking de Sucursales de forma predeterminada
 document.addEventListener('DOMContentLoaded', function() {
-    // Mostrar el tab de Ranking de Sucursales como predeterminado
     showTab('columna-gastos');
+    cargarGastos();
 });
 
 
-
-// Inicializar el proceso cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', cargarGastos);
+window.showTab = showTab;

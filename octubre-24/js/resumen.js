@@ -1,5 +1,6 @@
+import { apis } from './api.js';
 // API URLs para movimientos actuales, julio, y agosto (movimientos a conciliar)
-const urlMovimientosAConciliarActual = 'https://sheetlabs.com/COTO/MOVACONCOTO'; // MES ULTIMO
+const urlMovimientosAConciliarActual = apis.apiMovimientosActual; // MES ULTIMO
 
 // Variables de datos para cada mes (movimientos a conciliar)
 let pendientesConciliarActual = 0;

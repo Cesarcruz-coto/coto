@@ -1,5 +1,6 @@
+import { apis } from './api.js';
 // API URLs para movimientos actuales, julio, y agosto (movimientos a conciliar)
-const urlMovimientosAConciliarActual = 'https://cesarcruz-coto.github.io/coto/DATOS-AGOSTO-24/MOVACONCILIAR.json'; // MES ULTIMO
+const urlMovimientosAConciliarActual = apis.apiMovimientosActual; // MES ULTIMO
 
 // Variables de datos para cada mes (movimientos a conciliar)
 let pendientesConciliarActual = 0;
@@ -86,7 +87,7 @@ obtenerMovimientosConciliar();
 // ------------------------
 
 // API URLs para errores operativos actuales, julio, y agosto (errores operativos)
-const urlErroresOperativosActual = 'https://cesarcruz-coto.github.io/coto/DATOS-AGOSTO-24/ERROROPERATIVO.json'; // MES ULTIMO
+const urlErroresOperativosActual = 'https://sheetlabs.com/COTO/COTOERROROP'; // MES ULTIMO
 
 // Variables de datos para cada mes (errores operativos)
 let pendientesErroresActual = 0;

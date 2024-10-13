@@ -1,3 +1,5 @@
+import { apis } from './api.js';
+
 async function cargarGastos(url) {
     try {
         const response = await fetch(url);
@@ -37,6 +39,8 @@ function calcularDiferencias(totales) {
 function formatCurrency(value) {
     return `$ ${value.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
+
+
 
 function generarGrafico(totales) {
     const diferencias = calcularDiferencias(totales); // Calcular diferencias porcentuales
@@ -184,7 +188,7 @@ function generarGrafico(totales) {
 }
 
 async function cargarYMostrarGastos() {
-    const urlMesActual = 'https://app.sheetlabs.com/TREE/COTOGASTOSUC';
+    const urlMesActual = apis.apiGastosActual;
     const gastosMesActual = await cargarGastos(urlMesActual);
 
     // Datos fijos para los meses de enero a septiembre

@@ -85,13 +85,13 @@
 
             <section id="info">
                 <div class="info-item">
+
                     <div class="container-chart">
                         <div class="comparison">Evolutivo</div>
                         <h2>Gastos</h2>
-                      
                         <div id="chartGastos"></div>
-               
                     </div>
+                    
                 </div>
             </section>
 
@@ -106,7 +106,7 @@
                                 <option value="todas">Todas las sucursales</option>
                             </select>
                         </div>
-<br>
+                        <br>
                         <h2>Resumen por Sucursal: <span id="nombre-sucursal">Todas</span></h2>
                         <div id="total-sucursal"></div>
                         <div id="porcentaje-gastos"></div>
@@ -116,25 +116,26 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="info-item">
                     <div class="tabs">
-                        <button class="tab-button" onclick="showTab('ranking-sucursales')">Ranking de Sucursales</button>
+                        <button class="tab-button" onclick="showTab('ranking-sucursales')">Ranking de
+                            Sucursales</button>
                         <button class="tab-button" onclick="showTab('columna-gastos')">Desglose de Gastos</button>
                     </div>
-                    
+
                     <div id="ranking-sucursales" class="tab-content">
-                   
+
                         <div id="ranking-list"></div>
                     </div>
-                    
+
                     <div id="columna-gastos" class="tab-content">
-                     
+
                         <div id="top-gastos" class="gastos-list">
                             <!-- Aquí se cargarán los gastos -->
                         </div>
                         <button id="mostrar-mas-i">Mostrar más</button>
-                    </div>                    
+                    </div>
 
                 </div>
             </section>
@@ -142,9 +143,9 @@
         </div>
     </div>
 
-    <script src="js/top-axi.js" async></script>
-    <script src="js/gastos.js" async></script>
-    <script src="js/evolutivo-gastos.js" async></script>
+    <script src="js/top-axi.js" type="module" async></script>
+    <script src="js/gastos.js" type="module" async></script>
+    <script src="js/evolutivo-gastos.js" type="module" async></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.0/dist/xlsx.full.min.js"></script>

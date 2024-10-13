@@ -1,11 +1,12 @@
-// URLs de las APIs
-const apiErroresActual = 'https://cesarcruz-coto.github.io/coto/DATOS-SEPTIEMBRE-24/ERROROPERATIVO.json';
-const apiErroresJulio = 'https://cesarcruz-coto.github.io/coto/DATOS-JULIO-24/ERROROPERATIVO.json';
-const apiErroresAgosto = 'https://cesarcruz-coto.github.io/coto/DATOS-AGOSTO-24/ERROROPERATIVO.json';
+import { apis } from './api.js';
+const apiErroresActual = apis.apiErroresActual;
+const apiErroresJulio = apis.apiErroresJulio;
+const apiErroresAgosto = apis.apiErroresAgosto;
 
-const apiMovimientosActual = 'https://cesarcruz-coto.github.io/coto/DATOS-SEPTIEMBRE-24/MOVACONCILIAR.json';
-const apiMovimientosJulio = 'https://cesarcruz-coto.github.io/coto/DATOS-JULIO-24/MOVACONCILIAR.json';
-const apiMovimientosAgosto = 'https://cesarcruz-coto.github.io/coto/DATOS-AGOSTO-24/MOVACONCILIAR.json';
+const apiMovimientosActual = apis.apiMovimientosActual;
+const apiMovimientosJulio = apis.apiMovimientosJulio;
+const apiMovimientosAgosto = apis.apiMovimientosAgosto;
+
 
 // Obtener los datos de las APIs
 const obtenerDatos = async () => {

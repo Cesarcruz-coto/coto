@@ -1,11 +1,12 @@
-// URLs de las APIs
-const apiErroresActual = 'https://cesarcruz-coto.github.io/coto/DATOS-JUNIO-24/ERROROPERATIVO.json';
-const apiErroresJulio = 'https://cesarcruz-coto.github.io/coto/DATOS-JUNIO-24/ERROROPERATIVO.json';
-const apiErroresAgosto = 'https://cesarcruz-coto.github.io/coto/DATOS-JUNIO-24/ERROROPERATIVO.json';
+import { apis } from './api.js';
+const apiErroresActual = apis.apiErroresActual;
+const apiErroresJulio = apis.apiErroresJulio;
+const apiErroresAgosto = apis.apiErroresAgosto;
 
-const apiMovimientosActual = 'https://cesarcruz-coto.github.io/coto/DATOS-JUNIO-24/MOVACONCILIAR.json';
-const apiMovimientosJulio = 'https://cesarcruz-coto.github.io/coto/DATOS-JUNIO-24/MOVACONCILIAR.json';
-const apiMovimientosAgosto = 'https://cesarcruz-coto.github.io/coto/DATOS-JUNIO-24/MOVACONCILIAR.json';
+const apiMovimientosActual = apis.apiMovimientosActual;
+const apiMovimientosJulio = apis.apiMovimientosJulio;
+const apiMovimientosAgosto = apis.apiMovimientosAgosto;
+
 
 // Obtener los datos de las APIs
 const obtenerDatos = async () => {
@@ -89,16 +90,16 @@ const obtenerDatos = async () => {
             <span style="color: ${sumaImportesMovimientosConciliadosActual > 0 ? '#D50000' : '#2E7D32'};">$ ${sumaImportesMovimientosConciliadosActual.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         `;
 
-       // Calcular y mostrar la comparación en porcentaje
-       const diferenciaErrores = cantidadErroresActual - cantidadErroresAgosto;
-       const porcentajeCambioErrores = ((diferenciaErrores / cantidadErroresAgosto) * 100).toFixed(2);
-       const signoErrores = diferenciaErrores > 0 ? "+" : "";
-       document.getElementById('comparison').innerText = `${signoErrores} ${porcentajeCambioErrores}%`;
+        // Calcular y mostrar la comparación en porcentaje
+        const diferenciaErrores = cantidadErroresActual - cantidadErroresAgosto;
+        const porcentajeCambioErrores = ((diferenciaErrores / cantidadErroresAgosto) * 100).toFixed(2);
+        const signoErrores = diferenciaErrores > 0 ? "+" : "";
+        document.getElementById('comparison').innerText = `${signoErrores} ${porcentajeCambioErrores}%`;
 
-       const diferenciaMovimientos = cantidadMovimientosActual - cantidadMovimientosAgosto;
-       const porcentajeCambioMovimientos = ((diferenciaMovimientos / cantidadMovimientosAgosto) * 100).toFixed(2);
-       const signoMovimientos = diferenciaMovimientos > 0 ? "+" : "";
-       document.getElementById('comparison-movimientos').innerText = `${signoMovimientos} ${porcentajeCambioMovimientos}%`;
+        const diferenciaMovimientos = cantidadMovimientosActual - cantidadMovimientosAgosto;
+        const porcentajeCambioMovimientos = ((diferenciaMovimientos / cantidadMovimientosAgosto) * 100).toFixed(2);
+        const signoMovimientos = diferenciaMovimientos > 0 ? "+" : "";
+        document.getElementById('comparison-movimientos').innerText = `${signoMovimientos} ${porcentajeCambioMovimientos}%`;
 
         // Mostrar gráficos con ApexCharts
         const errorChartOptions = {
@@ -117,7 +118,7 @@ const obtenerDatos = async () => {
                 animations: {
                     enabled: true,     // Asegúrate de que esté en true
                     easing: 'easeinout',  // Cambia a 'easeinout' para una transición más suave
-                    speed: 5000,       // Incrementa el tiempo de animación si es necesario
+                    speed: 3000,       // Incrementa el tiempo de animación si es necesario
                     animateGradually: {
                         enabled: true,
                         delay: 150      // Retardo entre la aparición de cada punto
@@ -128,7 +129,7 @@ const obtenerDatos = async () => {
                 },   
             },
             xaxis: {
-                categories: ['Junio', 'Junio', 'Junio'],
+                categories: ['Jun', 'Jun', 'Jun'],
                 labels: {
                     show: false // Ocultar etiquetas del eje x
                 },
@@ -173,8 +174,8 @@ const obtenerDatos = async () => {
                 type: 'gradient',
             gradient: {
                 shadeIntensity: 1,
-                opacityFrom: 0.6,
-                opacityTo: 0.9,
+                opacityFrom: 0.8,
+                opacityTo: 0.6,
                 stops: [0, 90, 100]
             }
             },
@@ -186,6 +187,7 @@ const obtenerDatos = async () => {
                 show: false // Ocultar menú de descarga
             }
         };
+        
 
         const movimientoChartOptions = {
             series: [{
@@ -203,7 +205,7 @@ const obtenerDatos = async () => {
                 animations: {
                     enabled: true,     // Asegúrate de que esté en true
                     easing: 'easeinout',  // Cambia a 'easeinout' para una transición más suave
-                    speed: 5000,       // Incrementa el tiempo de animación si es necesario
+                    speed: 3000,       // Incrementa el tiempo de animación si es necesario
                     animateGradually: {
                         enabled: true,
                         delay: 150      // Retardo entre la aparición de cada punto
@@ -214,7 +216,7 @@ const obtenerDatos = async () => {
                 },   
             },
             xaxis: {
-                categories: ['Junio', 'Junio', 'Junio'],
+                categories: ['Jun', 'Jun', 'Jun'],
                 labels: {
                     show: false // Ocultar etiquetas del eje x
                 },
@@ -259,14 +261,20 @@ const obtenerDatos = async () => {
                 type: 'gradient',
                 gradient: {
                 shadeIntensity: 1,
-                opacityFrom: 0.5,
-                opacityTo: 0.9,
+                opacityFrom: 0.8,
+                opacityTo: 0.6,
                 stops: [0, 90, 100]
             }
             },
             colors: ['#3333ff'],
             grid: {
-                show: false // Ocultar líneas de la cuadrícula
+                show: false, // Ocultar líneas de la cuadrícula
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                  },
             },
             toolbar: {
                 show: false // Ocultar menú de descarga

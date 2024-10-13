@@ -85,7 +85,6 @@
       </section>
       <section id="info">
         <div class="info-item">
-
           <div class="summary">
             <p><strong>Movimientos A Conciliar:</strong> <span id="totalAConciliar">0</span></p>
             <p><strong>Compensados:</strong> <span id="totalCompensados">0</span></p>
@@ -103,7 +102,6 @@
 
           <!-- Contenido de las pestañas -->
           <div class="tab-content active" id="compensados-tab">
-
             <div class="container-eo">
               <div class="movimientos-eo" id="compensados"></div>
             </div>
@@ -114,9 +112,11 @@
           </div>
 
           <div class="tab-content" id="noCompensados-tab">
+
             <div>
-              <input type="text" id="searchInputNoCompensados" placeholder="Buscar por SUC. movimientos no compensados" oninput="buscarNoCompensados()">
-          </div>
+    <input type="text" id="searchInputNoCompensados" placeholder="Buscar por SUC. movimientos no compensados" oninput="buscarNoCompensados()">
+</div>
+
             <div class="container-eo">
               <div class="movimientos-eo" id="noCompensados"></div>
             </div>
@@ -129,8 +129,8 @@
     </div>
   </div>
 
-  <script src="js/mov.js" async></script>
-  <script src="js/top-axi.js" async></script>
+  <script src="js/mov.js" type="module" async></script>
+  <script src="js/top-axi.js" type="module" async></script>
   <script src="js/scripts.js"></script>
   
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.0/dist/xlsx.full.min.js"></script>

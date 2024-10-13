@@ -1,6 +1,7 @@
+import { apis } from './api.js';
 async function obtenerTopFallosDeCaja() {
     try {
-        const respuesta = await fetch('https://app.sheetlabs.com/COTO/COTOFALLOSF');
+        const respuesta = await fetch(apis.apiFallosActual);
         const datos = await respuesta.json();
 
         //const fallos = datos.filter(mov => mov.TAjuste.includes("Fallo De Caja"));

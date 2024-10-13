@@ -1,4 +1,5 @@
-const apiUrl = 'https://cesarcruz-coto.github.io/coto/DATOS-AGOSTO-24/MOVACONCILIAR.json';
+import { apis } from './api.js';
+const apiUrl = apis.apiMovimientosActual;
 const itemsPerPage = 20;
 let currentPageCompensados = 1;
 let currentPageNoCompensados = 1;
@@ -194,7 +195,6 @@ function showTab(tab) {
     document.getElementById('tab-' + tab).classList.add('active');
     document.getElementById(tab + '-tab').classList.add('active');
 }
-
 // Función para buscar movimientos no compensados por sucursal
 function buscarNoCompensados() {
     const searchTerm = document.getElementById('searchInputNoCompensados').value.toLowerCase();
@@ -235,6 +235,12 @@ function renderMovimientosFiltrados(movimientosFiltrados) {
     }
 }
 
+window.showTab = showTab;
+    window.prevPage = prevPage;
+    window.nextPage = nextPage;
+    window.buscarNoCompensados = buscarNoCompensados;
+    window.toggleObservacion = toggleObservacion;
+    window.exportToExcel = exportToExcel;
 
 // Cargar los datos al inicio
 fetchMovimientos();

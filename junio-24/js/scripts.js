@@ -103,7 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
 function toggleMenu() {
     const hamburger = document.querySelector('.hamburger');
     const sidebar = document.querySelector('.sidebar');
@@ -111,5 +110,3 @@ function toggleMenu() {
     hamburger.classList.toggle('active');
     sidebar.classList.toggle('active');
 }
-
-

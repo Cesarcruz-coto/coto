@@ -1,5 +1,6 @@
 // URL de la API
-const apiURL = 'https://sheetlabs.com/COTO/AJUSTESOBRANTEFALTANTE';
+import { apis } from './api.js';
+const apiURL = apis.apiAjusteSFActual;
 
 // Datos fijos por mes
 const monthlyData = {

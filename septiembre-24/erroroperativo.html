@@ -128,8 +128,8 @@
     </div>
   </div>
 
-  <script src="js/mov-error.js" async></script>
-  <script src="js/top-axi.js" async></script>
+  <script src="js/mov-error.js" type="module" async></script>
+  <script src="js/top-axi.js" type="module" async></script>
   <script src="js/scripts.js"></script>
   
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.0/dist/xlsx.full.min.js"></script>
@@ -176,10 +176,25 @@
                 alert("No se encontraron datos para este usuario.");
             }
         } else {
-            // Si no hay usuario autenticado, redirigir al login
-            window.location.href = '../index.html';
-        }
-    });
+                // Si no hay usuario autenticado, redirigir al login
+                window.location.href = '../index.html';
+            }
+        });
+
+        // Cerrar sesión
+        // Referencia al enlace de cerrar sesión
+        const logoutLink = document.getElementById("logout");
+
+        // Añadir evento click al enlace de cerrar sesión
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            signOut(auth).then(() => {
+                // Redirigir al login después de cerrar sesión
+                window.location.href = '../index.html';
+            }).catch((error) => {
+                console.error("Error al cerrar sesión:", error);
+            });
+        });
 </script>
 
 

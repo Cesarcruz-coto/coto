@@ -1,6 +1,7 @@
+import { apis } from './api.js';
 async function obtenerTopFallosDeCaja() {
     try {
-        const respuesta = await fetch('https://cesarcruz-coto.github.io/coto/DATOS-JULIO-24/FALLOSOBRANTEFALTANTE.json');
+        const respuesta = await fetch(apis.apiFallosActual);
         const datos = await respuesta.json();
 
         //const fallosFaltante = datos.filter(mov => mov.TAjuste === "Fallo De Caja - Faltante");
