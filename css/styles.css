@@ -2515,7 +2515,6 @@ ul#resumen-list li {
     border-radius: 5px;
     align-items: center;
     transition: 1s;
-    width: 100%;
 }
 
 .gasto-header span {
@@ -2780,7 +2779,7 @@ ul#resumen-list li {
     clear: both; /* Asegura que no haya superposiciones */
 }
 
-.tab-content.active {
+.tab-content.active-xd {
     display: block; /* Mostrar solo el contenido del tab activo */
 }
 

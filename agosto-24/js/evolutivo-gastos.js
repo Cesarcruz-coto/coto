@@ -21,7 +21,7 @@ function procesarGastos(gastosFiltrados) {
         }
         return total;
     }, 0);
-    
+
     return totalGastosSucursal;
 }
 
@@ -52,7 +52,7 @@ function generarGrafico(totales) {
         }],
         chart: {
             height: 200,
-            
+
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
@@ -67,7 +67,7 @@ function generarGrafico(totales) {
                 dynamicAnimation: {
                     speed: 1000    // Duración de la animación dinámica (cuando cambia el gráfico)
                 }
-            },            
+            },
         },
         fill: {
             type: 'gradient',
@@ -98,7 +98,7 @@ function generarGrafico(totales) {
                 right: 0,
                 top: 0,
                 bottom: 0,
-              },
+            },
             borderColor: '#e0e0e0',
             strokeDashArray: 5, // Líneas en puntos
             xaxis: {
@@ -186,6 +186,7 @@ function generarGrafico(totales) {
     var chart = new ApexCharts(document.querySelector("#chartGastos"), options);
     chart.render();
 }
+
 
 async function cargarYMostrarGastos() {
     const urlMesActual = apis.apiGastosActual;

@@ -285,13 +285,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Exponer la función showTab al ámbito global
 window.showTab = showTab;
-
-const response = await fetch(apis.apiGastosActual);
-if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-}
-
-const data = await response.json();
-if (!data || data.length === 0) {
-    throw new Error("No data returned from API");
-}
