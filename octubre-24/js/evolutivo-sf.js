@@ -16,7 +16,7 @@ const monthlyData = {
 };
 
 // Lista de sucursales de no venta
-const sucursalesNoVenta = [50, 231, 193, 79, 507];
+const sucursalesNoVenta = [50, 79, 93, 193, 229, 231, 507];
 
 // Variables globales para los datos
 let cmovimientos = [];
