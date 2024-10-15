@@ -59,9 +59,9 @@ function analizarMovimientosConciliar(movimientos, mes) {
     }
 }
 
-// Función para convertir el string del importe a número (movimientos a conciliar)
+// Función para convertir el string del importe a número
 function convertirMontoConciliar(importe) {
-    return parseFloat(importe.replace(/[^0-9.-]+/g, ''));
+    return parseFloat(importe.replace(/[^0-9,-]+/g, "").replace(',', '.'));
 }
 
 // Función para actualizar el resumen de movimientos (movimientos a conciliar)
@@ -87,7 +87,7 @@ obtenerMovimientosConciliar();
 // ------------------------
 
 // API URLs para errores operativos actuales, julio, y agosto (errores operativos)
-const urlErroresOperativosActual = 'https://sheetlabs.com/COTO/COTOERROROP'; // MES ULTIMO
+const urlErroresOperativosActual = apis.apiErroresActual; // MES ULTIMO
 
 // Variables de datos para cada mes (errores operativos)
 let pendientesErroresActual = 0;
@@ -146,9 +146,9 @@ function analizarMovimientosErrores(movimientos, mes) {
     }
 }
 
-// Función para convertir el string del importe a número (errores operativos)
+// Función para convertir el string del importe a número
 function convertirMontoErrores(importe) {
-    return parseFloat(importe.replace(/[^0-9.-]+/g, ''));
+    return parseFloat(importe.replace(/[^0-9,-]+/g, "").replace(',', '.'));
 }
 
 // Función para actualizar el resumen de movimientos (errores operativos)

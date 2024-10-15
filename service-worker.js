@@ -1,5 +1,5 @@
 // Cacheando archivos estáticos
-const CACHE_NAME = 'coto-pwa-cache-v200';
+const CACHE_NAME = 'coto-pwa-cache-v3000';
 const urlsToCache = [
   '/',
   '/index.html',

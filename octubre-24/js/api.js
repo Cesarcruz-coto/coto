@@ -10,5 +10,5 @@ const apis = {
     apiFallosActual: 'https://app.sheetlabs.com/COTO/COTOFALLOSF'
 };
 
-// Exportar el objeto completo
+// Exportar el objeto completo, Solo cambiar las url por las nuevas.
 export { apis };
