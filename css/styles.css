@@ -2154,7 +2154,7 @@ a.ver-obs {
     margin: 5px;
     background-color: #fff;
     text-align: center;
-    padding: 10px 20px;
+    padding: 15px 30px;
     /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
     border-radius: 5px;
 }
@@ -2468,7 +2468,7 @@ ul#resumen-list li {
     align-items: center;
     transition: 1s;
     font-size: 0.9em;
-    height: 40px;
+    height: 50px;
 }
 
 .gasto-item:hover, ul#resumen-list li:hover {
@@ -2748,6 +2748,8 @@ ul#resumen-list li {
 /* Estilo básico para las tabs */
 .tabs {
     display: flex; /* Alinear los botones de las tabs horizontalmente */
+    padding: 0;
+    margin: 0;
 }
 
 .tab-button {
@@ -2779,7 +2781,7 @@ ul#resumen-list li {
     clear: both; /* Asegura que no haya superposiciones */
 }
 
-.tab-content.active-xd {
+.tab-content.active {
     display: block; /* Mostrar solo el contenido del tab activo */
 }
 

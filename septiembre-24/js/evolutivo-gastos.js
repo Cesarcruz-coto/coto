@@ -51,7 +51,7 @@ function generarGrafico(totales) {
             data: totales // Valores de los meses
         }],
         chart: {
-            height: 200,
+            height: 220,
             
             type: 'area',
             zoom: { enabled: false },

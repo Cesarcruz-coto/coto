@@ -117,15 +117,105 @@ const cargarGastos = async () => {
             const sucursalSeleccionada = sucursalSelect.value;
             mostrarGastosPorSucursal(data, sucursalSeleccionada);
         });
-
+        actualizarTotales(data);
+        actualizarPromedioGastos(data);
+        actualizarPorcentajeCrecimiento(data);
         mostrarGastosPorSucursal(data, 'todas');
-
-        // Mostrar el ranking de sucursales
         mostrarRankingSucursales(data);
+        obtenerSucursalMayorGasto(data);
     } catch (error) {
         console.error("Error al cargar los gastos:", error);
         // Opcional: Mostrar mensaje de error en la UI
     }
+};
+
+const obtenerSucursalMayorGasto = (data) => {
+    // Calcular el total de gastos por sucursal
+    const totalGastosPorSucursal = {};
+
+    data.forEach(({ SUCGCIA: sucursal, Total: totalStr }) => {
+        const total = parseCurrency(totalStr);
+        totalGastosPorSucursal[sucursal] = (totalGastosPorSucursal[sucursal] || 0) + total;
+    });
+
+    // Encontrar la sucursal con el mayor gasto
+    const sucursalMayorGasto = Object.entries(totalGastosPorSucursal)
+        .reduce((max, current) => current[1] > max[1] ? current : max, ['', 0]);
+
+    const [sucursal, totalGasto] = sucursalMayorGasto;
+
+    // Actualizar el div con el nombre de la sucursal y el importe del gasto
+    document.getElementById('sucursal-mayor-gasto').textContent = `${sucursal}`;
+    document.getElementById('importe-mayor-gasto').innerHTML = `
+        <span style="color: ${totalGasto < 0 ? '#2E7D32' : '#D50000'};">
+            <i class="fa-solid ${totalGasto < 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down'}"></i>
+            <b>$ ${totalGasto.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b>
+        </span>
+    `;
+};
+
+
+const actualizarTotales = (data) => {
+    // Calcular el total de la cantidad de gastos y el importe total de gastos
+    const totalGastos = data.reduce((total, gasto) => total + parseCurrency(gasto.Total), 0);
+    const cantidadGastos = data.length;
+
+    // Actualizar los divs con los valores calculados
+    document.getElementById('total-gastos').textContent = cantidadGastos;
+    // Para total-gasto-importe
+document.getElementById('total-gasto-importe').innerHTML = `<span style="color: ${totalGastos < 0 ? '#2E7D32' : '#D50000'};">
+  <i class="fa-solid ${totalGastos < 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down'}"></i>
+  $ ${totalGastos.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+</span>
+`;
+
+};
+
+const actualizarPorcentajeCrecimiento = (data) => {
+    // Dato fijo: importe del mes anterior
+    const gastoMesAnterior = 125479561.97;
+
+    // Calcular el total de gastos del mes actual
+    const totalGastos = data.reduce((acc, { Total }) => acc + parseCurrency(Total), 0);
+
+    // Calcular el porcentaje de crecimiento respecto al mes anterior
+    const porcentajeCrecimiento = ((totalGastos - gastoMesAnterior) / gastoMesAnterior) * 100;
+
+    // Actualizar el div con el porcentaje de crecimiento
+    // Para porcentajeee-gastos
+const porcentajeGastosElement = document.getElementById('porcentajeee-gastos');
+
+// Establece el contenido y el color según el valor
+porcentajeGastosElement.textContent = porcentajeCrecimiento.toFixed(2) + '%';
+porcentajeGastosElement.style.color = porcentajeCrecimiento < 0 ? '#2E7D32' : '#D50000';
+
+};
+
+const actualizarPromedioGastos = (data) => {
+    // Calcular el total de gastos y la cantidad de sucursales
+    const totalGastosPorSucursal = {};
+    
+    data.forEach(({ SUCGCIA: sucursal, Total: totalStr }) => {
+        const total = parseCurrency(totalStr);
+        totalGastosPorSucursal[sucursal] = (totalGastosPorSucursal[sucursal] || 0) + total;
+    });
+
+    const totalSucursales = Object.keys(totalGastosPorSucursal).length;
+    const totalGastos = Object.values(totalGastosPorSucursal).reduce((acc, val) => acc + val, 0);
+
+    // Calcular el promedio de gastos por sucursal
+    const promedioGastos = totalSucursales > 0 ? (totalGastos / totalSucursales) : 0;
+
+    // Actualizar los divs con el promedio
+    document.getElementById('promedio-gastos').textContent = totalSucursales;
+    // Para promedio-gasto-importe
+// Para promedio-gasto-importe
+document.getElementById('promedio-gasto-importe').innerHTML = `<span style="color: ${promedioGastos < 0 ? '#2E7D32' : '#D50000'};">
+    <i class="fa-solid ${promedioGastos < 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down'}"></i>
+    $ ${promedioGastos.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+  </span>
+`;
+
 };
 
 const mostrarGastosPorSucursal = (data, sucursalSeleccionada) => {
@@ -285,13 +375,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Exponer la función showTab al ámbito global
 window.showTab = showTab;
-
-const response = await fetch(apis.apiGastosActual);
-if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-}
-
-const data = await response.json();
-if (!data || data.length === 0) {
-    throw new Error("No data returned from API");
-}
