@@ -158,7 +158,7 @@ document.getElementById('total-gasto-importe').innerHTML = `<span style="color: 
 
 const actualizarPorcentajeCrecimiento = (data) => {
     // Dato fijo: importe del mes anterior
-    const gastoMesAnterior = 125479561.97;
+    const gastoMesAnterior = 148319559.43;
 
     // Calcular el total de gastos del mes actual
     const totalGastos = data.reduce((acc, { Total }) => acc + parseCurrency(Total), 0);

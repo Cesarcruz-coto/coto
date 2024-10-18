@@ -2459,10 +2459,12 @@ button.toggle-detail {
     background-color: rgb(0 0 0 / 0%);
     color: #888888;
     transition: 1s;
+    cursor: pointer;
 }
 
 button.toggle-detail:hover {
-    color:rgb(0, 0, 0)
+    color:rgb(0, 0, 0);
+    font-weight: bold;
 }
 
 .gastos-list {
