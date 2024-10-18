@@ -23,21 +23,6 @@ const crearOpcionesSelect = (sucursales, selectElement) => {
     selectElement.appendChild(fragment);
 };
 
-// Función para crear un elemento de lista de resumen
-const crearResumenItem = (descr, total, porcentaje, iconMap) => {
-    const li = document.createElement('li');
-    li.className = 'gasto-resumen-item';
-
-    const icon = iconMap[descr] ? `<i class="fas ${iconMap[descr]}"></i>` : '';
-
-    li.innerHTML = `
-        <span class="gasto-descripcion">${icon} ${descr}</span>
-        <span class="gasto-total">$ ${total.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-        <span class="gasto-porcentaje">${porcentaje}%</span>
-    `;
-    return li;
-};
-
 // Función para mostrar el ranking de sucursales
 const mostrarRankingSucursales = (data) => {
     const rankingList = document.getElementById('ranking-list');
@@ -247,54 +232,130 @@ const mostrarGastosPorSucursal = (data, sucursalSeleccionada) => {
 
     totalSucursalDiv.textContent = `Total gastos de la sucursal: $ ${totalGastosSucursal.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-    // Calcular resumenPorDescripcion
-    const resumenPorDescripcion = gastosFiltrados.reduce((acc, { Descr: descr, Total: totalStr }) => {
-        const total = parseCurrency(totalStr);
-        acc[descr] = (acc[descr] || 0) + total;
+// Calcular resumenPorDescripcion
+const resumenPorDescripcion = gastosFiltrados.reduce((acc, { Descr: descr, Total: totalStr, SUCGCIA: Sucursal }) => {
+    const total = parseCurrency(totalStr);
+    acc[descr] = acc[descr] || { total: 0, detalles: [] }; // Almacena total y detalles
+    acc[descr].total += total;
+
+    // Agregar detalles por sucursal
+    acc[descr].detalles.push({ sucursal: Sucursal, monto: total }); // Asegúrate de que `Sucursal` es el nombre correcto
+
+    return acc;
+}, {});
+
+// Convertir resumenPorDescripcion en un array de [descripcion, { total, detalles }] y ordenarlo
+const resumenArray = Object.entries(resumenPorDescripcion).sort((a, b) => b[1].total - a[1].total);
+
+// Mapa de descripciones a iconos de Font Awesome
+const iconMap = {
+    "Gtos. Manten. Ordinario": "fa-tools",
+    "Gtos. Varios Administración": "fa-briefcase",
+    "Viáticos Extraordinarios": "fa-plane",
+    "Viaticos y Movilidad": "fa-car",
+    "Gtos. Adicionales Serv. Medic": "fa-heartbeat",
+    "Mantenimiento de Rodados": "fa-truck-pickup",
+    "Combustibles y Lubricantes": "fa-gas-pump",
+    "Gtos. Peaje y Estacionamiento": "fa-parking",
+    "Otros Serv. Contratados": "fa-handshake",
+    "Gtos. Manteni. Extraordinarios": "fa-exclamation-circle",
+    "Serv. y Atencion Medica": "fa-user-md",
+    "Fletes y Acarreos": "fa-truck",
+    "Servicio de Vigilancia": "fa-shield-alt",
+    "Fletes de Envio-Suc. y Domicil": "fa-shipping-fast",
+    "Tasa por Seguridad e Higiene": "fa-lock",
+    "Ropa y Elementos de Trabajo": "fa-tshirt",
+    "Alq. Pagados": "fa-file-invoice",
+    "Gtos. de Comedor": "fa-utensils",
+    "Consumos Varios": "fa-ellipsis-h",
+    "Consumos Insumos Elaboración": "fa-industry",
+    "Otros Gtos. de Personal": "fa-users",
+    "Gtos. de Capacitacion": "fa-chalkboard-teacher",
+    "Multas e Infracciones en Sucur": "fa-gavel",
+    "Gtos. Analisis Bacteriológico": "fa-flask",
+    "Gtos. de Repuestos": "fa-cogs",
+    "Papeleria y Utiles de Oficina": "fa-pencil-alt"
+};
+
+// Crear fragmento para el resumen ordenado
+const resumenFragment = document.createDocumentFragment();
+resumenArray.forEach(([descr, { total, detalles }]) => {
+    const porcentajeGasto = ((total / totalGastosSucursal) * 100).toFixed(2);
+    const li = crearResumenItem(descr, total, porcentajeGasto, iconMap, detalles);
+    resumenFragment.appendChild(li);
+});
+resumenList.appendChild(resumenFragment);
+
+// Función para crear un elemento de resumen
+function crearResumenItem(descr, total, porcentajeGasto, iconMap, detalles) {
+    const li = document.createElement('li');
+    li.className = 'gasto-resumen-item';
+    const icon = iconMap[descr] ? `<i class="fa ${iconMap[descr]}"></i>` : '';
+
+    li.innerHTML = `
+    <div class="divfg">
+        <span class="gasto-descripcion">${icon} ${descr}</span>
+        <span class="gasto-total">$ ${total.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+        <span class="gasto-porcentaje">${porcentajeGasto}%</span>
+        <span class="gasto-porcentaje"><button class="toggle-detail"><i class="fa-solid fa-eye-low-vision"></i> Ver</button></span>
+        </div>
+        <div class="sucursal-detail" style="display:none;"></div>
+    `;
+
+    // Evento de clic para mostrar/ocultar detalles de sucursales
+    li.querySelector('.toggle-detail').addEventListener('click', () => {
+        const detailDiv = li.querySelector('.sucursal-detail');
+        if (detailDiv.style.display === 'none') {
+            mostrarDetallesSucursales(detalles, detailDiv); // Llenar detalles
+            detailDiv.style.display = 'block'; // Mostrar el div
+        } else {
+            detailDiv.style.display = 'none'; // Ocultar el div
+        }
+    });
+
+    return li; // Retornar el elemento li completo
+}
+
+// Función para mostrar detalles de las sucursales
+function mostrarDetallesSucursales(detalles, detailDiv) {
+    // Limpiar el div antes de agregar nuevos detalles
+    detailDiv.innerHTML = '';
+
+    // Crear un objeto para agrupar los gastos por sucursal
+    const sucursalResumen = detalles.reduce((acc, { sucursal, monto }) => {
+        acc[sucursal] = acc[sucursal] || { count: 0, total: 0 }; // Inicializa si no existe
+        acc[sucursal].count += 1; // Incrementa el contador de gastos
+        acc[sucursal].total += monto; // Acumula el monto total
         return acc;
     }, {});
 
-    // Convertir resumenPorDescripcion en un array de [descripcion, total] y ordenarlo
-    const resumenArray = Object.entries(resumenPorDescripcion).sort((a, b) => b[1] - a[1]);
+    // Convertir el resumen a un array y ordenar por sucursal
+    // Convertir el resumen a un array y ordenar por sucursal numéricamente
+const sucursalArray = Object.entries(sucursalResumen).sort((a, b) => parseInt(a[0]) - parseInt(b[0]));
 
-    // Mapa de descripciones a iconos de Font Awesome
-    const iconMap = {
-        "Gtos. Manten. Ordinario": "fa-tools",
-        "Gtos. Varios Administración": "fa-briefcase",
-        "Viáticos Extraordinarios": "fa-plane",
-        "Viaticos y Movilidad": "fa-car",
-        "Gtos. Adicionales Serv. Medic": "fa-heartbeat",
-        "Mantenimiento de Rodados": "fa-truck-pickup",
-        "Combustibles y Lubricantes": "fa-gas-pump",
-        "Gtos. Peaje y Estacionamiento": "fa-parking",
-        "Otros Serv. Contratados": "fa-handshake",
-        "Gtos. Manteni. Extraordinarios": "fa-exclamation-circle",
-        "Serv. y Atencion Medica": "fa-user-md",
-        "Fletes y Acarreos": "fa-truck",
-        "Servicio de Vigilancia": "fa-shield-alt",
-        "Fletes de Envio-Suc. y Domicil": "fa-shipping-fast",
-        "Tasa por Seguridad e Higiene": "fa-lock",
-        "Ropa y Elementos de Trabajo": "fa-tshirt",
-        "Alq. Pagados": "fa-file-invoice",
-        "Gtos. de Comedor": "fa-utensils",
-        "Consumos Varios": "fa-ellipsis-h",
-        "Consumos Insumos Elaboración": "fa-industry",
-        "Otros Gtos. de Personal": "fa-users",
-        "Gtos. de Capacitacion": "fa-chalkboard-teacher",
-        "Multas e Infracciones en Sucur": "fa-gavel",
-        "Gtos. Analisis Bacteriológico": "fa-flask",
-        "Gtos. de Repuestos": "fa-cogs",
-        "Papeleria y Utiles de Oficina": "fa-pencil-alt"
-    };
 
-    // Crear fragmento para el resumen ordenado
-    const resumenFragment = document.createDocumentFragment();
-    resumenArray.forEach(([descr, total]) => {
-        const porcentajeGasto = ((total / totalGastosSucursal) * 100).toFixed(2);
-        const li = crearResumenItem(descr, total, porcentajeGasto, iconMap);
-        resumenFragment.appendChild(li);
+    // Mostrar los resultados ordenados
+    sucursalArray.forEach(([sucursal, { count, total }]) => {
+        // Crear un nuevo div para cada sucursal
+        const div = document.createElement('div');
+        div.classList.add('sucursal-detail-suc'); // Puedes añadir una clase para aplicar estilos
+    
+        // Asignar el contenido al div
+        div.innerHTML = `
+        <div class="sucursal-detail-one">
+            <div>Suc. ${sucursal}</div> 
+            <div>Total Gastos ${count}</div> 
+            <div>Importe $ ${total.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div> 
+        </div>
+        `;
+    
+        // Añadir el div al contenedor detailDiv
+        detailDiv.appendChild(div);
     });
-    resumenList.appendChild(resumenFragment);
+    
+}
+
+
 
     // Crear y agregar la cabecera de gastos
     const headerDiv = document.createElement('div');

@@ -62,7 +62,7 @@ function clasificarAjustes(ajuste, observacion) {
         importeProsegur += ajuste;
     }
     // Clasificación Redondeo
-    else if (observacion.includes('redondeo') || observacion.includes('vuelto') || observacion.includes('gasto')) {
+    else if (observacion.includes('redondeo') || observacion.includes('vuelto') || observacion.includes('gasto') || observacion.includes('gastos') || observacion.includes('gastoa') || observacion.includes('cambio')) {
         cantidadRedondeo++;
         importeRedondeo += ajuste;
     }
