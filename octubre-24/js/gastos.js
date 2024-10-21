@@ -233,7 +233,7 @@ const mostrarGastosPorSucursal = (data, sucursalSeleccionada) => {
     totalSucursalDiv.textContent = `Total gastos de la sucursal: $ ${totalGastosSucursal.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 // Calcular resumenPorDescripcion
-const resumenPorDescripcion = gastosFiltrados.reduce((acc, { Descr: descr, Total: totalStr, SUCGCIA: Sucursal }) => {
+const resumenPorDescripcion = gastosFiltrados.reduce((acc, { Descr: descr, Total: totalStr, SUCGCIA: Sucursal}) => {
     const total = parseCurrency(totalStr);
     acc[descr] = acc[descr] || { total: 0, detalles: [] }; // Almacena total y detalles
     acc[descr].total += total;
@@ -316,46 +316,102 @@ function crearResumenItem(descr, total, porcentajeGasto, iconMap, detalles) {
     return li; // Retornar el elemento li completo
 }
 
-// Función para mostrar detalles de las sucursales
+// Función para mostrar detalles de las sucursales agrupadas por tipo de gasto (descripción)
 function mostrarDetallesSucursales(detalles, detailDiv) {
     // Limpiar el div antes de agregar nuevos detalles
     detailDiv.innerHTML = '';
 
     // Crear un objeto para agrupar los gastos por sucursal
     const sucursalResumen = detalles.reduce((acc, { sucursal, monto }) => {
-        acc[sucursal] = acc[sucursal] || { count: 0, total: 0 }; // Inicializa si no existe
+        acc[sucursal] = acc[sucursal] || { count: 0, total: 0, items: [] }; // Inicializa si no existe
         acc[sucursal].count += 1; // Incrementa el contador de gastos
         acc[sucursal].total += monto; // Acumula el monto total
+        acc[sucursal].items.push({ monto, sucursal }); // Guarda cada gasto individual
         return acc;
     }, {});
 
-    // Convertir el resumen a un array y ordenar por sucursal
     // Convertir el resumen a un array y ordenar por sucursal numéricamente
-const sucursalArray = Object.entries(sucursalResumen).sort((a, b) => parseInt(a[0]) - parseInt(b[0]));
-
+    const sucursalArray = Object.entries(sucursalResumen).sort((a, b) => parseInt(a[0]) - parseInt(b[0]));
 
     // Mostrar los resultados ordenados
-    sucursalArray.forEach(([sucursal, { count, total }]) => {
+    sucursalArray.forEach(([sucursal, { count, total, items }]) => {
         // Crear un nuevo div para cada sucursal
         const div = document.createElement('div');
-        div.classList.add('sucursal-detail-suc'); // Puedes añadir una clase para aplicar estilos
-    
-        // Asignar el contenido al div
+        div.classList.add('sucursal-detail-suc'); // Añadir clase para estilos
+        
+        // Asignar el contenido al div con un ícono de mostrar/ocultar detalles
         div.innerHTML = `
         <div class="sucursal-detail-one">
             <div>Suc. ${sucursal}</div> 
-            <div>Total Gastos ${count}</div> 
-            <div>Importe $ ${total.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div> 
+            <div>Total Gastos: ${count}</div> 
+            <div>Importe Total: $ ${total.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+            <div><button class="toggle-detail-sucursal"><i class="fa fa-eye"></i> Ver Detalle</button></div>
         </div>
+        <div class="detalle-gastos" style="display:none;"></div> <!-- Div para los detalles individuales -->
         `;
-    
+
+        // Añadir evento de clic para mostrar/ocultar detalles de la sucursal
+        const toggleBtn = div.querySelector('.toggle-detail-sucursal');
+        const detalleDiv = div.querySelector('.detalle-gastos');
+
+        toggleBtn.addEventListener('click', () => {
+            if (detalleDiv.style.display === 'none') {
+                detalleDiv.style.display = 'block'; // Mostrar detalles
+                toggleBtn.innerHTML = `<i class="fa fa-eye-slash"></i> Ocultar Detalle`; // Cambiar ícono
+                mostrarGastosIndividuales(items, detalleDiv); // Mostrar los detalles de cada gasto individual
+            } else {
+                detalleDiv.style.display = 'none'; // Ocultar detalles
+                toggleBtn.innerHTML = `<i class="fa fa-eye"></i> Ver Detalle`; // Cambiar ícono
+            }
+        });
+
         // Añadir el div al contenedor detailDiv
         detailDiv.appendChild(div);
     });
-    
 }
 
+function mostrarGastosIndividuales(gastos, detalleDiv) {
+    // Limpiar el div antes de agregar los detalles
+    detalleDiv.innerHTML = '';
 
+    // Crear un fragmento para los gastos individuales
+    const fragment = document.createDocumentFragment();
+
+    // Crear el encabezado de los gastos 
+    const headerDiv = document.createElement('div');
+    headerDiv.className = 'gasto-header';
+    headerDiv.innerHTML = `
+        <span>Suc.</span>
+        <span>Fecha</span>
+        <span>Comprobante</span>
+        <span>N° Factura</span>
+        <span>Monto</span>
+    `;
+    fragment.appendChild(headerDiv);
+
+    // Agregar cada gasto individualmente
+    gastos.forEach(({ sucursal, monto, CategComprob, Factura, FechaFactura }) => { // Asegúrate de que Fecha esté en el objeto
+        const gastoDiv = document.createElement('div');
+        gastoDiv.className = 'gasto-item';
+
+        // Declarar las variables
+        const fechaGasto = FechaFactura || 'N/A'; // Usar 'N/A' si no hay fecha
+        const categoriaComprob = CategComprob || 'N/A'; // Usar 'N/A' si no hay categoría de comprobante
+        const facturaNum = Factura || 'N/A'; // Usar 'N/A' si no hay número de factura
+
+        gastoDiv.innerHTML = `
+            <span>${sucursal}</span>
+            <span>${fechaGasto}</span>
+            <span>${categoriaComprob}</span>
+            <span>${facturaNum}</span>
+            <span>$ ${monto.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+        `;
+        fragment.appendChild(gastoDiv);
+    });
+
+    // Agregar el fragmento al contenedor de detalles
+    detalleDiv.appendChild(fragment);
+}
 
     // Crear y agregar la cabecera de gastos
     const headerDiv = document.createElement('div');
