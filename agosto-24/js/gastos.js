@@ -38,7 +38,7 @@ const mostrarRankingSucursales = (data) => {
         </div>
     `;
 
-    // Calcular el total de gastos por sucursal y encontrar el gasto principal
+    // Inicializar acumuladores para los gastos por sucursal y su gasto principal
     const totalGastosPorSucursal = {};
     const gastoPrincipalPorSucursal = {};
 
@@ -48,28 +48,27 @@ const mostrarRankingSucursales = (data) => {
         // Acumular el total por sucursal
         totalGastosPorSucursal[sucursal] = (totalGastosPorSucursal[sucursal] || 0) + total;
 
-        // Acumular el total por descripción dentro de la sucursal
+        // Acumular el gasto por descripción
         gastoPrincipalPorSucursal[sucursal] = gastoPrincipalPorSucursal[sucursal] || {};
         gastoPrincipalPorSucursal[sucursal][descripcion] = (gastoPrincipalPorSucursal[sucursal][descripcion] || 0) + total;
     });
 
-    // Calcular el total de todos los gastos para los porcentajes
+    // Calcular el total general de gastos
     const totalGastosGeneral = Object.values(totalGastosPorSucursal).reduce((acc, val) => acc + val, 0);
 
-    // Convertir el objeto a un array para poder ordenarlo
+    // Crear un array de ranking ordenado
     const rankingArray = Object.entries(totalGastosPorSucursal)
-        .map(([sucursal, total]) => ({ sucursal, total }))
+        .map(([sucursal, total]) => ({
+            sucursal,
+            total,
+            gastoPrincipal: Object.entries(gastoPrincipalPorSucursal[sucursal])
+                .reduce((a, b) => (a[1] > b[1] ? a : b))[0]
+        }))
         .sort((a, b) => b.total - a.total);
 
     // Crear y agregar elementos al DOM
     const fragment = document.createDocumentFragment();
-    rankingArray.forEach((item, index) => {
-        const { sucursal, total } = item;
-
-        // Encontrar la descripción con el mayor gasto en la sucursal
-        const gastosPorDescripcion = gastoPrincipalPorSucursal[sucursal];
-        const gastoPrincipal = Object.entries(gastosPorDescripcion).reduce((a, b) => a[1] > b[1] ? a : b)[0];
-
+    rankingArray.forEach(({ sucursal, total, gastoPrincipal }, index) => {
         // Calcular el porcentaje respecto al total general
         const porcentaje = totalGastosGeneral > 0 ? ((total / totalGastosGeneral) * 100).toFixed(2) : '0.00';
 
@@ -87,6 +86,7 @@ const mostrarRankingSucursales = (data) => {
 
     rankingList.appendChild(fragment);
 };
+
 
 const cargarGastos = async () => {
     try {
@@ -239,7 +239,7 @@ const resumenPorDescripcion = gastosFiltrados.reduce((acc, { Descr: descr, Total
     acc[descr].total += total;
 
     // Agregar detalles por sucursal
-    acc[descr].detalles.push({ sucursal: Sucursal, monto: total }); // Asegúrate de que `Sucursal` es el nombre correcto
+    acc[descr].detalles.push({ sucursal: Sucursal, monto: total}); // Asegúrate de que `Sucursal` es el nombre correcto
 
     return acc;
 }, {});
@@ -297,65 +297,102 @@ function crearResumenItem(descr, total, porcentajeGasto, iconMap, detalles) {
         <span class="gasto-descripcion">${icon} ${descr}</span>
         <span class="gasto-total">$ ${total.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         <span class="gasto-porcentaje">${porcentajeGasto}%</span>
-        <span class="gasto-porcentaje"><button class="toggle-detail"><i class="fa-solid fa-eye-low-vision"></i> Ver</button></span>
+        <span class="gasto-porcentaje"><button class="toggle-detail"><i class="fa fa-eye"></i> Ver</button></span>
         </div>
         <div class="sucursal-detail" style="display:none;"></div>
     `;
 
     // Evento de clic para mostrar/ocultar detalles de sucursales
-    li.querySelector('.toggle-detail').addEventListener('click', () => {
-        const detailDiv = li.querySelector('.sucursal-detail');
+    const toggleBtn = li.querySelector('.toggle-detail');
+    const detailDiv = li.querySelector('.sucursal-detail');
+
+    toggleBtn.addEventListener('click', () => {
         if (detailDiv.style.display === 'none') {
             mostrarDetallesSucursales(detalles, detailDiv); // Llenar detalles
             detailDiv.style.display = 'block'; // Mostrar el div
+            toggleBtn.innerHTML = `<i class="fa fa-eye-slash"></i> Ocultar`; // Cambiar ícono y texto
         } else {
             detailDiv.style.display = 'none'; // Ocultar el div
+            toggleBtn.innerHTML = `<i class="fa fa-eye"></i> Ver`; // Cambiar ícono y texto
         }
     });
 
     return li; // Retornar el elemento li completo
 }
 
-// Función para mostrar detalles de las sucursales
+
+// Función para mostrar detalles de las sucursales agrupadas por tipo de gasto (descripción)
 function mostrarDetallesSucursales(detalles, detailDiv) {
     // Limpiar el div antes de agregar nuevos detalles
     detailDiv.innerHTML = '';
 
     // Crear un objeto para agrupar los gastos por sucursal
     const sucursalResumen = detalles.reduce((acc, { sucursal, monto }) => {
-        acc[sucursal] = acc[sucursal] || { count: 0, total: 0 }; // Inicializa si no existe
+        acc[sucursal] = acc[sucursal] || { count: 0, total: 0, items: [] }; // Inicializa si no existe
         acc[sucursal].count += 1; // Incrementa el contador de gastos
         acc[sucursal].total += monto; // Acumula el monto total
+        acc[sucursal].items.push({ monto, sucursal }); // Guarda cada gasto individual
         return acc;
     }, {});
 
-    // Convertir el resumen a un array y ordenar por sucursal
     // Convertir el resumen a un array y ordenar por sucursal numéricamente
-const sucursalArray = Object.entries(sucursalResumen).sort((a, b) => parseInt(a[0]) - parseInt(b[0]));
-
+    const sucursalArray = Object.entries(sucursalResumen).sort((a, b) => parseInt(a[0]) - parseInt(b[0]));
 
     // Mostrar los resultados ordenados
-    sucursalArray.forEach(([sucursal, { count, total }]) => {
+    sucursalArray.forEach(([sucursal, { count, total, items }]) => {
         // Crear un nuevo div para cada sucursal
         const div = document.createElement('div');
-        div.classList.add('sucursal-detail-suc'); // Puedes añadir una clase para aplicar estilos
-    
-        // Asignar el contenido al div
+        div.classList.add('sucursal-detail-suc'); // Añadir clase para estilos
+        
+        // Asignar el contenido al div con un ícono de mostrar/ocultar detalles
         div.innerHTML = `
         <div class="sucursal-detail-one">
             <div>Suc. ${sucursal}</div> 
-            <div>Total Gastos ${count}</div> 
-            <div>Importe $ ${total.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div> 
+            <div>Cant. Gastos: ${count}</div> 
+            <div>Importe: $ ${total.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+            <div><button class="toggle-detail-sucursal"><i class="fa fa-eye"></i> Ver</button></div>
         </div>
+        <div class="detalle-gastos" style="display:none;"></div> <!-- Div para los detalles individuales -->
         `;
-    
+
+        // Añadir evento de clic para mostrar/ocultar detalles de la sucursal
+        const toggleBtn = div.querySelector('.toggle-detail-sucursal');
+        const detalleDiv = div.querySelector('.detalle-gastos');
+
+        toggleBtn.addEventListener('click', () => {
+            if (detalleDiv.style.display === 'none') {
+                detalleDiv.style.display = 'block'; // Mostrar detalles
+                toggleBtn.innerHTML = `<i class="fa fa-eye-slash"></i> Ocultar`; // Cambiar ícono
+                mostrarGastosIndividuales(items, detalleDiv); // Mostrar los detalles de cada gasto individual
+            } else {
+                detalleDiv.style.display = 'none'; // Ocultar detalles
+                toggleBtn.innerHTML = `<i class="fa fa-eye"></i> Ver`; // Cambiar ícono
+            }
+        });
         // Añadir el div al contenedor detailDiv
         detailDiv.appendChild(div);
     });
-    
 }
 
+function mostrarGastosIndividuales(gastos, detalleDiv) {
+    // Limpiar el div antes de agregar los detalles
+    detalleDiv.innerHTML = '';
+    // Crear un fragmento para los gastos individuales
+    const fragment = document.createDocumentFragment();
+    // Agregar cada gasto individualmente
+    gastos.forEach(({ sucursal, monto}) => { // Asegúrate de que Fecha esté en el objeto
+        const gastoDiv = document.createElement('div');
+        gastoDiv.className = 'gasto-item';
+        gastoDiv.innerHTML = `
+            <span>Sucursal ${sucursal}</span>
+            <span>Importe $ ${monto.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+        `;
+        fragment.appendChild(gastoDiv);
+    });
 
+    // Agregar el fragmento al contenedor de detalles
+    detalleDiv.appendChild(fragment);
+}
 
     // Crear y agregar la cabecera de gastos
     const headerDiv = document.createElement('div');
@@ -403,6 +440,7 @@ const sucursalArray = Object.entries(sucursalResumen).sort((a, b) => parseInt(a[
     mostrarGastosLimitados();
     cargarMasBtn.onclick = mostrarGastosLimitados;
 };
+
 
 // Función para mostrar el tab correspondiente
 const showTab = (tabId) => {

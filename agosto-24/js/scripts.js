@@ -110,3 +110,60 @@ function toggleMenu() {
     hamburger.classList.toggle('active');
     sidebar.classList.toggle('active');
 }
+
+// Mostrar/ocultar formulario
+                document.getElementById('toggle-feedback-button').addEventListener('click', function () {
+                    var formContainer = document.getElementById('feedback-container');
+                    formContainer.classList.toggle('show');
+                });
+
+                // Cerrar formulario al presionar la "X"
+                document.getElementById('close-feedback-button').addEventListener('click', function () {
+                    var formContainer = document.getElementById('feedback-container');
+                    formContainer.classList.remove('show');
+                });
+
+                // Manejo del envío del formulario
+                var form = document.getElementById('feedback-form');
+                form.addEventListener("submit", e => {
+                    e.preventDefault();
+                    var alertSuccess = document.getElementById('feedback-success-alert');
+                    var alertError = document.getElementById('feedback-error-alert');
+                    var loading = document.getElementById('feedback-loading');
+                    var formContainer = document.getElementById('feedback-container');
+
+                    // Esconder el formulario y mostrar el mensaje de "Enviando feedback"
+                    form.style.display = 'none';
+                    alertSuccess.style.display = 'none';
+                    alertError.style.display = 'none';
+                    loading.style.display = 'block';
+
+                    // Enviar datos del formulario
+                    fetch(form.action, {
+                        method: "POST",
+                        body: new FormData(form),
+                    }).then(
+                        response => response.json()
+                    ).then((json) => {
+                        // Ocultar "Enviando feedback" y mostrar alerta de éxito
+                        loading.style.display = 'none';
+                        alertSuccess.style.display = 'block';
+
+                        // Esperar unos segundos antes de cerrar el formulario
+                        setTimeout(() => {
+                            formContainer.classList.remove('show');
+                            form.style.display = 'block'; // Volver a mostrar el formulario para la próxima vez
+                            form.reset(); // Resetear formulario
+                        }, 3000); // 3 segundos antes de cerrar
+                    }).catch((error) => {
+                        // Ocultar "Enviando feedback" y mostrar alerta de error
+                        loading.style.display = 'none';
+                        alertError.style.display = 'block';
+
+                        // Esperar unos segundos antes de cerrar el formulario
+                        setTimeout(() => {
+                            formContainer.classList.remove('show');
+                            form.style.display = 'block'; // Volver a mostrar el formulario para la próxima vez
+                        }, 3000); // 3 segundos antes de cerrar
+                    });
+                });

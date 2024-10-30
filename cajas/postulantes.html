@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COTO - Gerencia de Recaudaciones</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../ico/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../ico/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../ico/favicon-16x16.png">
+  <link rel="manifest" href="../ico/site.webmanifest">
+  <link rel="mask-icon" href="../ico/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://kit.fontawesome.com/9a289aa4a3.js" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+
+  <div id="loader">
+    <div class="loader-content">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Logo_Supermercado_Coto.svg/1198px-Logo_Supermercado_Coto.svg.png"
+        alt="Cargando">
+      <div id="progress">0%</div>
+    </div>
+  </div>
+
+  <div id="container-main">
+    <div class="sidebar">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Logo_Supermercado_Coto.svg/1198px-Logo_Supermercado_Coto.svg.png"
+        alt="">
+      <h1>Gerencia de<br>Recaudaciones</h1>
+
+      <!-- Menú hamburguesa -->
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <ul>
+        <li><a href="inicio.html">Inicio</a>
+        <li><a href="gastos.html">Tesoreria</a>
+            <ul>
+                <li><a href="/octubre-24/aconciliar.html">Mov. Conciliados</a></li>
+                <li><a href="/octubre-24/erroroperativo.html">Errores Operativos</a></li>
+                <li><a href="/octubre-24/fallos.html">Fallos de Caja</a></li>
+                <li><a href="/octubre-24/gastos.html">Gastos</a></li>
+            </ul>
+        </li>
+     <li><a href="gastos.html">Cajas</a>
+        <ul>
+            <li><a href="postulantes.html">Postulantes</a></li>
+        </ul>
+        </li>
+    </ul>
+
+      <div class="perfil-container">
+        <img id="perfilFoto" src="default.jpg" alt="Foto de perfil" class="perfil-foto">
+        <div class="perfil-info">
+          <div class="puesto" id="puesto">Puesto</div>
+          <div class="nombre" id="nombre">Nombre del Usuario</div>
+          <div class="legajo" id="legajo">Legajo</div>
+          <div class="logout"><a id="logout">Cerrar Sesión</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="dashboard-container">
+
+      <section id="info">
+        <div class="info-item-empleado">
+          <div class="employeeConte">
+            <h1>Gestión de Empleados</h1>
+
+            <div class="filtro">
+              <label for="filterBranch">Sucursal:</label>
+              <select id="filterBranch">
+                <option value="">Todos</option>
+              </select>
+
+              <label for="filterEmployeeId">Legajo:</label>
+              <select id="filterEmployeeId">
+                <option value="">Todos</option>
+              </select>
+
+              <label for="filterZona">Zona:</label>
+              <select id="filterZona">
+                <option value="">Todos</option>
+              </select>
+            </div>
+
+            <div id="employeeData"></div>
+          </div>
+        </div>
+        <div class="info-item">
+
+      <button id="toggleFormButton">Cargar nuevo Empleado</button>
+          <form id="employeeForm" style="display: none;">
+            <h1>Formulario</h1>
+            <div class="formGroup">
+              <label for="fullName">Nombre y Apellido</label>
+              <input type="text" id="fullName" required>
+            </div>
+            <div class="formGroup">
+              <label for="employeeId">Legajo</label>
+              <input type="text" id="employeeId" required>
+            </div>
+            <div class="formGroup">
+              <label for="zona">Zona</label>
+              <input type="text" id="zona" required>
+            </div>
+            <div class="formGroup">
+              <label for="zonaAssignmentDate">Fecha de Asignación de Zona</label>
+              <input type="date" id="zonaAssignmentDate" required>
+            </div>
+            <div class="formGroup">
+              <label for="hireDate">Fecha de Contratación</label>
+              <input type="date" id="hireDate" required>
+            </div>
+            <div class="formGroup">
+              <label for="position">Cargo</label>
+              <select id="position" required>
+                <option value="Postulante">Postulante</option>
+                <option value="Auxiliar">Auxiliar</option>
+              </select>
+            </div>
+            <div class="formGroup">
+              <label for="assignmentDate">Fecha de Asignación del Cargo:</label>
+              <input type="date" id="assignmentDate" required>
+            </div>
+            <div class="formGroup">
+              <label for="category">Categoría</label>
+              <select id="category" required>
+                <option value="Cajero B">Cajero B</option>
+                <option value="Auxiliar A">Auxiliar A</option>
+              </select>
+            </div>
+            <div class="formGroup">
+              <label for="categoryAssignmentDate">Fecha de Asignación de Categoría</label>
+              <input type="date" id="categoryAssignmentDate" required>
+            </div>
+            <div class="formGroup">
+              <label for="branch">Sucursal</label>
+              <input type="number" id="branch" required>
+            </div>
+            <div class="formGroup">
+              <label for="branchAssignmentDate">Fecha de Asignación de Sucursal</label>
+              <input type="date" id="branchAssignmentDate" required>
+            </div>
+            <div class="formGroup">
+              <label for="photo">Subir Foto</label>
+              <input type="file" id="photo" accept="image/*" required>
+            </div>
+            <fieldset>
+              <legend>Evaluación</legend>
+              <label>
+                <input type="radio" name="evaluation" value="Bien" required> Bien
+              </label>
+              <label>
+                <input type="radio" name="evaluation" value="Regular"> Regular
+              </label>
+              <label>
+                <input type="radio" name="evaluation" value="Mal"> Mal
+              </label>
+            </fieldset>
+            <br>
+            <button type="submit" class="formButton">Agregar Empleado</button>
+          </form>
+
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="/octubre-24/js/scripts.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.0/dist/xlsx.full.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, updateDoc, doc, arrayUnion, getDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js";
+    import { usuarios } from 'https://cesarcruz-coto.github.io/coto/usuarios.js';  // Importa los usuarios desde el archivo
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjDElF__Bcgo137GGf6hPRXhEp4BatD10",
+      authDomain: "recaudaciones-26766.firebaseapp.com",
+      projectId: "recaudaciones-26766",
+      storageBucket: "recaudaciones-26766.appspot.com",
+      messagingSenderId: "793331710217",
+      appId: "1:793331710217:web:93d036faa48032a6f53bd8"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+    const auth = getAuth();
+
+    // Referencias a los elementos del perfil
+    const nombreElement = document.getElementById("nombre");
+    const puestoElement = document.getElementById("puesto");
+    const legajoElement = document.getElementById("legajo");
+    const perfilFotoElement = document.getElementById("perfilFoto");
+
+    // Verificar si hay un usuario autenticado
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Obtener el correo electrónico del usuario autenticado
+        const userEmail = user.email;
+
+        // Buscar los datos del usuario en el JSON
+        const userData = usuarios.find(u => u.email === userEmail);
+
+        if (userData) {
+          // Mostrar los datos en la interfaz
+          nombreElement.textContent = userData.nombre;
+          puestoElement.textContent = userData.puesto;
+          legajoElement.textContent = userData.legajo;
+          perfilFotoElement.src = userData.fotoPerfil;
+        } else {
+          alert("No se encontraron datos para este usuario.");
+        }
+      } else {
+        // Si no hay usuario autenticado, redirigir al login
+        window.location.href = '../index.html';
+      }
+    });
+
+    // Cerrar sesión
+    // Referencia al enlace de cerrar sesión
+    const logoutLink = document.getElementById("logout");
+
+    // Añadir evento click al enlace de cerrar sesión
+    logoutLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      signOut(auth).then(() => {
+        // Redirigir al login después de cerrar sesión
+        window.location.href = '../index.html';
+      }).catch((error) => {
+        console.error("Error al cerrar sesión:", error);
+      });
+    });
+
+    document.getElementById("employeeForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      // Obtener datos del formulario
+      const fullName = document.getElementById("fullName").value;
+      const employeeId = document.getElementById("employeeId").value;
+      const zona = document.getElementById("zona").value;
+      const zonaAssignmentDate = document.getElementById("zonaAssignmentDate").value;
+      const hireDate = document.getElementById("hireDate").value;
+      const position = document.getElementById("position").value;
+      const assignmentDate = document.getElementById("assignmentDate").value;
+      const category = document.getElementById("category").value;
+      const categoryAssignmentDate = document.getElementById("categoryAssignmentDate").value;
+      const branch = document.getElementById("branch").value;
+      const branchAssignmentDate = document.getElementById("branchAssignmentDate").value;
+      const evaluation = document.querySelector('input[name="evaluation"]:checked').value;
+      const photoFile = document.getElementById("photo").files[0];
+
+      let photoURL = '';
+      if (photoFile) {
+        const storageRef = ref(storage, `photos/${employeeId}.jpg`);
+        await uploadBytes(storageRef, photoFile);
+        photoURL = await getDownloadURL(storageRef);
+      }
+
+      // Agregar el empleado a Firestore
+      await addDoc(collection(db, "employees"), {
+        fullName: fullName,
+        employeeId: employeeId,
+        zona: zona,
+        zonaAssignmentDate: zonaAssignmentDate,
+        hireDate: hireDate,
+        position: position,
+        assignmentDate: assignmentDate,
+        category: category,
+        categoryAssignmentDate: categoryAssignmentDate,
+        branch: branch,
+        branchAssignmentDate: branchAssignmentDate,
+        evaluation: evaluation,
+        photoURL: photoURL
+      });
+
+      document.getElementById("employeeForm").reset();
+      loadEmployees();
+    });
+
+    // Cargar filtros al cambiar cualquier opción
+    document.getElementById("filterBranch").addEventListener("change", loadEmployees);
+    document.getElementById("filterEmployeeId").addEventListener("change", loadEmployees);
+    document.getElementById("filterZona").addEventListener("change", loadEmployees);
+
+    async function loadFilters() {
+      const branchesSet = new Set();
+      const employeeIdsSet = new Set();
+      const zonasSet = new Set();
+
+      const querySnapshot = await getDocs(collection(db, "employees"));
+
+      querySnapshot.forEach(doc => {
+        const data = doc.data();
+        branchesSet.add(data.branch);
+        employeeIdsSet.add(data.employeeId);
+        zonasSet.add(data.employeeIdZona);
+      });
+
+      populateFilterOptions("filterBranch", branchesSet);
+      populateFilterOptions("filterEmployeeId", employeeIdsSet);
+      populateFilterOptions("filterZona", zonasSet);
+    }
+
+    function populateFilterOptions(filterId, optionsSet) {
+      const selectElement = document.getElementById(filterId);
+      selectElement.innerHTML = `<option value="">Todos</option>`; // Opción para seleccionar todo
+
+      optionsSet.forEach(option => {
+        const optionElement = document.createElement("option");
+        optionElement.value = option;
+        optionElement.textContent = option;
+        selectElement.appendChild(optionElement);
+      });
+    }
+
+    async function loadEmployees() {
+      const employeeContainer = document.getElementById("employeeData");
+      employeeContainer.innerHTML = ""; // Limpiar la visualización anterior
+
+      const selectedBranch = document.getElementById("filterBranch").value;
+      const selectedEmployeeId = document.getElementById("filterEmployeeId").value;
+      const selectedZona = document.getElementById("filterZona").value;
+
+      const querySnapshot = await getDocs(collection(db, "employees"));
+
+      querySnapshot.forEach(doc => {
+        const data = doc.data();
+
+        const matchesBranch = !selectedBranch || data.branch === selectedBranch;
+        const matchesEmployeeId = !selectedEmployeeId || data.employeeId === selectedEmployeeId;
+        const matchesZona = !selectedZona || data.zona === selectedZona;
+
+        if (matchesBranch && matchesEmployeeId && matchesZona) {
+          const employeeDiv = document.createElement("div");
+          employeeDiv.className = "employeeInfo";
+          employeeDiv.innerHTML = `
+                <div class="employeeDetails">
+                    <img src="${data.photoURL}" alt="Foto de ${data.fullName}" class="employeePhoto">
+                    <div class="employeeDetails-deta">
+                        <h3 id="employeeName">${data.fullName}</h3>
+                        <br>
+                        <p id="employeeIdDisplay">
+                            <b>Legajo:</b> 
+                            <span id="employeeIdValue" data-employee-id="${doc.id}" data-field="employeeId" data-old-value="${data.employeeId}">${data.employeeId}</span>
+                            <button id="edit-employeeId-${doc.id}" onclick="enableEdit('${doc.id}', 'employeeId')">Editar</button>
+                        </p>
+
+                        <p id="branchDisplay">
+                            <b>Sucursal:</b> 
+                            <span id="branchValue" data-employee-id="${doc.id}" data-field="branch" data-old-value="${data.branch}">${data.branch}</span>
+                            <button id="edit-branch-${doc.id}" onclick="enableEdit('${doc.id}', 'branch')">Editar</button>
+                        </p>
+
+                        <p id="positionDisplay">
+                            <b>Cargo:</b> 
+                            <span id="positionValue" data-employee-id="${doc.id}" data-field="position" data-old-value="${data.position}">${data.position}</span>
+                            <button id="edit-position-${doc.id}" onclick="enableEdit('${doc.id}', 'position')">Editar</button>
+                        </p>
+
+                        <p id="categoryDisplay">
+                            <b>Categoría:</b> 
+                            <span id="categoryValue" data-employee-id="${doc.id}" data-field="category" data-old-value="${data.category}">${data.category}</span>
+                            <button id="edit-category-${doc.id}" onclick="enableEdit('${doc.id}', 'category')">Editar</button>
+                        </p>
+
+                        <p id="zonaDisplay">
+                            <b>Zona:</b> 
+                            <span id="zonaValue" data-employee-id="${doc.id}" data-field="zona" data-old-value="${data.zona}">${data.zona}</span>
+                            <button id="edit-zona-${doc.id}" onclick="enableEdit('${doc.id}', 'zona')">Editar</button>
+                        </p>
+
+                        <p id="evaluationDisplay">
+                            <b>Evaluación:</b> 
+                            <span id="evaluation" data-employee-id="${doc.id}" data-field="evaluation" data-old-value="${data.evaluation}">${data.evaluation}</span>
+                            <button id="edit-evaluation-${doc.id}" onclick="enableEdit('${doc.id}', 'evaluation')">Editar</button>
+                        </p>
+
+                        <p id="evaluationDisplay">
+                        <button onclick="showHistory('${doc.id}', this.parentNode)">Ver Historial</button>
+                        </p>
+                    </div>
+
+                    <div class="employeeDetails-deta-time">
+                        <h3 id="employeeName">Antigüedad</h3>
+                        <br>
+                        <p><b>Empresa:</b> <span id="seniorityCompany">${calculateSeniority(data.hireDate)}</span></p>
+                        <p><b>Sucursal:</b> <span id="seniorityBranch">${calculateSeniority(data.branchAssignmentDate)}</span></p>
+                        <p><b>Categoría:</b> <span id="seniorityCategory">${calculateSeniority(data.categoryAssignmentDate)}</span></p>
+                        <p><b>Zona:</b> <span id="seniorityZona">${calculateSeniority(data.zonaAssignmentDate)}</span></p>
+                        <p><b>Puesto:</b> <span id="seniorityPosition">${calculateSeniority(data.assignmentDate)}</span></p>
+                        <p id="branchAlert"></p>
+                    </div>
+                </div>
+            `;
+          employeeContainer.appendChild(employeeDiv);
+
+          // Mostrar alerta si antigüedad en sucursal es mayor a 2 años
+          // Función para calcular la diferencia en años, meses y días
+          function calculateTimeLeft(assignmentDate) {
+            const today = new Date();
+            const targetDate = new Date(assignmentDate);
+            targetDate.setFullYear(targetDate.getFullYear() + 2); // 2 años desde la fecha de asignación
+
+            const diffInMilliseconds = targetDate - today;
+            const daysLeft = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24)); // Diferencia en días
+
+            const yearsLeft = Math.floor(daysLeft / 365); // Calculamos los años completos
+            const monthsLeft = Math.floor((daysLeft % 365) / 30); // Calculamos los meses restantes (aproximados)
+            const remainingDays = daysLeft % 30; // Días restantes
+
+            return { yearsLeft, monthsLeft, remainingDays };
+          }
+
+          // Lógica para mostrar la alerta
+          const seniorityBranch = calculateSeniorityInMonths(data.branchAssignmentDate);
+          const branchAlert = employeeDiv.querySelector("#branchAlert");
+
+          if (seniorityBranch >= 24) {
+            branchAlert.innerHTML = `<strong style="color: red;">¡Alerta! El empleado ha estado en la sucursal por más de 2 años.</strong>`;
+          } else {
+            const { yearsLeft, monthsLeft, remainingDays } = calculateTimeLeft(data.branchAssignmentDate);
+
+            // Generar mensaje dinámico basado en los valores
+            let timeMessage = `Quedan `;
+            if (yearsLeft > 0) timeMessage += `${yearsLeft} años, `;
+            if (monthsLeft > 0) timeMessage += `${monthsLeft} meses, `;
+            timeMessage += `${remainingDays} días para que el empleado cumpla 2 años en esta sucursal.`;
+
+            branchAlert.innerHTML = `<strong style="color: green;">${timeMessage}</strong>`;
+          }
+
+        }
+      });
+    }
+
+    function calculateSeniority(startDate) {
+      // Verificar si startDate es válida
+      if (!startDate) {
+        return "Antigüedad no disponible";
+      }
+
+      const start = new Date(startDate);
+
+      // Si la fecha no es válida (ej. "Invalid Date")
+      if (isNaN(start.getTime())) {
+        return "Antigüedad no disponible";
+      }
+
+      const now = new Date();
+      const years = now.getFullYear() - start.getFullYear();
+      const months = now.getMonth() - start.getMonth();
+      const days = now.getDate() - start.getDate();
+
+      let yearsDisplay = years;
+      let monthsDisplay = months;
+      let daysDisplay = days;
+
+      if (days < 0) {
+        monthsDisplay--;
+        daysDisplay += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+      }
+
+      if (monthsDisplay < 0) {
+        yearsDisplay--;
+        monthsDisplay += 12;
+      }
+
+      return `${yearsDisplay} años, ${monthsDisplay} meses y ${daysDisplay} días`;
+    }
+
+    function calculateSeniorityInMonths(startDate) {
+      // Verificar si startDate es válida
+      if (!startDate) {
+        return 0; // Consideramos que si no hay fecha, la antigüedad es 0 meses
+      }
+
+      const start = new Date(startDate);
+
+      // Si la fecha no es válida
+      if (isNaN(start.getTime())) {
+        return 0; // Retornar 0 meses si la fecha no es válida
+      }
+
+      const now = new Date();
+      const years = now.getFullYear() - start.getFullYear();
+      const months = now.getMonth() - start.getMonth();
+
+      return years * 12 + months;
+    }
+
+
+    // Función para habilitar la edición de un campo
+    window.enableEdit = function (employeeId, fieldName) {
+      const fieldElement = document.querySelector(`[data-employee-id="${employeeId}"][data-field="${fieldName}"]`);
+      if (!fieldElement) {
+        console.error(`No se encontró el elemento para el campo ${fieldName} del empleado con ID ${employeeId}`);
+        return;
+      }
+      fieldElement.setAttribute('contenteditable', 'true');
+      const editButton = document.getElementById(`edit-${fieldName}-${employeeId}`);
+      editButton.textContent = 'Guardar';
+      editButton.onclick = () => window.saveField(employeeId, fieldName);
+    };
+
+    // Función para guardar el campo editado
+    window.saveField = async function (employeeId, fieldName) {
+      const fieldElement = document.querySelector(`[data-employee-id="${employeeId}"][data-field="${fieldName}"]`);
+      if (!fieldElement) {
+        console.error(`No se encontró el elemento para el campo ${fieldName} del empleado con ID ${employeeId}`);
+        return;
+      }
+      const newValue = fieldElement.textContent;
+      const oldValue = fieldElement.getAttribute('data-old-value');
+
+      // Si el valor ha cambiado, actualizar el campo y el historial
+      if (oldValue !== newValue) {
+        const now = new Date();
+
+        try {
+          const docSnapshot = await getDoc(doc(db, "employees", employeeId));
+          const employeeData = docSnapshot.data();
+
+          // Calcular antigüedad previa en función del campo editado
+          let previousAssignmentDate = employeeData[`${fieldName}AssignmentDate`] || new Date();
+          employeeData[`${fieldName}AssignmentDate`] = now;
+
+          // Calcular la antigüedad entre la fecha anterior y ahora
+          const seniority = calculateSeniority(previousAssignmentDate);
+
+          // Actualizar el campo y la fecha en Firestore
+          let updateData = {
+            [fieldName]: newValue,
+            [`${fieldName}AssignmentDate`]: now
+          };
+
+          await updateDoc(doc(db, "employees", employeeId), updateData);
+
+          // Actualizar el historial con el tiempo transcurrido
+          await addDoc(collection(db, `employees/${employeeId}/history`), {
+            fieldName,
+            oldValue,
+            newValue,
+            seniority,
+            changedAt: now
+          });
+
+          // Actualizar el valor anterior y desactivar edición
+          fieldElement.setAttribute('data-old-value', newValue);
+
+        } catch (error) {
+          console.error("Error actualizando el documento: ", error);
+        }
+      }
+
+      // Desactivar edición
+      fieldElement.setAttribute('contenteditable', 'false');
+      const editButton = document.getElementById(`edit-${fieldName}-${employeeId}`);
+      editButton.textContent = 'Editar';
+      editButton.onclick = () => window.enableEdit(employeeId, fieldName);
+
+      // Recargar la antigüedad después de editar y guardar
+      await loadEmployees();
+    };
+
+
+
+
+    window.showHistory = async function (employeeId, parentNode) {
+      // Limpiar historial previo si existe
+      let existingHistoryDiv = parentNode.querySelector('.history');
+      if (existingHistoryDiv) {
+        parentNode.removeChild(existingHistoryDiv);
+        return; // Si el historial ya está abierto, al hacer clic se cierra
+      }
+
+      const historyQuerySnapshot = await getDocs(collection(db, `employees/${employeeId}/history`));
+
+      // Crear contenedores para cada módulo de cambios
+      let branchHistoryHTML = `<div class="module-history"><h4>Historial de Sucursal:</h4>`;
+      let categoryHistoryHTML = `<div class="module-history"><h4>Historial de Categoría:</h4>`;
+      let positionHistoryHTML = `<div class="module-history"><h4>Historial de Cargo:</h4>`;
+      let zonaHistoryHTML = `<div class="module-history"><h4>Historial de Zona:</h4>`;
+
+      historyQuerySnapshot.forEach(doc => {
+        const data = doc.data();
+        const changeHTML = `
+            <p>De: ${data.oldValue} a: ${data.newValue}</p>
+            <p>Fecha: ${data.changedAt.toDate().toLocaleString()}</p>
+            <p>Tiempo transcurrido: ${data.seniority}</p> <!-- Mostrar la antigüedad -->
+        `;
+
+        // Clasificar el historial según el campo que se haya cambiado
+        if (data.fieldName === 'branch') {
+          branchHistoryHTML += changeHTML;
+        } else if (data.fieldName === 'category') {
+          categoryHistoryHTML += changeHTML;
+        } else if (data.fieldName === 'position') {
+          positionHistoryHTML += changeHTML;
+        } else if (data.fieldName === 'zona') {
+          zonaHistoryHTML += changeHTML; // Añadir el historial de zona
+        }
+      });
+
+      // Cerrar los divs de los módulos
+      branchHistoryHTML += `</div>`;
+      categoryHistoryHTML += `</div>`;
+      positionHistoryHTML += `</div>`;
+      zonaHistoryHTML += `</div>`;
+
+      // Componer el historial completo con los módulos
+      let historyHTML = `
+        <div class="history sliding-div">
+            ${branchHistoryHTML}
+            ${categoryHistoryHTML}
+            ${positionHistoryHTML}
+            ${zonaHistoryHTML} <!-- Añadido el historial de zona -->
+            <button onclick="closeHistory(this)">Cerrar Historial</button>
+        </div>
+    `;
+
+      parentNode.innerHTML += historyHTML;
+
+      // Activar la animación de deslizamiento
+      setTimeout(() => {
+        const slidingDiv = parentNode.querySelector('.sliding-div');
+        if (slidingDiv) slidingDiv.classList.add('show');
+      }, 100);
+    };
+
+
+
+    window.closeHistory = function (button) {
+      const historyDiv = button.closest('.history');
+      if (historyDiv) {
+        historyDiv.classList.remove('show'); // Ocultar el div deslizándolo hacia la derecha
+        setTimeout(() => {
+          historyDiv.remove(); // Eliminar el div después de la transición
+        }, 500); // Esperar que termine la animación
+      }
+    };
+
+
+
+    loadFilters();
+    loadEmployees();
+
+
+
+    document.getElementById("toggleFormButton").addEventListener("click", function () {
+      const form = document.getElementById("employeeForm");
+      if (form.style.display === "none") {
+        form.style.display = "block";
+        this.textContent = "Ocultar Formulario";
+      } else {
+        form.style.display = "none";
+        this.textContent = "Cargar nuevo Empleado";
+      }
+    });
+
+
+  </script>
+
+</body>
+
+</html>

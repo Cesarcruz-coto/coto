@@ -637,15 +637,15 @@ canvas {
 
 .sidebar ul {
     list-style: none;
-    width: 80%;
     flex: 1;
     display: flex;
     transition: 1s;
     flex-direction: column;
+    width: 80%;
 }
 
 .sidebar ul li {
-    padding: 16px 15px;
+    padding: 16px 25px;
     font-size: 0.9em;
     font-weight: 400;
     cursor: pointer;
@@ -654,6 +654,41 @@ canvas {
     margin: 5px 0;
     /* clip-path: polygon(5% 0%, 90% 20%, 50% 80%, 10% 100%, 10% 85%); */
 }
+
+.sidebar li ul {
+    display:none;
+}
+
+.sidebar li:hover > ul {
+    display: block;
+    animation-name: menu-1;
+    animation-duration: 0.5s;
+}
+
+.sidebar li ul li {
+    position:relative;
+    transition: all .5s ease-in-out;
+}
+
+.sidebar ul li ul li {
+    margin-top: 10px;
+    width: 120%;
+}
+
+.sidebar li ul li:hover {
+    box-shadow: inset 400px 0 0 0 #003ad5;
+}  
+
+  @keyframes menu-1 {
+    0% {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    100% {
+      opacity: 11;
+      transform: translateY(0%);
+    }
+  }
 
 .sidebar ul a {
     color: #ffffff;
@@ -669,7 +704,7 @@ canvas {
 }
 
 .sidebar ul li:hover {
-    background-color: #0062ff;
+    background-color: #202020;
 }
 
 .sidebar ul li.active {
@@ -2831,4 +2866,260 @@ div.sucursal-detail-one div {
 .sucursales-detalle {
     margin-left: 20px; /* Sangría para que se vea como un desglose */
     display: none; /* Oculto por defecto */
+}
+
+button#MenuToggleTotal, button#MenuToggleTotalCajas {
+    border: 0;
+    background-color: #222222;
+    color: #f9f9f9;
+    padding: 14px;
+    width: 80%;
+    font-size: 0.9em;
+    font-weight: 400;
+    cursor: pointer;
+    transition: 1s;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+button.toggle-detail-sucursal {
+    border: 0;
+    background-color: transparent;
+    font-weight: bold;
+}
+
+:root {
+    --main-bg-color: #f8f9fa;
+    --hover-bg-color: #f2f2f2;
+    --primary-color: #003f82;
+    --secondary-color: #0082df;
+    --text-color: #555;
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.employeeDataContainer {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.employeeCard {
+    background: var(--main-bg-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: var(--box-shadow);
+    transition: box-shadow var(--transition-speed), transform var(--transition-speed);
+}
+
+.employeeCard:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px); /* Añadir un efecto sutil de elevación */
+}
+
+.employeeCard img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+    transition: transform var(--transition-speed);
+}
+
+.employeeCard:hover img {
+    transform: scale(1.05);
+}
+
+.employeeInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.employeeInfo h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: var(--primary-color);
+    text-transform: uppercase;
+}
+
+.employeeDetails {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    background-color: var(--hover-bg-color);
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+    margin-top: 15px;
+    padding: 15px;
+}
+
+.employeeDetails-deta, .employeeDetails-deta-time {
+    width: 48%;
+    text-align: left;
+}
+
+.employeeDetails-deta p, .employeeDetails-deta-time p {
+    padding: 2px 0;
+}
+
+.filtro {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    gap: 15px;
+}
+
+.employeeDetails button {
+    border: 0;
+    color: var(--secondary-color);
+    font-size: 0.8em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.info-item-empleado {
+    flex: 2.4;
+    font-family: monospace;
+    margin: 5px;
+    background-color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+}
+
+select#filterBranch,
+select#filterEmployeeId,
+select#filterZona {
+    width: 100%;
+    padding: 8px;
+    border-radius: var(--border-radius);
+    border: 1px solid #ccc;
+    transition: border-color var(--transition-speed);
+}
+
+select#filterBranch:hover,
+select#filterEmployeeId:hover,
+select#filterZona:hover {
+    border-color: var(--primary-color);
+}
+
+/* Estilos para el historial */
+.history {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 350px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -2px 0 100px rgba(0, 0, 0, 0.2);
+    transition: right 0.5s ease;
+    overflow-y: auto;
+    padding: 25px;
+    z-index: 1000;
+}
+
+.history.show {
+    right: 0;
+}
+
+.module-history {
+    margin-bottom: 25px;
+}
+
+.module-history h4 {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 5px;
+}
+
+.module-history p {
+    font-size: 0.9em;
+    color: #666;
+    line-height: 1.6;
+}
+
+img.employeePhoto {
+    width: 150px;
+    height: 199px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    margin-right: 20px;
+}
+
+/* Estilos del contenedor del formulario */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: monospace;
+}
+
+/* Estilos del botón */
+#toggleFormButton {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#toggleFormButton:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para los grupos de formularios */
+.formGroup {
+    margin-bottom: 20px;
+}
+
+button.formButton {
+    border: 0;
+    padding: 10px 30px;
+    background-color: #4a90e2;
+    color: #FFF;
+    border-radius: 5px;
+}
+
+/* Estilo para las etiquetas del formulario */
+.formGroup label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+    text-align: left;
+}
+
+/* Estilos para los campos de entrada y selección */
+.formGroup input,
+.formGroup select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Estilo para enfoque (focus) en campos de formulario */
+.formGroup input:focus,
+.formGroup select:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    outline: none;
 }

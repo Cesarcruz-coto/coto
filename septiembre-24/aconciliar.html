@@ -47,11 +47,21 @@
       </div>
 
       <ul>
-                <li><a href="inicio.html">Inicio</a></li>
-                <li><a href="aconciliar.html">Mov. Conciliados</a></li>
-                <li><a href="erroroperativo.html">Errores Operativos</a></li>
-                <li><a href="fallos.html">Fallos de Caja</a></li> <li><a href="gastos.html">Gastos</a></li>
+        <li><a href="inicio.html">Inicio</a>
+        <li><a href="">Tesoreria</a>
+            <ul>
+                <li><a href="aconciliar.html">Mov. A Conciliar</a></li>
+                <li><a href="erroroperativo.html">EO. Sin Resolver</a></li>
+                <li><a href="fallos.html">Fallos de Caja</a></li>
+                <li><a href="gastos.html">Gastos</a></li>
             </ul>
+        </li>
+        <li><a href="">Cajas</a>
+            <ul>
+                <li><a href="/cajas/postulantes.html">Postulantes</a></li>
+            </ul>
+        </li>
+    </ul>
 
       <div class="perfil-container">
         <img id="perfilFoto" src="default.jpg" alt="Foto de perfil" class="perfil-foto">
@@ -126,6 +136,31 @@
             </div>
           </div>
       </section>
+      <section id="feedback-container">
+        <button id="close-feedback-button" class="close-button">×</button>
+        <div class="form-wrapper">
+            <form method="post" id="feedback-form" action="https://sheetdb.io/api/v1/xsr7ejasp5q8s">
+                <div class="form-group">
+                    <label for="feedback-name">Nombre:</label>
+                    <input id="feedback-name" name="data[nombre]" required placeholder="Tu nombre">
+                </div>
+                <div class="form-group">
+                    <label for="feedback-legajo">Legajo:</label>
+                    <input id="feedback-legajo" name="data[legajo]" required placeholder="Tu legajo">
+                </div>
+                <div class="form-group">
+                    <label for="feedback-comment">Comentario:</label>
+                    <textarea id="feedback-comment" name="data[comentario]" required
+                        placeholder="Escribe tu comentario"></textarea>
+                </div>
+                <button type="submit">Enviar Feedback</button>
+            </form>
+            <div class="alert alert-success" id="feedback-success-alert">¡Feedback enviado con éxito!</div>
+            <div class="alert alert-error" id="feedback-error-alert">¡Hubo un error, inténtalo de nuevo!</div>
+            <div id="feedback-loading" class="loading">Enviando feedback...</div> <!-- Cargando -->
+        </div>
+    </section>
+    <button id="toggle-feedback-button">Feedback</button>
     </div>
   </div>
 

@@ -200,7 +200,7 @@ async function cargarYMostrarGastos() {
     const totalJunio = 123899209.29; // Reemplaza con el total real de junio
     const totalJulio = 140745488.00; // Reemplaza con el total real de julio
     const totalAgosto = 148319559.43; // Reemplaza con el total real de agosto
-    const totalSeptiembre = 125479561.97; // Reemplaza con el total real de septiembre
+    const totalSeptiembre = 133832672.99; // Reemplaza con el total real de septiembre
     const totalMesActual = procesarGastos(gastosMesActual);
 
     // Generar el gráfico con los totales

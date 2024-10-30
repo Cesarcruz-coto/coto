@@ -38,7 +38,7 @@ const mostrarRankingSucursales = (data) => {
         </div>
     `;
 
-    // Calcular el total de gastos por sucursal y encontrar el gasto principal
+    // Inicializar acumuladores para los gastos por sucursal y su gasto principal
     const totalGastosPorSucursal = {};
     const gastoPrincipalPorSucursal = {};
 
@@ -48,28 +48,27 @@ const mostrarRankingSucursales = (data) => {
         // Acumular el total por sucursal
         totalGastosPorSucursal[sucursal] = (totalGastosPorSucursal[sucursal] || 0) + total;
 
-        // Acumular el total por descripción dentro de la sucursal
+        // Acumular el gasto por descripción
         gastoPrincipalPorSucursal[sucursal] = gastoPrincipalPorSucursal[sucursal] || {};
         gastoPrincipalPorSucursal[sucursal][descripcion] = (gastoPrincipalPorSucursal[sucursal][descripcion] || 0) + total;
     });
 
-    // Calcular el total de todos los gastos para los porcentajes
+    // Calcular el total general de gastos
     const totalGastosGeneral = Object.values(totalGastosPorSucursal).reduce((acc, val) => acc + val, 0);
 
-    // Convertir el objeto a un array para poder ordenarlo
+    // Crear un array de ranking ordenado
     const rankingArray = Object.entries(totalGastosPorSucursal)
-        .map(([sucursal, total]) => ({ sucursal, total }))
+        .map(([sucursal, total]) => ({
+            sucursal,
+            total,
+            gastoPrincipal: Object.entries(gastoPrincipalPorSucursal[sucursal])
+                .reduce((a, b) => (a[1] > b[1] ? a : b))[0]
+        }))
         .sort((a, b) => b.total - a.total);
 
     // Crear y agregar elementos al DOM
     const fragment = document.createDocumentFragment();
-    rankingArray.forEach((item, index) => {
-        const { sucursal, total } = item;
-
-        // Encontrar la descripción con el mayor gasto en la sucursal
-        const gastosPorDescripcion = gastoPrincipalPorSucursal[sucursal];
-        const gastoPrincipal = Object.entries(gastosPorDescripcion).reduce((a, b) => a[1] > b[1] ? a : b)[0];
-
+    rankingArray.forEach(({ sucursal, total, gastoPrincipal }, index) => {
         // Calcular el porcentaje respecto al total general
         const porcentaje = totalGastosGeneral > 0 ? ((total / totalGastosGeneral) * 100).toFixed(2) : '0.00';
 
@@ -87,6 +86,7 @@ const mostrarRankingSucursales = (data) => {
 
     rankingList.appendChild(fragment);
 };
+
 
 const cargarGastos = async () => {
     try {
@@ -158,7 +158,7 @@ document.getElementById('total-gasto-importe').innerHTML = `<span style="color: 
 
 const actualizarPorcentajeCrecimiento = (data) => {
     // Dato fijo: importe del mes anterior
-    const gastoMesAnterior = 125479561.97;
+    const gastoMesAnterior = 133832672.99;
 
     // Calcular el total de gastos del mes actual
     const totalGastos = data.reduce((acc, { Total }) => acc + parseCurrency(Total), 0);
@@ -233,13 +233,13 @@ const mostrarGastosPorSucursal = (data, sucursalSeleccionada) => {
     totalSucursalDiv.textContent = `Total gastos de la sucursal: $ ${totalGastosSucursal.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 // Calcular resumenPorDescripcion
-const resumenPorDescripcion = gastosFiltrados.reduce((acc, { Descr: descr, Total: totalStr, SUCGCIA: Sucursal}) => {
+const resumenPorDescripcion = gastosFiltrados.reduce((acc, { Descr: descr, Total: totalStr, SUCGCIA: Sucursal }) => {
     const total = parseCurrency(totalStr);
     acc[descr] = acc[descr] || { total: 0, detalles: [] }; // Almacena total y detalles
     acc[descr].total += total;
 
     // Agregar detalles por sucursal
-    acc[descr].detalles.push({ sucursal: Sucursal, monto: total }); // Asegúrate de que `Sucursal` es el nombre correcto
+    acc[descr].detalles.push({ sucursal: Sucursal, monto: total}); // Asegúrate de que `Sucursal` es el nombre correcto
 
     return acc;
 }, {});
@@ -297,24 +297,29 @@ function crearResumenItem(descr, total, porcentajeGasto, iconMap, detalles) {
         <span class="gasto-descripcion">${icon} ${descr}</span>
         <span class="gasto-total">$ ${total.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         <span class="gasto-porcentaje">${porcentajeGasto}%</span>
-        <span class="gasto-porcentaje"><button class="toggle-detail"><i class="fa-solid fa-eye-low-vision"></i> Ver</button></span>
+        <span class="gasto-porcentaje"><button class="toggle-detail"><i class="fa fa-eye"></i> Ver</button></span>
         </div>
         <div class="sucursal-detail" style="display:none;"></div>
     `;
 
     // Evento de clic para mostrar/ocultar detalles de sucursales
-    li.querySelector('.toggle-detail').addEventListener('click', () => {
-        const detailDiv = li.querySelector('.sucursal-detail');
+    const toggleBtn = li.querySelector('.toggle-detail');
+    const detailDiv = li.querySelector('.sucursal-detail');
+
+    toggleBtn.addEventListener('click', () => {
         if (detailDiv.style.display === 'none') {
             mostrarDetallesSucursales(detalles, detailDiv); // Llenar detalles
             detailDiv.style.display = 'block'; // Mostrar el div
+            toggleBtn.innerHTML = `<i class="fa fa-eye-slash"></i> Ocultar`; // Cambiar ícono y texto
         } else {
             detailDiv.style.display = 'none'; // Ocultar el div
+            toggleBtn.innerHTML = `<i class="fa fa-eye"></i> Ver`; // Cambiar ícono y texto
         }
     });
 
     return li; // Retornar el elemento li completo
 }
+
 
 // Función para mostrar detalles de las sucursales agrupadas por tipo de gasto (descripción)
 function mostrarDetallesSucursales(detalles, detailDiv) {
@@ -343,9 +348,9 @@ function mostrarDetallesSucursales(detalles, detailDiv) {
         div.innerHTML = `
         <div class="sucursal-detail-one">
             <div>Suc. ${sucursal}</div> 
-            <div>Total Gastos: ${count}</div> 
-            <div>Importe Total: $ ${total.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-            <div><button class="toggle-detail-sucursal"><i class="fa fa-eye"></i> Ver Detalle</button></div>
+            <div>Cant. Gastos: ${count}</div> 
+            <div>Importe: $ ${total.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+            <div><button class="toggle-detail-sucursal"><i class="fa fa-eye"></i> Ver</button></div>
         </div>
         <div class="detalle-gastos" style="display:none;"></div> <!-- Div para los detalles individuales -->
         `;
@@ -357,14 +362,13 @@ function mostrarDetallesSucursales(detalles, detailDiv) {
         toggleBtn.addEventListener('click', () => {
             if (detalleDiv.style.display === 'none') {
                 detalleDiv.style.display = 'block'; // Mostrar detalles
-                toggleBtn.innerHTML = `<i class="fa fa-eye-slash"></i> Ocultar Detalle`; // Cambiar ícono
+                toggleBtn.innerHTML = `<i class="fa fa-eye-slash"></i> Ocultar`; // Cambiar ícono
                 mostrarGastosIndividuales(items, detalleDiv); // Mostrar los detalles de cada gasto individual
             } else {
                 detalleDiv.style.display = 'none'; // Ocultar detalles
-                toggleBtn.innerHTML = `<i class="fa fa-eye"></i> Ver Detalle`; // Cambiar ícono
+                toggleBtn.innerHTML = `<i class="fa fa-eye"></i> Ver`; // Cambiar ícono
             }
         });
-
         // Añadir el div al contenedor detailDiv
         detailDiv.appendChild(div);
     });
@@ -373,38 +377,15 @@ function mostrarDetallesSucursales(detalles, detailDiv) {
 function mostrarGastosIndividuales(gastos, detalleDiv) {
     // Limpiar el div antes de agregar los detalles
     detalleDiv.innerHTML = '';
-
     // Crear un fragmento para los gastos individuales
     const fragment = document.createDocumentFragment();
-
-    // Crear el encabezado de los gastos 
-    const headerDiv = document.createElement('div');
-    headerDiv.className = 'gasto-header';
-    headerDiv.innerHTML = `
-        <span>Suc.</span>
-        <span>Fecha</span>
-        <span>Comprobante</span>
-        <span>N° Factura</span>
-        <span>Monto</span>
-    `;
-    fragment.appendChild(headerDiv);
-
     // Agregar cada gasto individualmente
-    gastos.forEach(({ sucursal, monto, CategComprob, Factura, FechaFactura }) => { // Asegúrate de que Fecha esté en el objeto
+    gastos.forEach(({ sucursal, monto}) => { // Asegúrate de que Fecha esté en el objeto
         const gastoDiv = document.createElement('div');
         gastoDiv.className = 'gasto-item';
-
-        // Declarar las variables
-        const fechaGasto = FechaFactura || 'N/A'; // Usar 'N/A' si no hay fecha
-        const categoriaComprob = CategComprob || 'N/A'; // Usar 'N/A' si no hay categoría de comprobante
-        const facturaNum = Factura || 'N/A'; // Usar 'N/A' si no hay número de factura
-
         gastoDiv.innerHTML = `
-            <span>${sucursal}</span>
-            <span>${fechaGasto}</span>
-            <span>${categoriaComprob}</span>
-            <span>${facturaNum}</span>
-            <span>$ ${monto.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <span>Sucursal ${sucursal}</span>
+            <span>Importe $ ${monto.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         `;
         fragment.appendChild(gastoDiv);
     });
@@ -459,6 +440,7 @@ function mostrarGastosIndividuales(gastos, detalleDiv) {
     mostrarGastosLimitados();
     cargarMasBtn.onclick = mostrarGastosLimitados;
 };
+
 
 // Función para mostrar el tab correspondiente
 const showTab = (tabId) => {
