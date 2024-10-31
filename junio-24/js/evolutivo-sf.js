@@ -218,7 +218,7 @@ function loadChart() {
         },
         markers: {
             size: 4,
-            colors: ['#D50000', '#007bff'], // Color de los puntos para la línea del año anterior
+            colors: ['#D50000', '#003ad5'], // Color de los puntos para la línea del año anterior
             strokeColors: '#fff',
             strokeWidth: 4,
             hover: {
@@ -273,7 +273,7 @@ function loadChart() {
                 stops: [0, 90, 100]
             }
         },
-        colors: ['#D50000', '#007bff'], // Colores para las líneas
+        colors: ['#D50000', '#003ad5'], // Colores para las líneas
         
         annotations: {
             points: [

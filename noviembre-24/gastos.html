@@ -14,9 +14,6 @@
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="../css/styles.css">
     <script src="https://kit.fontawesome.com/9a289aa4a3.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -35,7 +32,6 @@
     </div>
 
     <div id="container-main">
-
         <div class="sidebar">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Logo_Supermercado_Coto.svg/1198px-Logo_Supermercado_Coto.svg.png"
                 alt="">
@@ -75,9 +71,7 @@
                 </div>
             </div>
         </div>
-
         <div class="dashboard-container">
-
             <section id="info">
                 <div class="info-item-fecha">
                     <div class="dropdown">
@@ -98,206 +92,119 @@
                 </div>
             </section>
 
-            <!-- Resumen de movimientos por mes/total -->
-
             <section id="info">
                 <div class="contenedor-movimientos">
                     <div class="icono">
                         <!-- Icono grande -->
-                        <b id="total-pendientes-conciliar">0</b>
+                        <b id="total-gastos">0</b>
                     </div>
                     <div class="info-movimientos">
                         <div class="texto-principal">
-                            <span class="pendientes-numero">Mov. A Conciliar pendientes</span>
+                            <span class="pendientes-numero">Total de Gastos</span>
                         </div>
                         <div class="importe-movimientos">
                             <!-- Importe de los movimientos pendientes -->
-                            <span id="total-importe-no-compensados-conciliar">0.00</span>
+                            <span id="total-gasto-importe">0.00</span>
                         </div>
                     </div>
                 </div>
-
                 <div class="contenedor-movimientos">
                     <div class="icono">
                         <!-- Icono grande -->
-                        <b id="total-pendientes-errores">0</b>
+                        <b id="promedio-gastos">0</b> 
                     </div>
                     <div class="info-movimientos">
                         <div class="texto-principal">
-                            <span class="pendientes-numero">EO. Sin Resolver pendientes</span>
+                            <span class="pendientes-numero">Promedio Sucursal</span>
                         </div>
                         <div class="importe-movimientos">
                             <!-- Importe de los movimientos pendientes -->
-                            <span id="total-importe-no-compensados-errores">0.00</span>
+                            <span id="promedio-gasto-importe">0.00</span> 
                         </div>
                     </div>
                 </div>
-
-                <div class="contenedor-movimientos tooltip-container">
-                    <div class="icono">
-                        <!-- Icono grande -->
-                        <b id="total-ajustes-resumen">0</b>
-                    </div>
-                    <div class="info-movimientos">
-                        <div class="texto-principal">
-                            <span class="pendientes-numero">Total Fallos de cajas</span>
-                        </div>
-                        <div class="importe-movimientos">
-                            <!-- Importe de los movimientos pendientes -->
-                            <span id="importe-total-ajustes-resumen">0.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div id="tooltip" class="tooltip" style="display:none;"></div>
-
                 <div class="contenedor-movimientos">
                     <div class="icono">
                         <!-- Icono grande -->
-                        <b id="total-pendientes-gastos">0</b>
+                        <b id="porcentajeee-gastos">0</b>  
                     </div>
                     <div class="info-movimientos">
                         <div class="texto-principal">
-                            <span class="pendientes-numero">Total Gastos</span>
-                        </div>
-                        <div class="importe-movimientos">
-                            <!-- Importe de los movimientos pendientes -->
-                            <span id="total-importe-no-compensados-gastos">0.00</span>
+                            <span class="pendientes-numero">Variación Mensual</span>
                         </div>
                     </div>
                 </div>
-
-            </section>
-
-            <section id="info">
-                <div class="info-item">
-                    <div class="layout-container">
-                        <div class="chart-container-sf">
-                            <div id="adjustment-summary">
-                                <span id="suc-no-venta-total">0</span> <span id="suc-venta-total">0</span>
-                            </div>
-                            <div id="chart"></div>
-                            <div id="clasificacion">
-                                <div id="prosegur-total" class="result-item">
-                                    Prosegur: 0 Ajustes - $0.00
-                                </div>
-
-                                <div id="redondeo-total" class="result-item">
-                                    Redondeo: 0 Ajustes - $0.00
-                                </div>
-
-                                <div id="operativo-total" class="result-item">
-                                    Operativo: 0 Ajustes - $0.00
-                                </div>
-
-                            </div>
+                <div class="contenedor-movimientos">
+                    <div class="icono">
+                        <!-- Icono grande -->
+                        <b id="sucursal-mayor-gasto">0</b>   
+                    </div>
+                    <div class="info-movimientos">
+                        <div class="texto-principal">
+                            <span class="pendientes-numero">Sucursal Top</span> 
                         </div>
-                        <div class="info-container">
-                            <div class="comparison"> Evolutivo</div>
-                            <h2 class="report-title">Ajustes Sobrantes<br>y Faltantes</h2>
-                            <div class="total-summary" id="total-adjustments"></div>
-                            <p class="total-error-importe-sf"></p>
-                            <div class="comparison">Prom. mes previo <span class="percentage-change"
-                                    id="change-percentage"></span></div>
-                            <div class="down-informe"><a id="generate-pdf"><i class="fa-regular fa-file-pdf"></i>
-                                    Descargar Informe</a>
-                            </div>
+                        <div class="suc-gastos">
+                            <!-- Importe de los movimientos pendientes -->
+                            <span id="importe-mayor-gasto">aqui el importe</span>   
                         </div>
                     </div>
                 </div>
             </section>
 
-            
-
             <section id="info">
                 <div class="info-item">
-                    <div class="container-index">
-                        <div class="text-section">
-                            <div class="comparison"> Evolutivo</div>
-                            <div class="title">
-                                <h2>EO. Sin Resolver</h2>
-                            </div>
-                            <div class="total-errors" id="total-errors"></div>
-                            <p class="total-error-importe"><b id="total-error-importes"></b></p>
-                            <p class="total-error-importe"><b id="total-error-resuelto-importes"></b></p>
-                            <div class="comparison">Prom. mes previo <b id="comparison"></b></div>
-                        </div>
-                        <div class="chart-container">
-                            <div id="errorChart"></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="info-item">
-                    <div class="container-index">
-                        <div class="text-section">
-                            <div class="comparison"> Evolutivo</div>
-                            <div class="title">
-                                <h2>Mov. a Conciliar</h2>
-                            </div>
-                            <div class="total-errors" id="total-movimientos-i"></div>
-                            <p class="total-importe"><b id="total-importes"></b></p>
-                            <p class="total-error-importe"><b id="total-movimientos-conciliados-importes"></b></p>
-                            <div class="comparison">Prom. mes previo <b id="comparison-movimientos"></b>
-                            </div>
-                        </div>
-                        <div class="chart-container">
-                            <div id="movimientoChart"></div>
-                        </div>
+                    <div class="container-chart">
+                        <div class="comparison">Evolutivo</div>
+                        <h2>Gastos</h2>
+                        <div id="chartGastos" style="width:98%"></div>
                     </div>
+                    
+                </div>
             </section>
 
             <section id="info">
                 <div class="info-item">
-                    <div class="container">
-                        <div class="comparison">Sucursales con mas</div>
-                        <h2>Errores Operativos Sin Resolver</h2>
-
-                        <div class="header">
-                            <div>#</div>
-                            <div>Suc</div>
-                            <div>T. Errores</div>
-                            <div>Legajo</div>
-                            <div>Errores</div>
-                            <div>Observacion</div>
+                    <!-- Columna 1: Resumen por Sucursal -->
+                    <div id="columna-resumen">
+                        <div id="sucursal-container">
+                            <br><br>
+                            <label for="sucursal-select"></label>
+                            <select id="sucursal-select">
+                                <option value="todas">Todas las sucursales</option>
+                            </select>
                         </div>
-                        <div id="top-errores">
-                            <!-- Aquí se insertarán las filas -->
-                        </div>
-                        <button id="mostrar-mas">Ver más</button>
-                        <a href="#" id="enlace-exportar-errores" title="Exportar a Excel">
-                            <i class="fa-solid fa-file-excel"></i> Generar Reporte
-                        </a>
+                        <br>
+                        <h2>Resumen por Sucursal: <span id="nombre-sucursal">Todas</span></h2>
+                        <div id="total-sucursal"></div>
+                        <div id="porcentaje-gastos"></div>
 
+                        <ul id="resumen-list">
+                            <!-- Resumen por descripción se mostrará aquí -->
+                        </ul>
                     </div>
                 </div>
+
                 <div class="info-item">
-                    <div class="container">
-                        <div class="comparison">Sucursales con mas</div>
-
-                        <h2>Fallos de Caja - Sobrante / Faltante</h2>
-
-                        <div class="header">
-                            <div>#</div>
-                            <div>Suc</div>
-                            <div>T. Errores</div>
-                            <div>Legajo</div>
-                            <div>Errores</div>
-                            <div>Observacion</div>
-                            <div id="observacion" class="observacion">
-                                <button id="cerrar-observacion" class="cerrar-observacion">&times;</button>
-                            </div>
-
-                        </div>
-                        <div id="top-fallos">
-                            <!-- Las filas generadas por el script JavaScript aparecerán aquí -->
-                        </div>
-                        <button id="mostrar-mas-i">Ver más</button>
-                        <a href="#" id="enlace-exportar-fallos" title="Exportar a Excel">
-                            <i class="fa-solid fa-file-excel"></i> Generar Reporte
-                        </a>
-
-
+                    <div class="tabs">
+                        <button class="tab-button" onclick="showTab('ranking-sucursales')">Ranking de
+                            Sucursales</button>
+                        <button class="tab-button" onclick="showTab('columna-gastos')">Desglose de Gastos</button>
                     </div>
+
+                    <div id="ranking-sucursales" class="tab-content">
+
+                        <div id="ranking-list"></div>
+                    </div>
+
+                    <div id="columna-gastos" class="tab-content">
+
+                        <div id="top-gastos" class="gastos-list">
+                            <!-- Aquí se cargarán los gastos -->
+                        </div>
+                        <button id="mostrar-mas-i">Mostrar más</button>
+                    </div>
+
                 </div>
             </section>
 
@@ -330,18 +237,10 @@
         </div>
     </div>
 
-    <script src="js/scripts.js"></script>
-    <script src="js/api.js" type="module" async></script>
     <script src="js/top-axi.js" type="module" async></script>
-    <script src="js/resumen.js" type="module" async></script>
-    <script src="js/resumen-gastos.js" type="module" async></script>
-    <script src="js/resumen-fallo.js" type="module" async></script>
-    <script src="js/top-eo.js" type="module" async></script>
+    <script src="js/gastos.js" type="module" async></script>
     <script src="js/evolutivo-gastos.js" type="module" async></script>
-    <script src="js/evolutivo-sf.js" type="module" async></script>
-
-    <script src="js/evolutivo-eo-mac.js" type="module" async></script>
-    <script src="js/top-fallos.js" type="module" async></script>
+    <script src="js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.0/dist/xlsx.full.min.js"></script>
     <script type="module">

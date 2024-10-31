@@ -167,7 +167,7 @@ const obtenerDatos = async () => {
             },
             markers: {
                 size: 4, // Tamaño de los puntos
-                colors: ['#D50000', '#007bff'], // Color de los puntos
+                colors: ['#D50000', '#003ad5'], // Color de los puntos
                 strokeColors: '#fff', // Color del borde de los puntos
                 strokeWidth: 4,
                 hover: {
@@ -186,7 +186,7 @@ const obtenerDatos = async () => {
                 stops: [0, 90, 100]
             }
             },
-            colors: ['#D50000', '#007bff'],
+            colors: ['#D50000', '#003ad5'],
             grid: {
                 show: true,
                 borderColor: '#e0e0e0',
@@ -280,7 +280,7 @@ const obtenerDatos = async () => {
             },
             markers: {
                 size: 4, // Tamaño de los puntos
-                colors: ['#D50000', '#007bff'], // Color de los puntos
+                colors: ['#D50000', '#003ad5'], // Color de los puntos
                 strokeColors: '#fff', // Color del borde de los puntos
                 strokeWidth: 4,
                 hover: {
@@ -296,7 +296,7 @@ const obtenerDatos = async () => {
                 stops: [0, 90, 100]
             }
             },
-            colors: ['#D50000', '#007bff'],
+            colors: ['#D50000', '#003ad5'],
             grid: {
                 show: true,
                 borderColor: '#e0e0e0',

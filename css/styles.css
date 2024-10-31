@@ -373,7 +373,7 @@ template {
 body {
     font-family: "Ubuntu", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 400;
+    font-weight: 450;
     font-size: 15.5px;
     /* Base size */
     font-style: normal;
@@ -568,9 +568,8 @@ h2 {
 .chart-container {
     flex: 1;
     text-align: right;
-    margin-top: -20px;
-    height: 145px;
-    width: 100% !important;
+    /*margin-top: -20px;*/
+    /*height: 145px;*/
 }
 
 .title {
@@ -597,8 +596,8 @@ h2 {
     color: #ffffff;
     background: #0060fb;
     border-radius: 5px;
-    padding: 3px 10px;
-    margin-left: 7px;
+    padding: 3px 5px;
+    margin-left: 5px;
 }
 
 canvas {
@@ -901,7 +900,7 @@ p {
 }
 
 .observacion a {
-    color: #007bff;
+    color: #003ad5;
     text-decoration: none;
 }
 
@@ -1083,6 +1082,7 @@ hr {
 .container {
     text-align: left;
     width: 100% !important;
+    padding: 10px 0 0 0;
 }
 
 
@@ -1254,7 +1254,7 @@ i.fa-solid.fa-triangle-exclamation {
     }
 
     .chart-container {
-        height: 300px;
+        /*height: 300px;*/
     }
 }
 
@@ -1272,7 +1272,7 @@ i.fa-solid.fa-triangle-exclamation {
     }
 
     .chart-container {
-        height: 250px;
+        /*height: 250px;*/
     }
 }
 
@@ -1369,7 +1369,7 @@ i.fa-solid.fa-file-csv {
 .perfil-container {
     display: flex;
     align-items: center;
-    margin: 30px;
+    margin: 0 40px 10px 40px;
     background-color: #1c1b1b;
     padding: 15px;
     border-radius: 5px;
@@ -1766,7 +1766,7 @@ a.fallo-comparison {
 .top-empleados ul li i,
 .errores-codigo ul li i {
     margin-right: 10px;
-    color: #007bff;
+    color: #003ad5;
 }
 
 ul {
@@ -1814,7 +1814,7 @@ ul {
 
 .card ul li i {
     margin-right: 5px;
-    color: #007bff;
+    color: #003ad5;
 }
 
 .card b {
@@ -1888,7 +1888,7 @@ i.fa-solid.fa-circle-user {
     /* Espaciado interno */
     font-size: 1.2em;
     /* Tamaño del texto */
-    border: 2px solid #007bff;
+    border: 2px solid #003ad5;
     /* Borde con color primario */
     border-radius: 8px;
     /* Bordes redondeados */
@@ -2160,7 +2160,7 @@ a.ver-obs {
 /* Efecto hover y focus */
 #searchInputNoCompensados:hover,
 #searchInputNoCompensados:focus {
-    border-color: #007BFF;
+    border-color: #003ad5;
     box-shadow: 0 6px 12px rgba(0, 123, 255, 0.2);
     background-color: #fff;
 }
@@ -2371,7 +2371,7 @@ i.fa-solid.fa-chart-simple {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #007bff;
+    background-color: #003ad5;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -2579,9 +2579,6 @@ button.toggle-detail:hover {
     margin-top: 10px;
 }
 
-.gasto-resumen-item {
-}
-
 .divfg {
     display: flex;
     justify-content: space-between;
@@ -2711,7 +2708,7 @@ div.sucursal-detail-one div {
     bottom: 20px;
     right: 20px;
     padding: 10px 15px;
-    background-color: #007bff;
+    background-color: #003ad5;
     color: white;
     border: none;
     border-radius: 5px;
@@ -2751,11 +2748,11 @@ div.sucursal-detail-one div {
 
 #solicitudForm input:focus,
 #solicitudForm select:focus {
-    border-color: #007bff;
+    border-color: #003ad5;
 }
 
 #solicitudForm button {
-    background-color: #007bff;
+    background-color: #003ad5;
     color: white;
     border: none;
     width: 100%;
@@ -3074,7 +3071,7 @@ form {
     padding: 10px 15px;
     font-size: 16px;
     color: #fff;
-    background-color: #007BFF;
+    background-color: #003ad5;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -3123,7 +3120,7 @@ button.formButton {
 /* Estilo para enfoque (focus) en campos de formulario */
 .formGroup input:focus,
 .formGroup select:focus {
-    border-color: #007BFF;
+    border-color: #003ad5;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
     outline: none;
 }
