@@ -3,7 +3,7 @@
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 // Configuración de Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyBjDElF__Bcgo137GGf6hPRXhEp4BatD10",
+    apiKey: "process.env.FIREBASE_API_KEY",
     authDomain: "recaudaciones-26766.firebaseapp.com",
     projectId: "recaudaciones-26766",
     storageBucket: "recaudaciones-26766.appspot.com",

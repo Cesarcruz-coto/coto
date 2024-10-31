@@ -22,6 +22,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
+        <script>
+            // Eliminar luego de dos dias
+            window.location.href = "../octubre-24/inicio.html";
+        </script>
 </head>
 
 <body>
@@ -351,7 +355,7 @@
 
         // Configuración de Firebase
         const firebaseConfig = {
-            apiKey: "AIzaSyBjDElF__Bcgo137GGf6hPRXhEp4BatD10",
+            apiKey: "process.env.FIREBASE_API_KEY",
             authDomain: "recaudaciones-26766.firebaseapp.com",
             projectId: "recaudaciones-26766",
             storageBucket: "recaudaciones-26766.appspot.com",
