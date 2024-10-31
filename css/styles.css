@@ -3053,8 +3053,8 @@ select#filterZona:hover {
 }
 
 img.employeePhoto {
-    width: 150px;
-    height: 199px;
+    width: 20%;
+    /*height: 199px;*/
     object-fit: cover;
     border-radius: var(--border-radius);
     margin-right: 20px;
