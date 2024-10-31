@@ -1,0 +1,16 @@
+name: Firebase Deploy
+
+on:
+  push:
+    branches:
+      - main  # Esto ejecutará el flujo de trabajo en cada push a la rama "main"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Firebase Config
+        env: FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
