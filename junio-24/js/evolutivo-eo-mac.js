@@ -104,12 +104,16 @@ const obtenerDatos = async () => {
         // Mostrar gráficos con ApexCharts
         const errorChartOptions = {
             series: [{
-                name: 'Errores Operativos',
+                name: '2024',
                 data: [
                     calcularDatosErrores(dataErroresJulio).cantidadErrores,
                     calcularDatosErrores(dataErroresAgosto).cantidadErrores,
                     cantidadErroresActual
-                ]
+                ],
+            },
+            {
+                name: '2023',
+                data: [2431, 2522, 2531] // Datos para AGO, SEP, OCT
             }],
             chart: {
                 type: 'area',
@@ -129,7 +133,7 @@ const obtenerDatos = async () => {
                 },   
             },
             xaxis: {
-                categories: ['Jun', 'Jun', 'Jun'],
+                categories: ['Abr', 'May', 'Jun'],
                 labels: {
                     show: false // Ocultar etiquetas del eje x
                 },
@@ -163,12 +167,15 @@ const obtenerDatos = async () => {
             },
             markers: {
                 size: 4, // Tamaño de los puntos
-                colors: ['#3333ff'], // Color de los puntos
+                colors: ['#D50000', '#007bff'], // Color de los puntos
                 strokeColors: '#fff', // Color del borde de los puntos
                 strokeWidth: 4,
                 hover: {
                     size: 8 // Tamaño del punto al pasar el mouse
                 }
+            },
+            legend: {
+                show: false
             },
             fill: {
                 type: 'gradient',
@@ -179,9 +186,24 @@ const obtenerDatos = async () => {
                 stops: [0, 90, 100]
             }
             },
-            colors: ['#3333ff'],
+            colors: ['#D50000', '#007bff'],
             grid: {
-                show: false // Ocultar líneas de la cuadrícula
+                show: true,
+                borderColor: '#e0e0e0',
+                strokeDashArray: 5,
+                xaxis: {
+                    lines: {
+                        show: true
+                    }
+                },
+                yaxis: {
+                    lines: {
+                        show: false
+                    }
+                }
+            },
+            tooltip: {
+                theme: 'dark'
             },
             toolbar: {
                 show: false // Ocultar menú de descarga
@@ -191,13 +213,18 @@ const obtenerDatos = async () => {
 
         const movimientoChartOptions = {
             series: [{
-                name: 'Movimientos A Conciliar',
+                name: '2024',
                 data: [
                     calcularDatosMovimientos(dataMovimientosJulio).cantidadMovimientos,
                     calcularDatosMovimientos(dataMovimientosAgosto).cantidadMovimientos,
                     cantidadMovimientosActual
                 ]
-            }],
+            },
+            {
+                name: '2023',
+                data: [531, 547, 654] // Datos para AGO, SEP, OCT
+            }
+        ],
             chart: {
                 type: 'area',
                 
@@ -216,7 +243,7 @@ const obtenerDatos = async () => {
                 },   
             },
             xaxis: {
-                categories: ['Jun', 'Jun', 'Jun'],
+                categories: ['Abr', 'May', 'Jun'],
                 labels: {
                     show: false // Ocultar etiquetas del eje x
                 },
@@ -248,9 +275,12 @@ const obtenerDatos = async () => {
                 curve: 'straight',
                 width: 3
             },
+            legend: {
+                show: false
+            },
             markers: {
                 size: 4, // Tamaño de los puntos
-                colors: ['#3333ff'], // Color de los puntos
+                colors: ['#D50000', '#007bff'], // Color de los puntos
                 strokeColors: '#fff', // Color del borde de los puntos
                 strokeWidth: 4,
                 hover: {
@@ -266,15 +296,24 @@ const obtenerDatos = async () => {
                 stops: [0, 90, 100]
             }
             },
-            colors: ['#3333ff'],
+            colors: ['#D50000', '#007bff'],
             grid: {
-                show: false, // Ocultar líneas de la cuadrícula
-                padding: {
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                  },
+                show: true,
+                borderColor: '#e0e0e0',
+                strokeDashArray: 5,
+                xaxis: {
+                    lines: {
+                        show: true
+                    }
+                },
+                yaxis: {
+                    lines: {
+                        show: false
+                    }
+                }
+            },
+            tooltip: {
+                theme: 'dark'
             },
             toolbar: {
                 show: false // Ocultar menú de descarga

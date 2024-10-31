@@ -4,15 +4,18 @@ const apiURL = apis.apiAjusteSFActual;
 
 // Datos fijos por mes
 const monthlyData = {
-    'Enero': 1970,
-    'Febrero': 1817,
-    'Marzo': 1862,
-    'Abril': 2286,
-    'Mayo': 2053,
-    'Junio': 1304,
-    'Julio': 594,
-    'Agosto': 386
+    'Enero': 2196,
+    'Febrero': 1815,
+    'Marzo': 1859,
+    'Abril': 2284,
+    'Mayo': 2044,
+    'Junio': 1299,
+    'Julio': 591,
+    'Agosto': 387
 };
+
+// Datos del año anterior
+const previousYearData = [2229, 1814, 1744, 1574, 1625, 1616, 1604, 1731, 1538];
 
 // Lista de sucursales de no venta
 const sucursalesNoVenta = [50, 79, 93, 193, 229, 231, 507];
@@ -171,47 +174,58 @@ Operativo: ${cantidadOperativo} Ajustes <br>
 
 // Función para inicializar o actualizar el gráfico con ApexCharts
 function loadChart() {
-
     const monthAbbreviations = months.map(month => {
         return month.slice(0, 3); // Abreviar los primeros 3 caracteres de cada mes
     });
 
+    // Calcular los porcentajes de diferencia
+    const percentageDifferences = cmovimientos.map((current, index) => {
+        const previous = previousYearData[index];
+        const difference = ((current - previous) / previous) * 100; // Cálculo del porcentaje
+        return difference.toFixed(2) + '%'; // Formatear a dos decimales
+    });
+
     var options = {
-        series: [{
-            name: 'Cantidad de Ajustes',
-            data: cmovimientos
-        }],
+        series: [
+            {
+                name: 'Ajustes - 2024',
+                data: cmovimientos
+            },
+            {
+                name: 'Ajustes - 2023',
+                data: previousYearData // Agregar los datos del año anterior
+            }
+        ],
         chart: {
             height: 300,
-
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
             animations: {
-                enabled: true,     // Asegúrate de que esté en true
-                easing: 'easeinout',  // Cambia a 'easeinout' para una transición más suave
-                speed: 5000,       // Incrementa el tiempo de animación si es necesario
+                enabled: true,
+                easing: 'easeinout',
+                speed: 5000,
                 animateGradually: {
                     enabled: true,
-                    delay: 150      // Retardo entre la aparición de cada punto
+                    delay: 150
                 },
                 dynamicAnimation: {
-                    speed: 1000    // Duración de la animación dinámica (cuando cambia el gráfico)
+                    speed: 1000
                 }
             },
         },
         dataLabels: { enabled: false },
         stroke: {
-            curve: 'straight',
+            curve: 'straight', // Cambia a 'smooth' para una transición más suave entre los puntos
             width: 3,
         },
         markers: {
-            size: 4, // Tamaño de los puntos
-            colors: ['#D50000'], // Color de los puntos
-            strokeColors: '#fff', // Color del borde de los puntos
+            size: 4,
+            colors: ['#D50000', '#007bff'], // Color de los puntos para la línea del año anterior
+            strokeColors: '#fff',
             strokeWidth: 4,
             hover: {
-                size: 8 // Tamaño del punto al pasar el mouse
+                size: 8
             }
         },
         xaxis: {
@@ -228,23 +242,28 @@ function loadChart() {
         grid: {
             show: true,
             borderColor: '#e0e0e0',
-            strokeDashArray: 5, // Líneas en puntos
+            strokeDashArray: 5,
             xaxis: {
                 lines: {
-                    show: true // Solo líneas verticales
+                    show: true
                 }
             },
             yaxis: {
                 lines: {
-                    show: false // Solo líneas verticales
+                    show: false
                 }
             }
+        },
+        legend: {
+            show: false
         },
         tooltip: {
             theme: 'dark',
             y: {
-                formatter: function (value) {
-                    return `${value}`;
+                formatter: function (value, { seriesIndex, dataPointIndex }) {
+                    const year = seriesIndex === 0 ? '2024' : '2023'; // Determinar el año
+                    const percentage = percentageDifferences[dataPointIndex]; // Obtener el porcentaje correspondiente
+                    return `${value} *${percentage}`; // Mostrar el valor y el porcentaje
                 }
             }
         },
@@ -257,14 +276,13 @@ function loadChart() {
                 stops: [0, 90, 100]
             }
         },
-        colors: ['#D50000'],
-
-        // Anotaciones de texto dentro del gráfico
+        colors: ['#D50000', '#007bff'], // Colores para las líneas
+        
         annotations: {
             points: [
                 {
-                    x: 'Jun', // Asegúrate de que el valor coincida con las categorías abreviadas
-                    y: 1304, // Verifica que este valor esté dentro del rango de los datos
+                    x: 'Jun',
+                    y: 1304,
                     marker: {
                         size: 0,
                         fillColor: '#D50000',
@@ -278,7 +296,7 @@ function loadChart() {
                             color: '#fff',
                             background: '#D50000'
                         },
-                        text: 'Norma 91 - Movimientos Compensatorios'
+                        text: 'Norma 91'
                     }
                 }
             ]
@@ -288,6 +306,7 @@ function loadChart() {
     var chart = new ApexCharts(document.querySelector("#chart"), options);
     chart.render();
 }
+
 
 
 function generatePDF() {
