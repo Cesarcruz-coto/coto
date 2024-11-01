@@ -648,46 +648,12 @@ canvas {
     font-size: 0.9em;
     font-weight: 400;
     cursor: pointer;
-    transition: 1s;
+    position:relative;
+    transition: all .5s ease-in-out;
     border-radius: 5px;
     margin: 5px 0;
     /* clip-path: polygon(5% 0%, 90% 20%, 50% 80%, 10% 100%, 10% 85%); */
 }
-
-.sidebar li ul {
-    display:none;
-}
-
-.sidebar li:hover > ul {
-    display: block;
-    animation-name: menu-1;
-    animation-duration: 0.5s;
-}
-
-.sidebar li ul li {
-    position:relative;
-    transition: all .5s ease-in-out;
-}
-
-.sidebar ul li ul li {
-    margin-top: 10px;
-    width: 120%;
-}
-
-.sidebar li ul li:hover {
-    box-shadow: inset 400px 0 0 0 #003ad5;
-}  
-
-  @keyframes menu-1 {
-    0% {
-      opacity: 0;
-      transform: translateY(100%);
-    }
-    100% {
-      opacity: 11;
-      transform: translateY(0%);
-    }
-  }
 
 .sidebar ul a {
     color: #ffffff;
@@ -703,7 +669,7 @@ canvas {
 }
 
 .sidebar ul li:hover {
-    background-color: #202020;
+    box-shadow: inset 400px 0 0 0 #003ad5;
 }
 
 .sidebar ul li.active {
@@ -2122,8 +2088,7 @@ a.ver-obs {
 }
 
 .dropdown-content a:hover {
-    box-shadow: inset 300px 0 0 0 #ed0000;
-    color: #fff;
+    box-shadow: inset 300px 0 0 0 #e9e9e9;
 }
 
 .dropdown:hover .dropdown-content {

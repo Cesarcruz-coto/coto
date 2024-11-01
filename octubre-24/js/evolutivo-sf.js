@@ -12,7 +12,7 @@ const monthlyData = {
     'Junio': 1299,
     'Julio': 591,
     'Agosto': 387,
-    'Septiembre': 354
+    'Septiembre': 353
 };
 
 // Datos del año anterior
