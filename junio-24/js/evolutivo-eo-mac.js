@@ -101,6 +101,7 @@ const obtenerDatos = async () => {
         const signoMovimientos = diferenciaMovimientos > 0 ? "+" : "";
         document.getElementById('comparison-movimientos').innerText = `${signoMovimientos} ${porcentajeCambioMovimientos}%`;
 
+        
         // Mostrar gráficos con ApexCharts
         const errorChartOptions = {
             series: [{

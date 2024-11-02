@@ -15,9 +15,6 @@ const monthlyData = {
     'Septiembre': 353
 };
 
-// Datos del año anterior
-const previousYearData = [2229, 1814, 1744, 1574, 1625, 1616, 1604, 1731, 1538, 1767];
-
 // Lista de sucursales de no venta
 const sucursalesNoVenta = [50, 79, 93, 193, 229, 231, 507];
 
@@ -172,6 +169,8 @@ Operativo: ${cantidadOperativo} Ajustes <br>
     })
     .catch(error => console.error('Error al obtener los datos:', error));
 
+    // Datos del año anterior
+const previousYearData = [2229, 1814, 1744, 1574, 1625, 1616, 1604, 1731, 1538, 1767];
 
 // Función para inicializar o actualizar el gráfico con ApexCharts
 function loadChart() {
@@ -179,22 +178,21 @@ function loadChart() {
         return month.slice(0, 3); // Abreviar los primeros 3 caracteres de cada mes
     });
 
-    // Calcular los porcentajes de diferencia
     const percentageDifferences = cmovimientos.map((current, index) => {
         const previous = previousYearData[index];
-        const difference = ((current - previous) / previous) * 100; // Cálculo del porcentaje
+        const difference = ((current - previous) / previous) * 100; // Cálculo del porcentaje de 2024 vs 2023
         return difference.toFixed(2) + '%'; // Formatear a dos decimales
     });
 
     var options = {
         series: [
             {
-                name: 'Ajustes - 2024',
-                data: cmovimientos
-            },
-            {
                 name: 'Ajustes - 2023',
                 data: previousYearData // Agregar los datos del año anterior
+            },
+            {
+                name: 'Ajustes - 2024',
+                data: cmovimientos
             }
         ],
         chart: {
@@ -218,11 +216,12 @@ function loadChart() {
         dataLabels: { enabled: false },
         stroke: {
             curve: 'straight', // Cambia a 'smooth' para una transición más suave entre los puntos
-            width: 3,
+            width: [3, 3],
+            dashArray: [0, 0]
         },
         markers: {
             size: 4,
-            colors: ['#D50000', '#003ad5'], // Color de los puntos para la línea del año anterior
+            colors: ['#003ad5', '#D50000'], // Color de los puntos para la línea del año anterior
             strokeColors: '#fff',
             strokeWidth: 4,
             hover: {
@@ -262,9 +261,15 @@ function loadChart() {
             theme: 'dark',
             y: {
                 formatter: function (value, { seriesIndex, dataPointIndex }) {
-                    const year = seriesIndex === 0 ? '2024' : '2023'; // Determinar el año
-                    const percentage = percentageDifferences[dataPointIndex]; // Obtener el porcentaje correspondiente
-                    return `${value} *${percentage}`; // Mostrar el valor y el porcentaje
+                    let result = `${value}`; // Mostrar solo el valor por defecto
+                    
+                    // Mostrar el porcentaje solo para 2024 y 2025
+                    if (seriesIndex === 1) { // Para 2024
+                        const percentage = percentageDifferences[dataPointIndex]; // Obtener el porcentaje de 2024 vs 2023
+                        result += ` (${percentage})`; // Agregar el porcentaje
+                    }
+    
+                    return result;
                 }
             }
         },
@@ -277,13 +282,13 @@ function loadChart() {
                 stops: [0, 90, 100]
             }
         },
-        colors: ['#D50000', '#003ad5'], // Colores para las líneas
+        colors: ['#003ad5', '#D50000'], // Colores para las líneas
         
         annotations: {
             points: [
                 {
                     x: 'Jun',
-                    y: 1304,
+                    y: 1304, // Asegúrate de que este valor esté en el rango del gráfico
                     marker: {
                         size: 0,
                         fillColor: '#D50000',
@@ -302,6 +307,8 @@ function loadChart() {
                 }
             ]
         }
+        
+        
     };
 
     var chart = new ApexCharts(document.querySelector("#chart"), options);

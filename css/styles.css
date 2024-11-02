@@ -1218,10 +1218,6 @@ i.fa-solid.fa-triangle-exclamation {
     .percentage-change {
         font-size: 1.4em;
     }
-
-    .chart-container {
-        /*height: 300px;*/
-    }
 }
 
 @media (max-width: 480px) {
@@ -1235,10 +1231,6 @@ i.fa-solid.fa-triangle-exclamation {
 
     .percentage-change {
         font-size: 1.2em;
-    }
-
-    .chart-container {
-        /*height: 250px;*/
     }
 }
 
