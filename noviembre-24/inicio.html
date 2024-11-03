@@ -152,11 +152,23 @@
             </section>
 
             <section id="info">
-                <div class="info-item">
+                <div class="info-item-ajustesf">
+                    <div class="info-container">
+                        <h2 class="report-title">Ajustes Sobrantes y Faltantes</h2>
+                        <div class="down-informe"><a id="generate-pdf"><i class="fa-regular fa-file-pdf"></i>
+                                Descargar Informe</a> </div>
+                    </div>
                     <div class="layout-container">
                         <div class="chart-container-sf">
                             <div id="adjustment-summary">
-                                <span id="suc-no-venta-total">0</span> <span id="suc-venta-total">0</span>
+
+                            <span><p class="total-summary" id="total-adjustments"></p>
+                                <p class="total-error-importe-sf"></p>
+                                <p class="comparison">Prom. mes previo <span class="percentage-change"
+                                        id="change-percentage"></span></p></span>
+                                <span id="suc-no-venta-total">0</span>
+                                <span id="suc-venta-total">0</span>
+
                             </div>
                             <div id="chart"></div>
                             <div id="clasificacion">
@@ -174,22 +186,20 @@
 
                             </div>
                         </div>
-                        <div class="info-container">
-                            <div class="comparison"> Evolutivo</div>
-                            <h2 class="report-title">Ajustes Sobrantes<br>y Faltantes</h2>
-                            <div class="total-summary" id="total-adjustments"></div>
-                            <p class="total-error-importe-sf"></p>
-                            <div class="comparison">Prom. mes previo <span class="percentage-change"
-                                    id="change-percentage"></span></div>
-                            <div class="down-informe"><a id="generate-pdf"><i class="fa-regular fa-file-pdf"></i>
-                                    Descargar Informe</a>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="info-item">
+                    <div id="resumen-codigo-3"></div>
+                    <div id="resumen-codigo-2"></div>
+                    <div id="resumen-codigo-1"></div>
+                    <div id="resumen-codigo-digital"></div>
                 </div>
             </section>
 
-            
+            <div id="detalle-fallo-panel" class="detalle-panel oculto">
+                <button onclick="cerrarPanelDetalle()">Cerrar</button>
+                <div id="detalle-fallo-contenido"></div>
+            </div>
 
             <section id="info">
                 <div class="info-item">
@@ -322,7 +332,7 @@
     <script src="js/top-eo.js" type="module" async></script>
     <script src="js/evolutivo-gastos.js" type="module" async></script>
     <script src="js/evolutivo-sf.js" type="module" async></script>
-
+    <script src="js/fallos-codigos.js" type="module" async></script>
     <script src="js/evolutivo-eo-mac.js" type="module" async></script>
     <script src="js/top-fallos.js" type="module" async></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
