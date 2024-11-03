@@ -5,14 +5,14 @@ const codigos = [3, 2, 1, 'digital']; // Agregamos el nuevo código "digital"
 async function obtenerFallosDeCodigo() {
     try {
         const respuesta = await fetch(apis.apiFallosActual);
+        if (!respuesta.ok) throw new Error('Error en la respuesta de la API');
         const datos = await respuesta.json();
 
-        // Inicializar un objeto para almacenar los resultados
         const resumen = {
             3: { total: 0, faltantes: 0, sobrantes: 0, fallos: [] },
             2: { total: 0, faltantes: 0, sobrantes: 0, fallos: [] },
             1: { total: 0, faltantes: 0, sobrantes: 0, fallos: [] },
-            digital: { total: 0, faltantes: 0, sobrantes: 0, fallos: [] } // Nuevo código digital
+            digital: { total: 0, faltantes: 0, sobrantes: 0, fallos: [] }
         };
 
         // Procesar cada movimiento
@@ -20,9 +20,22 @@ async function obtenerFallosDeCodigo() {
             const importe = parseFloat(mov.Importe.replace(/[^0-9,-]+/g, '').replace(',', '.'));
             const codigoData = obtenerCodigo(importe, mov.Motivo);
 
-            if (codigos.includes(codigoData.codigo)) {
+            // Si el motivo contiene "pedido", asignar solo al código "digital"
+            if (mov.Motivo.toLowerCase().includes('pedido')) {
+                if (codigoData.codigo === 'digital') {
+                    resumen.digital.total += 1;
+                    resumen.digital.fallos.push(mov);
+                    if (mov.TAjuste === 'Fallo De Caja - Faltante') {
+                        resumen.digital.faltantes += importe;
+                    } else if (mov.TAjuste === 'Fallo De Cajas - Sobrante') {
+                        resumen.digital.sobrantes += importe;
+                    }
+                }
+            }
+            // Para códigos 3, 2 y 1, verificar que el motivo sea "CAJAS"
+            else if (mov.Motivo === 'CAJAS' && [3, 2, 1].includes(codigoData.codigo)) {
                 resumen[codigoData.codigo].total += 1;
-                resumen[codigoData.codigo].fallos.push(mov); // Guardar cada fallo en el resumen
+                resumen[codigoData.codigo].fallos.push(mov);
                 if (mov.TAjuste === 'Fallo De Caja - Faltante') {
                     resumen[codigoData.codigo].faltantes += importe;
                 } else if (mov.TAjuste === 'Fallo De Cajas - Sobrante') {
@@ -31,7 +44,6 @@ async function obtenerFallosDeCodigo() {
             }
         });
 
-        // Mostrar los resultados en los divs
         mostrarResumen(resumen);
 
     } catch (error) {
@@ -79,7 +91,6 @@ window.abrirPanelDetalle = (codigo) => {
         <h3>Detalle de los Fallos - Código ${codigo}</h3>
         <div class="header-ii">
         <div>Suc</div>
-        <div>Empleado</div>
             <div>Fecha</div>
             <div>Fallo</div>
             <div>Importe</div>
@@ -98,7 +109,6 @@ window.abrirPanelDetalle = (codigo) => {
                 return `
                     <div class="row fade-in">
                     <div>${fallo.Suc}</div>
-                    <div>${fallo.Empleado}</div>
                         <div>${fallo.Fecha}</div>
                         <div>${fallo.TAjuste}</div>
                         <div>$${importe.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}<br>
