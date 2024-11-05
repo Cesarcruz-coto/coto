@@ -1,88 +1,165 @@
 import { apis } from './api.js';
-const codigos = [3]; // Solo nos interesa el código 3
+const codigos = [3, 2, 1]; // Lista de códigos
 
 // Función principal para obtener y procesar los fallos
 async function obtenerFallosDeCodigo() {
     try {
         const respuesta = await fetch(apis.apiFallosActual);
+        if (!respuesta.ok) throw new Error('Error en la respuesta de la API');
         const datos = await respuesta.json();
 
-        // Filtrar solo los fallos con código 3
-        const fallosCodigo3 = datos.filter(mov => {
-            const importe = parseFloat(mov.Importe.replace(/[^0-9,-]+/g, '').replace(',', '.'));
-            const codigoData = obtenerCodigo(importe);
-            return codigoData.codigo === 3;
+        const resumen = {
+            3: { total: 0, faltantes: 0, sobrantes: 0, fallos: [] },
+            2: { total: 0, faltantes: 0, sobrantes: 0, fallos: [] },
+            1: { total: 0, faltantes: 0, sobrantes: 0, fallos: [] }
+        };
+
+        // Procesar cada movimiento
+        datos.forEach(mov => {
+            const importe = parseFloat(mov.Importe.replace(/\./g, '').replace('$', '').replace(',', '.').trim());
+            const codigoData = obtenerCodigo(importe, mov.Motivo);
+
+            // Solo se procesan los códigos 3, 2 y 1
+            if (codigos.includes(codigoData.codigo)) {
+                agregarFallo(resumen, codigoData.codigo, mov, importe);
+            }
         });
 
-        console.log('Fallos con código 3:', fallosCodigo3);
-
-        if (fallosCodigo3.length === 0) {
-            console.log('No hay fallos con código 3 para mostrar notificaciones.');
-            return;
-        }
-
-        // Encontrar la fecha más reciente entre los fallos con código 3
-        const fechaMasReciente = obtenerFechaMasReciente(fallosCodigo3);
-        console.log('Fecha más reciente:', fechaMasReciente);
-
-        // Filtrar solo los fallos con código 3 que sean de la fecha más reciente
-        const fallosMasRecientes = fallosCodigo3.filter(mov => {
-            const fechaConvertida = convertirFecha(mov.Fecha);
-            const fechaISO = fechaConvertida.toISOString().split('T')[0]; // Convertir fecha a YYYY-MM-DD para comparar
-            return fechaISO === fechaMasReciente;
-        });
-
-        console.log('Fallos más recientes:', fallosMasRecientes);
-
-        // Mostrar notificaciones para los fallos más recientes con código 3
-        mostrarNotificaciones(fallosMasRecientes);
+        mostrarResumen(resumen); // Pasar el resumen
 
     } catch (error) {
         console.error('Error al obtener los datos:', error);
     }
 }
 
-// Mostrar las notificaciones para los fallos más recientes con código 3
-const mostrarNotificaciones = (fallos) => {
-    if (!('Notification' in window)) {
-        console.error('Este navegador no soporta notificaciones.');
-        return;
+// Función para agregar un fallo al resumen
+function agregarFallo(resumen, codigo, mov, importe) {
+    resumen[codigo].total += 1;
+    resumen[codigo].fallos.push(mov);
+    if (mov.TAjuste === 'Fallo De Caja - Faltante') {
+        resumen[codigo].faltantes += importe;
+    } else if (mov.TAjuste === 'Fallo De Cajas - Sobrante') {
+        resumen[codigo].sobrantes += importe;
     }
+}
 
-    fallos.forEach((mov) => {
-        const importe = parseFloat(mov.Importe.replace(/[^0-9,-]+/g, '').replace(',', '.'));
-        const observacion = mov.Observacion || 'Sin observación';
+// Mostrar el resumen en los divs
+const mostrarResumen = (resumen) => {
+    let totalFallos = 0;
+    let totalFaltantes = 0;
+    let totalSobrantes = 0;
 
-        // Verificar si las notificaciones están permitidas
-        if (Notification.permission === "granted") {
-            new Notification(`Fallo Código 3`, {
-                body: `Sucursal: ${mov.Suc}\nFecha: ${mov.Fecha}\nEmpleado: ${mov.Empleado}\nImporte: $${importe.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}\nObservación: ${observacion}`,
-                icon: `/ico/favicon-32x32.png`, // Ruta absoluta con extensión correcta
-            });
-        } else {
-            console.warn('Permiso para notificaciones no concedido.');
+    codigos.forEach(codigo => {
+        const div = document.getElementById(`resumen-codigo-${codigo}`);
+        if (div) {
+            const iconoFaltante = '<i class="fa-solid fa-arrow-trend-down" style="color: #D50000;"></i>';
+            const iconoSobrante = '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>';
+
+            const faltantesHTML = `<span style="color: #D50000;">${iconoFaltante} $${resumen[codigo].faltantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
+            const sobrantesHTML = `<span style="color: #2E7D32;">${iconoSobrante} $${resumen[codigo].sobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
+
+            const enlaceDetalle = `<a href="#" onclick="abrirPanelDetalle('${codigo}')">Ver detalles</a>`;
+
+            div.innerHTML = `
+                <h3>Código ${codigo}</h3>
+                <p>Total de fallos: ${resumen[codigo].total}</p>
+                <p>Faltantes: ${faltantesHTML}</p>
+                <p>Sobrantes: ${sobrantesHTML}</p>
+                <p>${enlaceDetalle}</p>
+            `;
+
+            // Guardar los fallos detallados para usarlos en el panel
+            div.dataset.fallos = JSON.stringify(resumen[codigo].fallos);
+
+            // Acumular totales generales
+            totalFallos += resumen[codigo].total;
+            totalFaltantes += resumen[codigo].faltantes;
+            totalSobrantes += resumen[codigo].sobrantes;
         }
     });
+
+    // Actualizar el div para mostrar el total de fallos
+    const divTotalFallos = document.getElementById('resumen-codigo-digital');
+    if (divTotalFallos) {
+        divTotalFallos.innerHTML = `
+            <h3>Total de Fallos</h3>
+            <p>Total de fallos: ${totalFallos.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+            <p>Faltantes: $${totalFaltantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+            <p>Sobrantes: $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+        `;
+    }
 }
 
-// Obtener la fecha más reciente de los fallos con código 3
-const obtenerFechaMasReciente = (fallos) => {
-    const fechas = fallos.map(mov => convertirFecha(mov.Fecha));
-    const fechaMasReciente = new Date(Math.max.apply(null, fechas)); // Obtener la fecha más reciente
-    return fechaMasReciente.toISOString().split('T')[0]; // Formato YYYY-MM-DD
-}
+// Función para abrir el panel de detalles con el resumen
+window.abrirPanelDetalle = (codigo) => {
+    const div = document.getElementById(`resumen-codigo-${codigo}`);
+    const fallos = JSON.parse(div.dataset.fallos || '[]');
 
-// Convertir la fecha del formato DD/MM/YYYY a un objeto Date
-const convertirFecha = (fechaString) => {
-    const partes = fechaString.split('/'); // Dividir la fecha en [Día, Mes, Año]
-    const dia = parseInt(partes[0], 10);   // Día
-    const mes = parseInt(partes[1], 10) - 1; // Mes (restar 1 porque los meses en Date son 0-11)
-    const anio = parseInt(partes[2], 10);  // Año
-    return new Date(anio, mes, dia);       // Crear un objeto Date
-}
+    const panel = document.getElementById('detalle-fallo-panel');
+    const contenido = document.getElementById('detalle-fallo-contenido');
 
-// Función para obtener el código según el importe
-const obtenerCodigo = (importe) => {
+    // Crear el contenido del detalle
+    contenido.innerHTML = `
+        <h3>Detalle de los Fallos - Código ${codigo}</h3>
+        <div class="header-ii">
+            <div>Suc</div>
+            <div>Fecha</div>
+            <div>Fallo</div>
+            <div>Importe</div>
+            <div>Obs.</div>
+        </div>
+        <div>
+            ${fallos.map(fallo => {
+                const importe = parseFloat(fallo.Importe.replace(/\./g, '').replace('$', '').replace(',', '.').trim());
+                const codigoData = obtenerCodigo(importe, fallo.Motivo);
+
+                const observacionCorta = fallo.Observacion && fallo.Observacion.length > 11
+                    ? `${fallo.Observacion.slice(0, 11)}... <br><span class="ver-mas">ver más</span>`
+                    : fallo.Observacion || 'Sin observación';
+
+                return `
+                    <div class="row fade-in">
+                        <div>${fallo.Suc}</div>
+                        <div>${fallo.Fecha}</div>
+                        <div>${fallo.TAjuste}</div>
+                        <div>$${importe.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}<br>
+                            <p><i class="fa-solid ${codigoData.icono}" style="color:${codigoData.color}"></i> Código ${codigoData.codigo}</p>
+                        </div>
+                        <div>
+                            <span class="observacion-corta">${observacionCorta}</span>
+                            <span class="observacion-completa" style="display:none;">${fallo.Observacion}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('')}
+        </div>
+        <button id="cerrar-detalle" onclick="cerrarPanelDetalle()">&times; Cerrar</button>
+    `;
+
+    // Agregar eventos de "ver más"
+    const verMasLinks = contenido.querySelectorAll('.ver-mas');
+    verMasLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            const observacionCompleta = this.parentElement.nextElementSibling;
+            this.parentElement.style.display = 'none';
+            observacionCompleta.style.display = 'inline';
+        });
+    });
+
+    // Mostrar el panel eliminando la clase 'oculto' y agregando 'mostrar'
+    panel.classList.remove('oculto');
+    panel.classList.add('mostrar');
+};
+
+// Función para cerrar el panel de detalles
+window.cerrarPanelDetalle = () => {
+    const panel = document.getElementById('detalle-fallo-panel');
+    panel.classList.remove('mostrar');
+    panel.classList.add('oculto');
+};
+
+// Función para obtener el código según el importe y motivo
+const obtenerCodigo = (importe, motivo) => {
     if (Math.abs(importe) >= 15000) return { codigo: 3, icono: 'fa-exclamation-triangle', color: 'red' };
     if (Math.abs(importe) >= 7500) return { codigo: 2, icono: 'fa-exclamation-circle', color: '#FFB900' };
     if (Math.abs(importe) >= 3000) return { codigo: 1, icono: 'fa-info-circle', color: '#0061fe' };
@@ -91,82 +168,5 @@ const obtenerCodigo = (importe) => {
 
 // Ejecutar la función después de que el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', () => {
-    registrarServiceWorker();
-    solicitarPermisoNotificaciones();
+    obtenerFallosDeCodigo(); // Llamar a la función al cargar el documento
 });
-
-// Registrar el Service Worker (opcional, pero recomendado para notificaciones en segundo plano)
-const registrarServiceWorker = () => {
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('Service Worker registrado con éxito:', registration);
-            })
-            .catch(error => {
-                console.error('Error al registrar el Service Worker:', error);
-            });
-    } else {
-        console.warn('Service Workers no están soportados en este navegador.');
-    }
-}
-
-// Solicitar permiso para mostrar notificaciones
-const solicitarPermisoNotificaciones = () => {
-    if (!('Notification' in window)) {
-        console.error('Este navegador no soporta notificaciones.');
-        return;
-    }
-
-    if (Notification.permission === 'default') {
-        Notification.requestPermission().then(permission => {
-            if (permission === "granted") {
-                console.log("Permiso para notificaciones concedido.");
-                obtenerFallosDeCodigo(); // Llamar la función para obtener los fallos después de conceder el permiso
-                // Opcional: Configurar actualizaciones periódicas
-                setInterval(obtenerFallosDeCodigo, 5 * 60 * 1000); // Cada 5 minutos
-            } else {
-                console.warn("Permiso para notificaciones denegado.");
-            }
-        });
-    } else if (Notification.permission === "granted") {
-        obtenerFallosDeCodigo();
-        // Opcional: Configurar actualizaciones periódicas
-        setInterval(obtenerFallosDeCodigo, 5 * 60 * 1000); // Cada 5 minutos
-    } else {
-        console.warn("Permiso para notificaciones denegado.");
-    }
-};
-
-// Archivo sw.js (debes crearlo en la raíz de tu proyecto)
-/*
-self.addEventListener('push', event => {
-    const data = event.data.json();
-    const options = {
-        body: data.body,
-        icon: data.icon,
-        // Puedes agregar más opciones aquí
-    };
-    event.waitUntil(
-        self.registration.showNotification(data.title, options)
-    );
-});
-*/
-
-// Prueba básica de notificaciones (puedes eliminarla después de verificar que todo funciona)
-/*
-document.addEventListener('DOMContentLoaded', () => {
-    if (!('Notification' in window)) {
-        console.error('Este navegador no soporta notificaciones.');
-        return;
-    }
-
-    Notification.requestPermission().then(permission => {
-        if (permission === "granted") {
-            new Notification('Prueba de Notificación', {
-                body: 'Esta es una notificación de prueba en móvil.',
-                icon: '/ico/favicon-32x32.png',
-            });
-        }
-    });
-});
-*/
