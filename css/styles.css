@@ -1204,7 +1204,7 @@ i.fa-solid.fa-triangle-exclamation {
 
     .report-title {
         font-size: 1.5em;
-        display: none;
+  
     }
 
     .down-informe {
@@ -1215,7 +1215,6 @@ i.fa-solid.fa-triangle-exclamation {
         transition: 1s;
         text-align: center;
         cursor: pointer;
-        display: none;
     }
 
     .total-summary {
@@ -1223,7 +1222,7 @@ i.fa-solid.fa-triangle-exclamation {
         display: flex;
         justify-content: center;
         align-items: center;
-        display: none;
+
     }
 
     p.total-error-importe-sf {
@@ -1231,7 +1230,7 @@ i.fa-solid.fa-triangle-exclamation {
         display: flex;
         justify-content: center;
         align-items: center;
-        display: none;
+  
     }
 
     .total-summary {

@@ -1,5 +1,5 @@
 import { apis } from './api.js';
-const codigos = [3, 2, 1, 'digital']; // Agregamos el nuevo código "digital"
+const codigos = [3, 2, 1]; // Lista de códigos
 
 // Función principal para obtener y procesar los fallos
 async function obtenerFallosDeCodigo() {
@@ -11,48 +11,44 @@ async function obtenerFallosDeCodigo() {
         const resumen = {
             3: { total: 0, faltantes: 0, sobrantes: 0, fallos: [] },
             2: { total: 0, faltantes: 0, sobrantes: 0, fallos: [] },
-            1: { total: 0, faltantes: 0, sobrantes: 0, fallos: [] },
-            digital: { total: 0, faltantes: 0, sobrantes: 0, fallos: [] }
+            1: { total: 0, faltantes: 0, sobrantes: 0, fallos: [] }
         };
 
         // Procesar cada movimiento
         datos.forEach(mov => {
-            const importe = parseFloat(mov.Importe.replace(/[^0-9,-]+/g, '').replace(',', '.'));
+            const importe = parseFloat(mov.Importe.replace(/\./g, '').replace('$', '').replace(',', '.').trim());
             const codigoData = obtenerCodigo(importe, mov.Motivo);
 
-            // Si el motivo contiene "pedido", asignar solo al código "digital"
-            if (mov.Motivo.toLowerCase().includes('pedido')) {
-                if (codigoData.codigo === 'digital') {
-                    resumen.digital.total += 1;
-                    resumen.digital.fallos.push(mov);
-                    if (mov.TAjuste === 'Fallo De Caja - Faltante') {
-                        resumen.digital.faltantes += importe;
-                    } else if (mov.TAjuste === 'Fallo De Cajas - Sobrante') {
-                        resumen.digital.sobrantes += importe;
-                    }
-                }
-            }
-            // Para códigos 3, 2 y 1, verificar que el motivo sea "CAJAS"
-            else if (mov.Motivo === 'CAJAS' && [3, 2, 1].includes(codigoData.codigo)) {
-                resumen[codigoData.codigo].total += 1;
-                resumen[codigoData.codigo].fallos.push(mov);
-                if (mov.TAjuste === 'Fallo De Caja - Faltante') {
-                    resumen[codigoData.codigo].faltantes += importe;
-                } else if (mov.TAjuste === 'Fallo De Cajas - Sobrante') {
-                    resumen[codigoData.codigo].sobrantes += importe;
-                }
+            // Solo se procesan los códigos 3, 2 y 1
+            if (codigos.includes(codigoData.codigo)) {
+                agregarFallo(resumen, codigoData.codigo, mov, importe);
             }
         });
 
-        mostrarResumen(resumen);
+        mostrarResumen(resumen); // Pasar el resumen
 
     } catch (error) {
         console.error('Error al obtener los datos:', error);
     }
 }
 
+// Función para agregar un fallo al resumen
+function agregarFallo(resumen, codigo, mov, importe) {
+    resumen[codigo].total += 1;
+    resumen[codigo].fallos.push(mov);
+    if (mov.TAjuste === 'Fallo De Caja - Faltante') {
+        resumen[codigo].faltantes += importe;
+    } else if (mov.TAjuste === 'Fallo De Cajas - Sobrante') {
+        resumen[codigo].sobrantes += importe;
+    }
+}
+
 // Mostrar el resumen en los divs
 const mostrarResumen = (resumen) => {
+    let totalFallos = 0;
+    let totalFaltantes = 0;
+    let totalSobrantes = 0;
+
     codigos.forEach(codigo => {
         const div = document.getElementById(`resumen-codigo-${codigo}`);
         if (div) {
@@ -74,8 +70,24 @@ const mostrarResumen = (resumen) => {
 
             // Guardar los fallos detallados para usarlos en el panel
             div.dataset.fallos = JSON.stringify(resumen[codigo].fallos);
+
+            // Acumular totales generales
+            totalFallos += resumen[codigo].total;
+            totalFaltantes += resumen[codigo].faltantes;
+            totalSobrantes += resumen[codigo].sobrantes;
         }
     });
+
+    // Actualizar el div para mostrar el total de fallos
+    const divTotalFallos = document.getElementById('resumen-codigo-digital');
+    if (divTotalFallos) {
+        divTotalFallos.innerHTML = `
+            <h3>Total de Fallos</h3>
+            <p>Total de fallos: ${totalFallos.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+            <p>Faltantes: $${totalFaltantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+            <p>Sobrantes: $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+        `;
+    }
 }
 
 // Función para abrir el panel de detalles con el resumen
@@ -90,17 +102,16 @@ window.abrirPanelDetalle = (codigo) => {
     contenido.innerHTML = `
         <h3>Detalle de los Fallos - Código ${codigo}</h3>
         <div class="header-ii">
-        <div>Suc</div>
+            <div>Suc</div>
             <div>Fecha</div>
             <div>Fallo</div>
             <div>Importe</div>
             <div>Obs.</div>
-            
         </div>
         <div>
             ${fallos.map(fallo => {
-                const importe = parseFloat(fallo.Importe.replace(/[^0-9,-]+/g, '').replace(',', '.'));
-                const codigoData = obtenerCodigo(importe, fallo.Motivo); // Asegúrate de que 'motivo' se pase aquí si es necesario
+                const importe = parseFloat(fallo.Importe.replace(/\./g, '').replace('$', '').replace(',', '.').trim());
+                const codigoData = obtenerCodigo(importe, fallo.Motivo);
 
                 const observacionCorta = fallo.Observacion && fallo.Observacion.length > 11
                     ? `${fallo.Observacion.slice(0, 11)}... <br><span class="ver-mas">ver más</span>`
@@ -108,7 +119,7 @@ window.abrirPanelDetalle = (codigo) => {
 
                 return `
                     <div class="row fade-in">
-                    <div>${fallo.Suc}</div>
+                        <div>${fallo.Suc}</div>
                         <div>${fallo.Fecha}</div>
                         <div>${fallo.TAjuste}</div>
                         <div>$${importe.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}<br>
@@ -149,7 +160,6 @@ window.cerrarPanelDetalle = () => {
 
 // Función para obtener el código según el importe y motivo
 const obtenerCodigo = (importe, motivo) => {
-    if (motivo && motivo.toLowerCase().includes('pedido')) return { codigo: 'digital', icono: 'fa-solid fa-truck-fast', color: '#4A90E2' };
     if (Math.abs(importe) >= 15000) return { codigo: 3, icono: 'fa-exclamation-triangle', color: 'red' };
     if (Math.abs(importe) >= 7500) return { codigo: 2, icono: 'fa-exclamation-circle', color: '#FFB900' };
     if (Math.abs(importe) >= 3000) return { codigo: 1, icono: 'fa-info-circle', color: '#0061fe' };
