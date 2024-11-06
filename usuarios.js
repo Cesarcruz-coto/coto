@@ -7,6 +7,13 @@ export const usuarios = [
       "fotoPerfil": "https://cesarcruz-coto.github.io/coto/img/24909.jpeg"
   },
   {
+    "email": "invitado@coto.com.ar",
+    "nombre": "Invitado",
+    "puesto": "Recaudaciones",
+    "legajo": "000001",
+    "fotoPerfil": "https://cesarcruz-coto.github.io/coto/img/invitado.png"
+},
+  {
       "email": "jaime.cruz@coto.com.ar",
       "nombre": "Cesar Cruz",
       "puesto": "Recaudaciones",

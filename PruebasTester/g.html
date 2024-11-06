@@ -26,60 +26,88 @@
     </div>
 
     <script>
-    async function cargarGastos(url) {
-        try {
-            const response = await fetch(url);
-            return await response.json();
-        } catch (error) {
-            console.error("Error al cargar los gastos:", error);
-            return [];
-        }
-    }
-
-    function procesarGastos(gastos) {
-        let totalGastos = 0;
-        gastos.forEach(gasto => {
-            let valor = gasto.Total;
-            valor = valor.replace('$', '').replace(/\./g, '').replace(',', '.');
-            const numero = parseFloat(valor);
-            if (!isNaN(numero)) {
-                totalGastos += numero;
+        
+        var options = {
+          series: [{
+            name: "2024",
+            data: [2196, 1815, 1859, 2284, 2044, 1300, 592, 388, 354, 394]
+        },
+            {
+                name: '2023',
+                data: [2229, 1814, 1744, 1574, 1625, 1616, 1604, 1731, 1538, 1767] 
             }
-        });
-        return totalGastos;
-    }
-
-    function calcularDiferencias(totales) {
-        const diferencias = [];
-        for (let i = 1; i < totales.length; i++) {
-            const diferencia = ((totales[i] - totales[i - 1]) / totales[i - 1]) * 100;
-            diferencias.push(diferencia);
-        }
-        diferencias.unshift(0); // Agregar un 0% para el primer mes
-        return diferencias;
-    }
-
-    function formatCurrency(value) {
-        return `$ ${value.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    }
-
-    function generarGrafico(totalJunio, totalJulio, totalAgosto, totalSeptiembre, totalMesActual) {
-    const totales = [totalJunio, totalJulio, totalAgosto, totalSeptiembre, totalMesActual];
-    const diferencias = calcularDiferencias(totales); // Calcular diferencias porcentuales
-
-    var options = {
-        series: [{
-            name: 'Total Gastos',
-            data: totales // Valores de los cinco meses
-        }],
-        chart: {
-            type: 'area', // Cambiar a gráfico de área
-            height: 350,
-            toolbar: {
-                show: false // Eliminar la barra de herramientas
+    ],
+          chart: {
+          height: 400,
+          type: 'area',
+          zoom: {
+            enabled: false
+          }
+        },
+            xaxis: {
+                categories: ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT'],
+                labels: {
+                    show: false // Ocultar etiquetas del eje x
+                },
+                axisBorder: {
+                    show: false // Eliminar la línea debajo del eje X
+                },
+                axisTicks: {
+                    show: false
+                }
+              },
+        dataLabels: { enabled: false },
+        stroke: {
+            curve: 'straight', // Cambia a 'smooth' para una transición más suave entre los puntos
+            width: [3, 3],
+            dashArray: [0, 5]
+        },
+        markers: {
+            size: 0,
+            colors: ['#0099ff', '#0099ff'], // Color de los puntos para la línea del año anterior
+            strokeColors: '#fff',
+            strokeWidth: 4,
+            hover: {
+                size: 8
+            }
+        },
+        yaxis: {
+            labels: { show: false },
+            axisBorder: { show: false },
+            axisTicks: { show: false }
+        },
+        grid: {
+            show: true,
+            borderColor: '#e0e0e0',
+            strokeDashArray: 5,
+            xaxis: {
+                lines: {
+                    show: true
+                }
             },
-            dropShadow: {
-                enabled: false // Desactivar sombra
+            yaxis: {
+                lines: {
+                    show: false
+                }
+            }
+        },
+        legend: {
+            show: false
+        },
+        tooltip: {
+            theme: 'dark',
+            y: {
+                formatter: function (value, { seriesIndex, dataPointIndex }) {
+                    let result = `${value}`; // Mostrar solo el valor por defecto
+                    
+                    // Mostrar el porcentaje solo para 2024 y 2025
+                    if (seriesIndex === 1) { // Para 2024
+                        const percentage = percentageDifferences[dataPointIndex]; // Obtener el porcentaje de 2024 vs 2023
+                        result += ` (${percentage})`; // Agregar el porcentaje
+                    }
+    
+                    return result;
+                }
             }
         },
         fill: {
@@ -88,142 +116,40 @@
                 shadeIntensity: 1,
                 opacityFrom: 0.8,
                 opacityTo: 0.6,
-                stops: [0, 90, 100]
+                stops: [0, 90, 0]
             }
         },
-        stroke: {
-            curve: 'straight',
-            width: 3, // Grosor de la línea
-        },
-        markers: {
-            size: 4, // Tamaño de los puntos
-            colors: ['#f44336'], // Color de los puntos
-            strokeColors: '#fff', // Color del borde de los puntos
-            strokeWidth: 4,
-            hover: {
-                size: 8 // Tamaño del punto al pasar el mouse
-            }
-        },
-        grid: {
-            show: true,
-            borderColor: '#e0e0e0',
-            strokeDashArray: 5, // Líneas en puntos
-            xaxis: {
-                lines: {
-                    show: true // Solo líneas verticales
-                }
-            },
-            yaxis: {
-                lines: {
-                    show: false // Solo líneas verticales
-                }
-            }
-        },
-        xaxis: {
-            categories: ['Jun', 'Jul', 'Ago', 'Sep', 'Mes Actual'], // Nombres de los meses abreviados
-            labels: {
-                show: true // Mostrar etiquetas de los meses
-            },
-            axisBorder: {
-                show: false // Eliminar el borde del eje x
-            },
-            axisTicks: {
-                show: false // Eliminar las marcas del eje x
-            }
-        },
-        yaxis: {
-            title: {
-                text: ''
-            },
-            labels: {
-                formatter: function (value) {
-                    return formatCurrency(value);
-                },
-                show: false // Eliminar etiquetas del eje y
-            },
-            axisBorder: {
-                show: false // Eliminar el borde del eje y
-            },
-            axisTicks: {
-                show: false // Eliminar las marcas del eje y
-            }
-        },
-        tooltip: {
-            theme: 'dark',
-            y: {
-                formatter: function (value) {
-                    return formatCurrency(value); // Usar la función formatCurrency para el tooltip
-                }
-            }
-        },
-        colors: ['#f44336'], // Color de la línea del gráfico
-        dataLabels: {
-            enabled: false // Deshabilitar etiquetas de datos en la línea
-        },
+        colors: ['#0099ff', '#0099ff'], // Colores para las líneas
+        
         annotations: {
-            points: [] // Inicializa puntos de anotaciones
-        }
-    };
-
-    // Agregar anotaciones de las diferencias porcentuales y totales
-    for (let i = 0; i < diferencias.length; i++) {
-        const textoDiferencia = diferencias[i].toFixed(2) + '%';
-        const textoTotal = formatCurrency(totales[i]);
-        options.annotations.points.push({
-            x: options.xaxis.categories[i], // Mes correspondiente
-            y: totales[i], // Valor del mes
-            marker: {
-                size: 8, // Tamaño del marcador
-                fillColor: '#f44336', // Cambiar a cualquier color deseado
-                strokeColor: '#fff', // Color del borde del marcador
-                strokeWidth: 4, // Grosor del borde del marcador
-            },
-            label: {
-                text: `${textoDiferencia}`, // Texto de la diferencia y total
-                style: {
-                    color: '#000',
-                    background: '#fff',
-                    border: '1px solid #000',
-                    fontSize: '12px',
-                    whiteSpace: 'nowrap' // Evitar el ajuste de línea
+            points: [
+                {
+                    x: 'Jun',
+                    y: 1304, // Asegúrate de que este valor esté en el rango del gráfico
+                    marker: {
+                        size: 0,
+                        fillColor: '#D50000',
+                        strokeColor: '#D50000',
+                        shape: 'circle'
+                    },
+                    label: {
+                        borderColor: '#D50000',
+                        offsetY: -10,
+                        style: {
+                            color: '#fff',
+                            background: '#D50000'
+                        },
+                        text: 'Norma 91'
+                    }
                 }
-            }
-        });
-    }
+            ]
+        }
+        
+        };
 
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
-    chart.render();
-}
-
-
-    async function cargarYMostrarGastos() {
-        const urlJunio = 'https://cesarcruz-coto.github.io/coto/DATOS-JUNIO-24/GASTOSUC.json';
-        const urlJulio = 'https://cesarcruz-coto.github.io/coto/DATOS-JULIO-24/GASTOSUC.json';
-        const urlAgosto = 'https://cesarcruz-coto.github.io/coto/DATOS-AGOSTO-24/GASTOSUC.json';
-        const urlSeptiembre = 'https://cesarcruz-coto.github.io/coto/DATOS-SEPTIEMBRE-24/GASTOSUC.json';
-        const urlMesActual = 'https://app.sheetlabs.com/TREE/COTOGASTOSUC';
-
-        const [gastosJunio, gastosJulio, gastosAgosto, gastosSeptiembre, gastosMesActual] = await Promise.all([
-            cargarGastos(urlJunio),
-            cargarGastos(urlJulio),
-            cargarGastos(urlAgosto),
-            cargarGastos(urlSeptiembre),
-            cargarGastos(urlMesActual)
-        ]);
-
-        // Procesar los gastos para obtener el total de cada mes
-        const totalJunio = procesarGastos(gastosJunio);
-        const totalJulio = procesarGastos(gastosJulio);
-        const totalAgosto = procesarGastos(gastosAgosto);
-        const totalSeptiembre = procesarGastos(gastosSeptiembre);
-        const totalMesActual = procesarGastos(gastosMesActual);
-
-        // Generar el gráfico con los totales
-        generarGrafico(totalJunio, totalJulio, totalAgosto, totalSeptiembre, totalMesActual);
-    }
-
-    // Inicializar la carga y el gráfico
-    cargarYMostrarGastos();
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+      
     </script>
 </body>
 </html>
