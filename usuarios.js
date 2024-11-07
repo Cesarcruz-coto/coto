@@ -9,7 +9,7 @@ export const usuarios = [
   {
     "email": "invitado@coto.com.ar",
     "nombre": "Invitado",
-    "puesto": "Recaudaciones",
+    "puesto": "Invitado",
     "legajo": "000001",
     "fotoPerfil": "https://cesarcruz-coto.github.io/coto/img/invitado.png"
 },
@@ -70,10 +70,38 @@ export const usuarios = [
       "fotoPerfil": "https://cesarcruz-coto.github.io/coto/img/48367.jpeg"
   },
   {
-      "email": "192134@coto.com.ar",
-      "nombre": "Cesar Cruz",
-      "puesto": "Recaudaciones",
-      "legajo": "192134",
-      "fotoPerfil": "https://cesarcruz-coto.github.io/coto/img/192134.jpeg"
+      "email": "lvecchia@coto.com.ar",
+      "nombre": "Lucas Vecchia",
+      "puesto": "Ventas",
+      "legajo": "86120",
+      "fotoPerfil": "https://cesarcruz-coto.github.io/coto/img/86120.jpeg"
+  },
+  {
+      "email": "pksanchez@coto.com.ar",
+      "nombre": "Paola Sanchez",
+      "puesto": "Ventas",
+      "legajo": "38258",
+      "fotoPerfil": "https://cesarcruz-coto.github.io/coto/img/38258.jpeg"
+  },
+  {
+      "email": "cdojeda@coto.com.ar",
+      "nombre": "Carla Ojeda",
+      "puesto": "Ventas",
+      "legajo": "97246",
+      "fotoPerfil": "https://cesarcruz-coto.github.io/coto/img/97246.jpeg"
+  },
+  {
+      "email": "cedorr@coto.com.ar",
+      "nombre": "Cecilia Dorr",
+      "puesto": "Ventas",
+      "legajo": "106500",
+      "fotoPerfil": "https://cesarcruz-coto.github.io/coto/img/106500.jpeg"
+  },
+  {
+      "email": "cmaguero@coto.com.ar",
+      "nombre": "Claudio Aguero",
+      "puesto": "Ventas",
+      "legajo": "79410",
+      "fotoPerfil": "https://cesarcruz-coto.github.io/coto/img/79410.jpeg"
   }
 ];

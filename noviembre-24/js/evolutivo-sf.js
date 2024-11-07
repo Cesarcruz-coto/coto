@@ -355,7 +355,7 @@ function generatePDF() {
     // Capturar gráfico usando html2canvas
     html2canvas(document.querySelector("#chart")).then(canvas => {
         const imgData = canvas.toDataURL("image/png");
-        doc.addImage(imgData, 'PNG', 10, 95, 192, 78); // Ajusta las dimensiones según sea necesario
+        doc.addImage(imgData, 'PNG', 10, 165, 192, 78); // Ajusta las dimensiones según sea necesario
 
         // Análisis final
         doc.setFontSize(13);
