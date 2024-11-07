@@ -61,8 +61,8 @@ const mostrarResumen = (resumen) => {
             const enlaceDetalle = `<a href="#" onclick="abrirPanelDetalle('${codigo}')">Ver detalles</a>`;
 
             div.innerHTML = `
-                <h3>Código ${codigo}</h3>
-                <p>Total de fallos: ${resumen[codigo].total}</p>
+                <h3>Codigo ${codigo}</h3>
+                <p>Fallos: ${resumen[codigo].total}</p>
                 <p>Faltantes: ${faltantesHTML}</p>
                 <p>Sobrantes: ${sobrantesHTML}</p>
                 <p>${enlaceDetalle}</p>
@@ -79,15 +79,22 @@ const mostrarResumen = (resumen) => {
     });
 
     // Actualizar el div para mostrar el total de fallos
-    const divTotalFallos = document.getElementById('resumen-codigo-digital');
-    if (divTotalFallos) {
-        divTotalFallos.innerHTML = `
-            <h3>Total de Fallos</h3>
-            <p>Total de fallos: ${totalFallos.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-            <p>Faltantes: $${totalFaltantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-            <p>Sobrantes: $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-        `;
-    }
+const divTotalFallos = document.getElementById('resumen-codigo-digital');
+if (divTotalFallos) {
+    const iconoFaltante = '<i class="fa-solid fa-arrow-trend-down" style="color: #D50000;"></i>';
+    const iconoSobrante = '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>';
+
+    // Establecer el color dependiendo del importe
+    const colorFaltante = totalFaltantes > 0 ? '#D50000' : '#000'; // Rojo si hay faltantes, negro si no
+    const colorSobrante = totalSobrantes > 0 ? '#2E7D32' : '#000'; // Verde si hay sobrantes, negro si no
+
+    divTotalFallos.innerHTML = `
+        <h3>Total de codigos ${totalFallos}</h3>
+        <p style="color: ${colorFaltante};">${iconoFaltante} $${totalFaltantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+        <p style="color: ${colorSobrante};">${iconoSobrante} $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+    `;
+}
+
 }
 
 // Función para abrir el panel de detalles con el resumen
@@ -165,6 +172,7 @@ const obtenerCodigo = (importe, motivo) => {
     if (Math.abs(importe) >= 3000) return { codigo: 1, icono: 'fa-info-circle', color: '#0061fe' };
     return { codigo: 0, icono: '', color: '' };
 };
+
 
 // Ejecutar la función después de que el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', () => {
