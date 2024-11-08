@@ -2012,10 +2012,12 @@ a.ver-obs {
     padding: 8px 12px;
     border-radius: 4px;
     cursor: pointer;
+    transition: 1s;
 }
 
 .ver-obs-eo:hover {
     background-color: #357ABD;
+    transform: scale(1.05);
 }
 
 .pagination {
@@ -2048,6 +2050,7 @@ a.ver-obs {
     display: block;
     font-weight: 600;
     margin: 20px auto;
+    transition: 1S;
 }
 
 .export-button i {
@@ -3118,7 +3121,7 @@ button.formButton {
     /* border: 1px solid #ddd; */
     /* border-radius: 8px; */
     /* padding: 16px; */
-    margin: 25px 0;
+    margin: 10px 0;
     font-size: 0.8em;
     /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
@@ -3164,18 +3167,27 @@ button.formButton {
 /* Color de fondo según el código */
 #resumen-codigo-3 {
     border-left: 5px solid #D50000; /* Borde rojo para el código 3 */
+    padding: 15px 0;
+    background: rgb(255, 0, 0);
+    background: linear-gradient(90deg, rgb(255 0 0 / 10%) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
 #resumen-codigo-2 {
     border-left: 5px solid #009812; /* Borde amarillo para el código 2 */
+    padding: 15px 0;
+    background: rgb(255, 0, 0);
+    background: linear-gradient(90deg, rgba(115, 255, 0, 0.1) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
 #resumen-codigo-1 {
     border-left: 5px solid #fef600; /* Borde azul para el código 1 */
+    padding: 15px 0;
+    background: rgb(255, 0, 0);
+    background: linear-gradient(90deg, rgba(255, 225, 0, 0.1) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
 #resumen-codigo-digital {
-    border-left: 5px solid #0061fe; /* Borde azul para el código 1 */
+    
 }
 
 /* Estilo del panel deslizante */
