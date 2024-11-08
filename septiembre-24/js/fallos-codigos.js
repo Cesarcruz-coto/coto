@@ -61,10 +61,9 @@ const mostrarResumen = (resumen) => {
             const enlaceDetalle = `<a href="#" onclick="abrirPanelDetalle('${codigo}')">Ver detalles</a>`;
 
             div.innerHTML = `
-                <h3>Codigo ${codigo}</h3>
-                <p>Fallos: ${resumen[codigo].total}</p>
-                <p>Faltantes: ${faltantesHTML}</p>
-                <p>Sobrantes: ${sobrantesHTML}</p>
+                <h3>Codigo ${codigo} - ${resumen[codigo].total} Fallos</h3>
+                <p>Faltantes ${faltantesHTML}</p>
+                <p>Sobrantes ${sobrantesHTML}</p>
                 <p>${enlaceDetalle}</p>
             `;
 

@@ -370,7 +370,7 @@ template {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 700!important;
+  font-weight: 700;
   }
 
 /* Estilos globales */
@@ -576,13 +576,23 @@ h2 {
     /*height: 145px;*/
 }
 
+span.igual {
+    display: flex;
+}
+
+.igual2 {
+    padding: 4px;
+    text-align: left;
+    font-size: 1.3em;
+}
+
 .title {
     font-weight: bold;
     margin-bottom: 10px;
 }
 
 .total-errors {
-    font-size: 2.1em;
+    font-size: 2.5em;
     font-weight: bold;
     color: #3333ff;
     margin-bottom: 10px;
@@ -733,7 +743,6 @@ p#selected-month-display {
 
 p#selected-month-display:hover {
     background-color: #222121;
-    transform: scale(1.05);
     /* Aumenta el tamaño del botón */
 }
 
@@ -776,7 +785,7 @@ p {
 
 .info-item h2 {
     /* padding-bottom: 15px; */
-    font-size: 1.13em;
+    font-size: 1.3em;
 }
 
 /* Scrollable Container */
@@ -1093,7 +1102,7 @@ hr {
     margin: 5px;
     background-color: #fff;
     text-align: center;
-    padding: 10px 20px;
+    padding: 5px;
     border-radius: var(--border-radius);
 }
 
@@ -1107,7 +1116,7 @@ p.total-error-importe-sf {
 }
 
 .total-summary {
-    font-size: 2.1em;
+    font-size: 2.5em;
     color: #f44336;
     font-weight: bold;
 }
@@ -2178,7 +2187,7 @@ a.ver-obs {
 }
 
 .icono {
-    font-size: 2.1875em;
+    font-size: 2.5em;
     color: #000000;
     margin-right: 10px;
 }
@@ -3109,7 +3118,7 @@ button.formButton {
     /* border: 1px solid #ddd; */
     /* border-radius: 8px; */
     /* padding: 16px; */
-    margin: 15px 0;
+    margin: 25px 0;
     font-size: 0.8em;
     /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
@@ -3119,8 +3128,8 @@ button.formButton {
 #resumen-codigo-2 h3, 
 #resumen-codigo-3 h3,
 #resumen-codigo-digital h3 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
+    font-size: 1.1em;
+    margin-bottom: 5px;
     color: #333;
     text-transform: uppercase;
 }
