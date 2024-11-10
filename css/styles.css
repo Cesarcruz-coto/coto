@@ -1552,43 +1552,93 @@ a.ver-obs {
 .ver-obs-eo {
   cursor: pointer;
 }
+/* Contenedor del dropdown */
 .dropdown {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Elemento que muestra el mes seleccionado */
+  #selected-month-display {
+    cursor: pointer;
+  }
+
+  /* Contenedor del dropdown */
+#dropdown-content {
+    display: none; /* Ocultar el menú por defecto */
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 10px;
+    border-radius: 5px;
+    max-height: 0; /* Inicia el dropdown con altura cero */
+    overflow: hidden; /* Oculta las opciones cuando la altura es cero */
+    transition: max-height 0.3s ease-out; /* Animación de deslizamiento */
 }
-#selected-month-display {
-  cursor: pointer;
+
+/* Mostrar el dropdown con un efecto de deslizamiento */
+#dropdown-content.show {
+    display: block; /* Hacer visible el dropdown */
+    max-height: 500px; /* Altura máxima para el deslizamiento (ajustable según la cantidad de opciones) */
 }
-.dropdown-content {
-  display: none;
-  opacity: 0;
-  margin-top: -10px;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 100%;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  z-index: 1;
+
+/* Hacer que el select se vea bien */
+#dropdown-content select {
+    width: 100%; /* El select ocupará todo el ancho disponible */
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+    text-transform: capitalize;
+    appearance: none; /* Elimina el estilo predeterminado en algunos navegadores */
+    -webkit-appearance: none; /* Para Safari */
+    -moz-appearance: none; /* Para Firefox */
 }
-.dropdown-content.show {
-  display: block;
-  opacity: 1;
+
+/* Agregar icono a la derecha (como el icono de desplegar) */
+#dropdown-content select::-ms-expand {
+    display: none; /* Quitar el icono de la flecha en IE */
 }
-.dropdown-content a {
-  color: #000;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  transition: all 0.6s ease-in-out;
+
+/* Opcional: Estilo cuando el select está en foco (cuando está seleccionado) */
+#dropdown-content select:focus {
+    border-color: #311b92; /* Cambiar el borde cuando está en foco */
+    outline: none;
 }
-.dropdown-content a:hover {
-  box-shadow: inset 300px 0 0 0 #e9e9e9;
+
+/* Estilos de las opciones */
+#dropdown-content select option {
+    padding: 8px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
 }
-.dropdown:hover .dropdown-content {
-  display: block;
-  opacity: 1;
-  animation-name: menu-1;
-  animation-duration: 0.5s;
+
+/* Hover sobre las opciones */
+#dropdown-content select option:hover {
+    background-color: #311b92;
+    color: #fff;
 }
+
+#dropdown-content option {
+    padding: 10px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilo para las opciones cuando se pasa el mouse por encima */
+#dropdown-content option:hover {
+    background-color: #f1f1f1;
+}
+  
 #searchContainer {
   width: 100%;
   display: flex;
