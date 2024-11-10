@@ -59,7 +59,7 @@ const mostrarResumen = (resumen) => {
             const faltantesHTML = `<span style="color: #D50000;">${iconoFaltante} $${resumen[codigo].faltantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
             const sobrantesHTML = `<span style="color: #2E7D32;">${iconoSobrante} $${resumen[codigo].sobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
 
-            const enlaceDetalle = `<a href="#" onclick="abrirPanelDetalle('${codigo}')"><i class="fa-regular fa-eye"></i></a>`;
+            const enlaceDetalle = `<a href="#" onclick="abrirPanelDetalle('${codigo}')"><i class="fa-regular fa-eye"></i> Ver fallos</a>`;
 
             div.innerHTML = `
                 <h3>Codigo ${codigo} - ${resumen[codigo].total} Fallos</h3>
@@ -92,82 +92,103 @@ if (divTotalFallos) {
     divTotalFallos.innerHTML = `
         <h2 class="report-title">Fallos de caja x Codigo - ${totalFallos}</h2>
         <b style="color: ${colorFaltante};">${iconoFaltante} $${totalFaltantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} - <b style="color: ${colorSobrante};">${iconoSobrante} $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></b>
-    <br><br>`;
+    <div class="comparison-fallos">Prom. mes previo <b id="diferencia-porcentaje-total"></b></div>
+        <br>`;
 }
 }
 
 function renderizarGraficoFallos(resumen) {
     // Datos fijos para los fallos de 2023
     const datosFijos2023 = {
-        'Jun': 2688
+        'Ene': 1300,
+        'Feb': 1100,
+        'Mar': 972,
+        'Abr': 878,
+        'May': 1039,
+        'Jun': 969
     };
 
     // Datos fijos para los fallos de 2024
     const datosFijos2024 = {
-
+        'Ene': 418,
+        'Feb': 453,
+        'Mar': 459,
+        'Abr': 495,
+        'May': 469
     };
 
-    // Si 'codigos' es un array, asegúrate de que esté definido
-    const codigos = Object.keys(resumen);  // Suponiendo que 'resumen' es un objeto y queremos sus claves
+    const codigos = Object.keys(resumen);
 
-    // Calcular el total de fallos para el mes actual en 2024
+    // Total de fallos para el mes actual en 2024
     const totalFallosMesActual2024 = codigos.reduce((total, codigo) => total + resumen[codigo].total, 0);
-
-    // Crear la serie de fallos para 2024: Los meses anteriores más el total del mes actual
     const fallosPorMes2024 = Object.values(datosFijos2024).concat(totalFallosMesActual2024);
-
-    // Crear la serie de fallos para 2023 (solo datos fijos)
     const fallosPorMes2023 = Object.values(datosFijos2023);
 
-    // Las etiquetas del eje X (meses anteriores y el mes actual al final para 2024)
     const meses = Object.keys(datosFijos2024).concat("Jun");
 
-    // Calcular las diferencias porcentuales entre 2024 y 2023 para cada mes
     const percentageDifferencesFallos = fallosPorMes2024.map((current, index) => {
         const previous = fallosPorMes2023[index];
-        const difference = ((current - previous) / previous) * 100; // Cálculo del porcentaje de 2024 vs 2023
-        return difference.toFixed(2) + '%'; // Formatear a dos decimales
+        const difference = ((current - previous) / previous) * 100;
+        return difference.toFixed(2) + '%';
     });
 
-    // Verificar el cálculo de las diferencias porcentuales
+    // Función para calcular la diferencia porcentual
+function calcularDiferenciaPorcentual(mesActual, mesAnterior) {
+    if (mesAnterior === 0) {
+        return mesActual > 0 ? '∞%' : '0%';
+    }
+
+    // Calcular la diferencia porcentual
+    const diferencia = ((mesActual - mesAnterior) / mesAnterior) * 100;
+
+    // Formatear la diferencia con el signo + o -
+    const diferenciaFormateada = diferencia > 0 ? `+${diferencia.toFixed(2)}%` : `${diferencia.toFixed(2)}%`;
+
+    return diferenciaFormateada;
+}
+
+// Accedes al total de fallos del mes anterior desde datosFijos2024 (esto depende de cómo lo obtienes)
+const mesAnterior = datosFijos2024['May'];  // Asumiendo que 'SEP' es el mes anterior
+
+// Calcular la diferencia porcentual
+const diferencia = calcularDiferenciaPorcentual(totalFallosMesActual2024, mesAnterior);
+
+// Mostrar la diferencia porcentual en el div con el id 'diferencia-porcentaje-total'
+document.getElementById('diferencia-porcentaje-total').innerHTML = `${diferencia}`;
+
     console.log(percentageDifferencesFallos);
 
-    // Configuración de ApexCharts con el gráfico de tipo columna
     const opciones = {
         chart: {
-            height: 180,
-            type: 'bar', // Cambiado a gráfico de columna
+            height: 300,
+            type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
             animations: {
                 enabled: true,
                 easing: 'easeinout',
-                speed: 5000,
-                animateGradually: {
-                    enabled: true,
-                    delay: 150
-                },
-                dynamicAnimation: {
-                    speed: 1000
-                }
+                speed: 1000,
+                animateGradually: { enabled: true, delay: 150 },
+                dynamicAnimation: { speed: 1000 }
             },
         },
         dataLabels: { enabled: false },
         stroke: {
-            width: [0, 0],
-            dashArray: [0, 0]
+            curve: 'straight', // Cambia a 'smooth' para una transición más suave entre los puntos
+            width: [3, 3],
+            dashArray: [4, 0]
         },
         markers: {
             size: 4,
-            colors: ['#003ad5', '#D50000'], // Color de los puntos para la columna del año anterior
+            colors: ['#c9c9c9', '#311b92'], // Color de los puntos para la línea del año anterior
             strokeColors: '#fff',
-            strokeWidth: 0,
+            strokeWidth: 4,
             hover: {
                 size: 8
             }
         },
         xaxis: {
-            categories: meses, // Mostrar los meses anteriores + el mes actual para 2024
+            categories: meses,
             labels: { show: true },
             axisBorder: { show: false },
             axisTicks: { show: false }
@@ -181,49 +202,48 @@ function renderizarGraficoFallos(resumen) {
             show: true,
             borderColor: '#e0e0e0',
             strokeDashArray: 5,
-            xaxis: {
-                lines: { show: true }
-            },
-            yaxis: {
-                lines: { show: false }
-            }
+            xaxis: { lines: { show: true } },
+            yaxis: { lines: { show: false } }
         },
-        legend: {
-            show: false // Eliminar leyenda
-        },
+        legend: { show: false },
         tooltip: {
             theme: 'dark',
-            // Formatear el tooltip para incluir el porcentaje de diferencia
-            y: { formatter: function (value, { seriesIndex, dataPointIndex }) {
-                let result = `${value}`; // Mostrar solo el valor por defecto
-                
-                // Solo agregar el porcentaje de diferencia para 2024
-                if (seriesIndex === 1) { // Para 2024
-                    const percentage = percentageDifferencesFallos[dataPointIndex]; // Obtener el porcentaje de 2024 vs 2023
-                    console.log(`Tooltip para 2024 - Mes: ${meses[dataPointIndex]}, Valor: ${value}, Porcentaje: ${percentage}`);
-                    result += ` (${percentage})`; // Agregar el porcentaje
+            y: {
+                formatter: function (value, { seriesIndex, dataPointIndex }) {
+                    let result = `${value}`;
+                    if (seriesIndex === 1) {
+                        const percentage = percentageDifferencesFallos[dataPointIndex];
+                        console.log(`Tooltip para 2024 - Mes: ${meses[dataPointIndex]}, Valor: ${value}, Porcentaje: ${percentage}`);
+                        result += ` (${percentage})`;
+                    }
+                    return result;
                 }
-
-                return result;
-            }}
+            }
         },
-        colors: ['#cccccc', '#003ad5'], // Colores para las barras (azul para 2023 y rojo para 2024)
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.8,
+                opacityTo: 0.6,
+                stops: [0, 90, 100]
+            }
+        },
+        colors: ['#bdbdbd', '#311b92'],
         series: [
-            { name: '2023', data: fallosPorMes2023 }, // Datos de 2023
-            { name: '2024', data: fallosPorMes2024 }  // Datos de 2024
+            { name: '2023', data: fallosPorMes2023 },
+            { name: '2024', data: fallosPorMes2024 }
         ]
     };
 
-    // Crear el gráfico y renderizarlo
     const chart = new ApexCharts(document.querySelector("#grafico-fallos"), opciones);
     chart.render();
 }
 
 
-
-
 // Función para abrir el panel de detalles con el resumen
 window.abrirPanelDetalle = (codigo) => {
+    event.preventDefault();  // Si el panel se abre a través de un enlace <a> con href="#"
     const div = document.getElementById(`resumen-codigo-${codigo}`);
     const fallos = JSON.parse(div.dataset.fallos || '[]');
 

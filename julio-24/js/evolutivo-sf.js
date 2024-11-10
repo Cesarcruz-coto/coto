@@ -215,11 +215,11 @@ Operativo: ${cantidadOperativo} Ajustes <br>
          stroke: {
              curve: 'straight', // Cambia a 'smooth' para una transición más suave entre los puntos
              width: [3, 3],
-             dashArray: [0, 0]
+             dashArray: [4, 0]
          },
          markers: {
              size: 4,
-             colors: ['#003ad5', '#D50000'], // Color de los puntos para la línea del año anterior
+             colors: ['#c9c9c9', '#311b92'], // Color de los puntos para la línea del año anterior
              strokeColors: '#fff',
              strokeWidth: 4,
              hover: {
@@ -280,7 +280,7 @@ Operativo: ${cantidadOperativo} Ajustes <br>
                  stops: [0, 90, 100]
              }
          },
-         colors: ['#003ad5', '#D50000'], // Colores para las líneas
+         colors: ['#c9c9c9', '#311b92'], // Colores para las líneas
          
          annotations: {
              points: [
@@ -289,16 +289,17 @@ Operativo: ${cantidadOperativo} Ajustes <br>
                      y: 1304, // Asegúrate de que este valor esté en el rango del gráfico
                      marker: {
                          size: 0,
-                         fillColor: '#D50000',
-                         strokeColor: '#D50000',
+                         fillColor: '#311b92',
+                         strokeColor: '#311b92',
                          shape: 'circle'
                      },
                      label: {
-                         borderColor: '#D50000',
-                         offsetY: -10,
+                         borderColor: '#311b92',
+                         offsetY: 10,
+                         offsetX: 50,
                          style: {
                              color: '#fff',
-                             background: '#D50000'
+                             background: '#311b92'
                          },
                          text: 'Norma 91'
                      }
@@ -312,7 +313,6 @@ Operativo: ${cantidadOperativo} Ajustes <br>
      var chart = new ApexCharts(document.querySelector("#chart"), options);
      chart.render();
  }
-
 
 function generatePDF() {
     const { jsPDF } = window.jspdf;
@@ -352,7 +352,7 @@ function generatePDF() {
     // Capturar gráfico usando html2canvas
     html2canvas(document.querySelector("#chart")).then(canvas => {
         const imgData = canvas.toDataURL("image/png");
-        doc.addImage(imgData, 'PNG', 10, 155, 190, 100); // Ajusta las dimensiones según sea necesario
+        doc.addImage(imgData, 'PNG', 10, 165, 192, 78); // Ajusta las dimensiones según sea necesario
 
         // Análisis final
         doc.setFontSize(13);

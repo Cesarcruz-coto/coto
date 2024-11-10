@@ -103,22 +103,24 @@ const obtenerDatos = async () => {
 
         // Mostrar gráficos con ApexCharts
         const errorChartOptions = {
-            series: [{
+            series: [
+                {
+                    name: '2023',
+                    data: [2522, 2531, 2612] // Datos para AGO, SEP, OCT
+                },
+                {
                 name: '2024',
                 data: [
                     calcularDatosErrores(dataErroresJulio).cantidadErrores,
                     calcularDatosErrores(dataErroresAgosto).cantidadErrores,
                     cantidadErroresActual
                 ],
-            },
-            {
-                name: '2023',
-                data: [2522, 2531, 2612] // Datos para AGO, SEP, OCT
             }],
             chart: {
                 type: 'area',
-                
-                height: 150,
+                zoom: { enabled: false },
+             toolbar: { show: false },
+                height: 280,
                 animations: {
                     enabled: true,     // Asegúrate de que esté en true
                     easing: 'easeinout',  // Cambia a 'easeinout' para una transición más suave
@@ -162,12 +164,13 @@ const obtenerDatos = async () => {
                 enabled: false
             },
             stroke: {
-                curve: 'straight',
-                width: 3
+                curve: 'straight', // Cambia a 'smooth' para una transición más suave entre los puntos
+                width: [3, 3],
+                dashArray: [4, 0]
             },
             markers: {
                 size: 4, // Tamaño de los puntos
-                colors: ['#D50000', '#003ad5'], // Color de los puntos
+                colors: ['#c9c9c9', '#311b92'], // Color de los puntos
                 strokeColors: '#fff', // Color del borde de los puntos
                 strokeWidth: 4,
                 hover: {
@@ -186,7 +189,7 @@ const obtenerDatos = async () => {
                 stops: [0, 90, 100]
             }
             },
-            colors: ['#D50000', '#003ad5'],
+            colors: ['#c9c9c9', '#311b92'],
             grid: {
                 show: true,
                 borderColor: '#e0e0e0',
@@ -212,23 +215,25 @@ const obtenerDatos = async () => {
         
 
         const movimientoChartOptions = {
-            series: [{
+            series: [
+                {
+                    name: '2023',
+                    data: [547, 654, 735] // Datos para AGO, SEP, OCT
+                },
+                {
                 name: '2024',
                 data: [
                     calcularDatosMovimientos(dataMovimientosJulio).cantidadMovimientos,
                     calcularDatosMovimientos(dataMovimientosAgosto).cantidadMovimientos,
                     cantidadMovimientosActual
                 ]
-            },
-            {
-                name: '2023',
-                data: [547, 654, 735] // Datos para AGO, SEP, OCT
             }
         ],
             chart: {
                 type: 'area',
-                
-                height: 150,
+                zoom: { enabled: false },
+             toolbar: { show: false },
+                height: 280,
                 animations: {
                     enabled: true,     // Asegúrate de que esté en true
                     easing: 'easeinout',  // Cambia a 'easeinout' para una transición más suave
@@ -272,15 +277,16 @@ const obtenerDatos = async () => {
                 enabled: false
             },
             stroke: {
-                curve: 'straight',
-                width: 3
+                curve: 'straight', // Cambia a 'smooth' para una transición más suave entre los puntos
+                width: [3, 3],
+                dashArray: [4, 0]
             },
             legend: {
                 show: false
             },
             markers: {
                 size: 4, // Tamaño de los puntos
-                colors: ['#D50000', '#003ad5'], // Color de los puntos
+                colors: ['#c9c9c9', '#311b92'], // Color de los puntos
                 strokeColors: '#fff', // Color del borde de los puntos
                 strokeWidth: 4,
                 hover: {
@@ -296,7 +302,7 @@ const obtenerDatos = async () => {
                 stops: [0, 90, 100]
             }
             },
-            colors: ['#D50000', '#003ad5'],
+            colors: ['#c9c9c9', '#311b92'],
             grid: {
                 show: true,
                 borderColor: '#e0e0e0',

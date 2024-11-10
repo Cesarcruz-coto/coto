@@ -14,6 +14,9 @@ const monthlyData = {
     'Agosto': 387
 };
 
+// Datos del año anterior
+const previousYearData = [2229, 1814, 1744, 1574, 1625, 1616, 1604, 1731, 1538];
+
 // Lista de sucursales de no venta
 const sucursalesNoVenta = [50, 79, 93, 193, 229, 231, 507];
 
@@ -169,153 +172,149 @@ Operativo: ${cantidadOperativo} Ajustes <br>
     .catch(error => console.error('Error al obtener los datos:', error));
 
 
- // Datos del año anterior
-const previousYearData = [2229, 1814, 1744, 1574, 1625, 1616, 1604, 1731, 1538];
-
-// Función para inicializar o actualizar el gráfico con ApexCharts
-function loadChart() {
-    const monthAbbreviations = months.map(month => {
-        return month.slice(0, 3); // Abreviar los primeros 3 caracteres de cada mes
-    });
-
-    const percentageDifferences = cmovimientos.map((current, index) => {
-        const previous = previousYearData[index];
-        const difference = ((current - previous) / previous) * 100; // Cálculo del porcentaje de 2024 vs 2023
-        return difference.toFixed(2) + '%'; // Formatear a dos decimales
-    });
-
-    var options = {
-        series: [
-            {
-                name: 'Ajustes - 2023',
-                data: previousYearData // Agregar los datos del año anterior
-            },
-            {
-                name: 'Ajustes - 2024',
-                data: cmovimientos
-            }
-        ],
-        chart: {
-            height: 300,
-            type: 'area',
-            zoom: { enabled: false },
-            toolbar: { show: false },
-            animations: {
-                enabled: true,
-                easing: 'easeinout',
-                speed: 5000,
-                animateGradually: {
-                    enabled: true,
-                    delay: 150
-                },
-                dynamicAnimation: {
-                    speed: 1000
-                }
-            },
-        },
-        dataLabels: { enabled: false },
-        stroke: {
-            curve: 'straight', // Cambia a 'smooth' para una transición más suave entre los puntos
-            width: [3, 3],
-            dashArray: [0, 0]
-        },
-        markers: {
-            size: 4,
-            colors: ['#003ad5', '#D50000'], // Color de los puntos para la línea del año anterior
-            strokeColors: '#fff',
-            strokeWidth: 4,
-            hover: {
-                size: 8
-            }
-        },
-        xaxis: {
-            categories: [...monthAbbreviations, 'Sep'],
-            labels: { show: true },
-            axisBorder: { show: false },
-            axisTicks: { show: false }
-        },
-        yaxis: {
-            labels: { show: false },
-            axisBorder: { show: false },
-            axisTicks: { show: false }
-        },
-        grid: {
-            show: true,
-            borderColor: '#e0e0e0',
-            strokeDashArray: 5,
-            xaxis: {
-                lines: {
-                    show: true
-                }
-            },
-            yaxis: {
-                lines: {
-                    show: false
-                }
-            }
-        },
-        legend: {
-            show: false
-        },
-        tooltip: {
-            theme: 'dark',
-            y: {
-                formatter: function (value, { seriesIndex, dataPointIndex }) {
-                    let result = `${value}`; // Mostrar solo el valor por defecto
-                    
-                    // Mostrar el porcentaje solo para 2024 y 2025
-                    if (seriesIndex === 1) { // Para 2024
-                        const percentage = percentageDifferences[dataPointIndex]; // Obtener el porcentaje de 2024 vs 2023
-                        result += ` (${percentage})`; // Agregar el porcentaje
-                    }
-    
-                    return result;
-                }
-            }
-        },
-        fill: {
-            type: 'gradient',
-            gradient: {
-                shadeIntensity: 1,
-                opacityFrom: 0.8,
-                opacityTo: 0.6,
-                stops: [0, 90, 100]
-            }
-        },
-        colors: ['#003ad5', '#D50000'], // Colores para las líneas
-        
-        annotations: {
-            points: [
-                {
-                    x: 'Jun',
-                    y: 1304, // Asegúrate de que este valor esté en el rango del gráfico
-                    marker: {
-                        size: 0,
-                        fillColor: '#D50000',
-                        strokeColor: '#D50000',
-                        shape: 'circle'
-                    },
-                    label: {
-                        borderColor: '#D50000',
-                        offsetY: -10,
-                        style: {
-                            color: '#fff',
-                            background: '#D50000'
-                        },
-                        text: 'Norma 91'
-                    }
-                }
-            ]
-        }
-        
-        
-    };
-
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
-    chart.render();
-}
-
-
+ // Función para inicializar o actualizar el gráfico con ApexCharts
+ function loadChart() {
+     const monthAbbreviations = months.map(month => {
+         return month.slice(0, 3); // Abreviar los primeros 3 caracteres de cada mes
+     });
+ 
+     const percentageDifferences = cmovimientos.map((current, index) => {
+         const previous = previousYearData[index];
+         const difference = ((current - previous) / previous) * 100; // Cálculo del porcentaje de 2024 vs 2023
+         return difference.toFixed(2) + '%'; // Formatear a dos decimales
+     });
+ 
+     var options = {
+         series: [
+             {
+                 name: 'Ajustes - 2023',
+                 data: previousYearData // Agregar los datos del año anterior
+             },
+             {
+                 name: 'Ajustes - 2024',
+                 data: cmovimientos
+             }
+         ],
+         chart: {
+             height: 300,
+             type: 'area',
+             zoom: { enabled: false },
+             toolbar: { show: false },
+             animations: {
+                 enabled: true,
+                 easing: 'easeinout',
+                 speed: 5000,
+                 animateGradually: {
+                     enabled: true,
+                     delay: 150
+                 },
+                 dynamicAnimation: {
+                     speed: 1000
+                 }
+             },
+         },
+         dataLabels: { enabled: false },
+         stroke: {
+             curve: 'straight', // Cambia a 'smooth' para una transición más suave entre los puntos
+             width: [3, 3],
+             dashArray: [4, 0]
+         },
+         markers: {
+             size: 4,
+             colors: ['#c9c9c9', '#311b92'], // Color de los puntos para la línea del año anterior
+             strokeColors: '#fff',
+             strokeWidth: 4,
+             hover: {
+                 size: 8
+             }
+         },
+         xaxis: {
+             categories: [...monthAbbreviations, 'Sep'],
+             labels: { show: true },
+             axisBorder: { show: false },
+             axisTicks: { show: false }
+         },
+         yaxis: {
+             labels: { show: false },
+             axisBorder: { show: false },
+             axisTicks: { show: false }
+         },
+         grid: {
+             show: true,
+             borderColor: '#e0e0e0',
+             strokeDashArray: 5,
+             xaxis: {
+                 lines: {
+                     show: true
+                 }
+             },
+             yaxis: {
+                 lines: {
+                     show: false
+                 }
+             }
+         },
+         legend: {
+             show: false
+         },
+         tooltip: {
+             theme: 'dark',
+             y: {
+                 formatter: function (value, { seriesIndex, dataPointIndex }) {
+                     let result = `${value}`; // Mostrar solo el valor por defecto
+                     
+                     // Mostrar el porcentaje solo para 2024 y 2025
+                     if (seriesIndex === 1) { // Para 2024
+                         const percentage = percentageDifferences[dataPointIndex]; // Obtener el porcentaje de 2024 vs 2023
+                         result += ` (${percentage})`; // Agregar el porcentaje
+                     }
+     
+                     return result;
+                 }
+             }
+         },
+         fill: {
+             type: 'gradient',
+             gradient: {
+                 shadeIntensity: 1,
+                 opacityFrom: 0.8,
+                 opacityTo: 0.6,
+                 stops: [0, 90, 100]
+             }
+         },
+         colors: ['#c9c9c9', '#311b92'], // Colores para las líneas
+         
+         annotations: {
+             points: [
+                 {
+                     x: 'Jun',
+                     y: 1304, // Asegúrate de que este valor esté en el rango del gráfico
+                     marker: {
+                         size: 0,
+                         fillColor: '#311b92',
+                         strokeColor: '#311b92',
+                         shape: 'circle'
+                     },
+                     label: {
+                         borderColor: '#311b92',
+                         offsetY: 10,
+                         offsetX: 50,
+                         style: {
+                             color: '#fff',
+                             background: '#311b92'
+                         },
+                         text: 'Norma 91'
+                     }
+                 }
+             ]
+         }
+         
+         
+     };
+ 
+     var chart = new ApexCharts(document.querySelector("#chart"), options);
+     chart.render();
+ }
 
 function generatePDF() {
     const { jsPDF } = window.jspdf;
@@ -355,7 +354,7 @@ function generatePDF() {
     // Capturar gráfico usando html2canvas
     html2canvas(document.querySelector("#chart")).then(canvas => {
         const imgData = canvas.toDataURL("image/png");
-        doc.addImage(imgData, 'PNG', 10, 155, 190, 100); // Ajusta las dimensiones según sea necesario
+        doc.addImage(imgData, 'PNG', 10, 165, 192, 78); // Ajusta las dimensiones según sea necesario
 
         // Análisis final
         doc.setFontSize(13);

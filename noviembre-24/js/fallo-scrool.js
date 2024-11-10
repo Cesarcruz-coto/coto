@@ -92,6 +92,7 @@ const mostrarResumen = (resumen) => {
 
 // Función para abrir el panel de detalles con el resumen
 window.abrirPanelDetalle = (codigo) => {
+    event.preventDefault();  // Si el panel se abre a través de un enlace <a> con href="#"
     const div = document.getElementById(`resumen-codigo-${codigo}`);
     const fallos = JSON.parse(div.dataset.fallos || '[]');
 
