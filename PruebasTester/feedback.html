@@ -29,8 +29,7 @@
 
     <div id="loader">
         <div class="loader-content">
-            <img src="https://cesarcruz-coto.github.io/coto/img/coto.png"
-                alt="Cargando">
+            <img src="https://cesarcruz-coto.github.io/coto/img/coto.png" alt="Cargando">
             <div id="progress">0%</div>
         </div>
     </div>
@@ -38,8 +37,7 @@
     <div id="container-main">
 
         <div class="sidebar">
-            <img src="https://cesarcruz-coto.github.io/coto/img/coto.png"
-                alt="">
+            <img src="https://cesarcruz-coto.github.io/coto/img/coto.png" alt="">
             <h1>Gerencia de<br>Recaudaciones</h1>
 
             <!-- Menú hamburguesa -->
@@ -53,11 +51,13 @@
                 <li><a href="inicio.html">Inicio</a></li>
                 <li><a href="aconciliar.html">Mov. Conciliados</a></li>
                 <li><a href="erroroperativo.html">Errores Operativos</a></li>
-                <li><a href="fallos.html">Fallos de Caja</a></li> <li><a href="gastos.html">Gastos</a></li>
+                <li><a href="fallos.html">Fallos de Caja</a></li>
+                <li><a href="gastos.html">Gastos</a></li>
             </ul>
 
             <div class="perfil-container">
-                <img id="perfilFoto" src="https://cesarcruz-coto.github.io/coto/img/invitado.png" alt="Foto de perfil" class="perfil-foto">
+                <img id="perfilFoto" src="https://cesarcruz-coto.github.io/coto/img/invitado.png" alt="Foto de perfil"
+                    class="perfil-foto">
                 <div class="perfil-info">
                     <div class="puesto" id="puesto">Puesto</div>
                     <div class="nombre" id="nombre">Nombre del Usuario</div>
@@ -94,30 +94,29 @@
             <section id="info">
 
                 <div class="contenedor-movimientos">
-                    <form method="post" id="sheetdb-form"
-  action="https://sheetdb.io/api/v1/xsr7ejasp5q8s">
-    Nombre: <input name="data[nombre]">
-    Legajo: <input name="data[legajo]">
-    Comentario: <input name="data[comentario]">
-    <button type="submit">Enviar Feedback</button>
-</form>
+                    <form method="post" id="sheetdb-form" action="https://sheetdb.io/api/v1/xsr7ejasp5q8s">
+                        Nombre: <input name="data[nombre]">
+                        Legajo: <input name="data[legajo]">
+                        Comentario: <input name="data[comentario]">
+                        <button type="submit">Enviar Feedback</button>
+                    </form>
 
-<script>
-  var form = document.getElementById('sheetdb-form');
-  form.addEventListener("submit", e => {
-    e.preventDefault();
-    fetch(form.action, {
-        method : "POST",
-        body: new FormData(document.getElementById("sheetdb-form")),
-    }).then(
-        response => response.json()
-    ).then((html) => {
-      // you can put any JS code here
-      alert('success')
-    });
-  });
-</script>
-</div>
+                    <script>
+                        var form = document.getElementById('sheetdb-form');
+                        form.addEventListener("submit", e => {
+                            e.preventDefault();
+                            fetch(form.action, {
+                                method: "POST",
+                                body: new FormData(document.getElementById("sheetdb-form")),
+                            }).then(
+                                response => response.json()
+                            ).then((html) => {
+                                // you can put any JS code here
+                                alert('success')
+                            });
+                        });
+                    </script>
+                </div>
             </section>
 
         </div>
@@ -200,3 +199,45 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="contenedor-movimientos">
+    <div class="icono">
+        <b>${totalFallos}</b>
+    </div>
+    <div class="info-movimientos">
+        <div class="texto-principal">
+            <span class="pendientes-numero">Fallos de caja por Codigo</span>
+        </div>
+        <div class="importe-movimientos">
+            <b style="color: ${colorFaltante};">${iconoFaltante} $${totalFaltantes.toLocaleString('es-ES', { minimumFractionDigits:
+                2, maximumFractionDigits: 2 })} - <b style="color: ${colorSobrante};">${iconoSobrante}
+                    $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></b>
+            <div class="comparison-fallos">Prom. mes previo <b id="diferencia-porcentaje-total"></b></div>
+        </div>
+    </div>
+</div>
+
+
+
+<h2 class="report-title">Fallos de caja x Codigo - ${totalFallos}</h2>
+<b style="color: ${colorFaltante};">${iconoFaltante} $${totalFaltantes.toLocaleString('es-ES', { minimumFractionDigits:
+    2, maximumFractionDigits: 2 })} - <b style="color: ${colorSobrante};">${iconoSobrante}
+        $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></b>
+<div class="comparison-fallos">Prom. mes previo <b id="diferencia-porcentaje-total"></b></div>
+<br>

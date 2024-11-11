@@ -319,7 +319,7 @@ span.igual {
   margin-bottom: 10px;
 }
 .total-errors {
-  font-size: 2.6em;
+  font-size: 2.5em;
   font-weight: 700;
   color: #311b92;
   margin-bottom: 10px;
@@ -715,7 +715,7 @@ p.total-error-importe-sf {
   font-size: 1.3em;
 }
 .total-summary {
-  font-size: 2.6em;
+  font-size: 2.7em;
   color: #311b92;
   font-weight: 700;
 }
@@ -726,6 +726,12 @@ p.total-error-importe-sf {
   padding: 3px 10px;
   font-weight: 700;
   margin-left: 7px;
+}
+.contenedor-movimientos-fallos {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  margin-bottom: 15px;
 }
 b#total-error-importes,
 b#total-importes {
@@ -1088,7 +1094,11 @@ button#exportar-excel {
     color: #555;
     display: flex;
     align-items: center;
-    padding-top: 10px;
+}
+.icono-fallos {
+  font-size: 2.5em;
+  margin-right: 10px;
+  color: #311b92;
 }
 #diferencia-porcentaje-total {
     color: #212121;
@@ -1442,13 +1452,13 @@ i.fa-solid.fa-circle-user {
 .tab {
   padding: 10px 20px;
   cursor: pointer;
-  background-color: #4a90e2;
+  background-color: #4426c8;
   color: #fff;
   margin: 0 5px;
   border-radius: 4px;
 }
 .tab.active {
-  background-color: #357abd;
+  background-color: #311b92;
 }
 .container-eo {
   display: flex;
@@ -1483,7 +1493,7 @@ i.fa-solid.fa-circle-user {
   background-color: #f0f0f0;
   padding: 10px;
   margin-top: 10px;
-  border-left: 4px solid #4a90e2;
+  border-left: 4px solid #311b92;
   display: none;
 }
 a.ver-obs {
@@ -1492,7 +1502,7 @@ a.ver-obs {
   text-decoration: none;
 }
 .ver-obs-eo {
-  background-color: #4a90e2;
+  background-color: #311b92;
   color: #fff;
   border: none;
   padding: 8px 12px;
@@ -1501,7 +1511,7 @@ a.ver-obs {
   transition: 1s;
 }
 .ver-obs-eo:hover {
-  background-color: #357abd;
+  background-color: #4426c8;
   transform: scale(1.05);
 }
 .pagination {
@@ -1511,7 +1521,7 @@ a.ver-obs {
 .pagination button {
   padding: 10px 20px;
   margin: 5px;
-  background-color: #4a90e2;
+  background-color: #311b92;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -1522,7 +1532,7 @@ a.ver-obs {
   cursor: not-allowed;
 }
 .export-button {
-  background-color: #4a90e2;
+  background-color: #311b92;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -1537,7 +1547,7 @@ a.ver-obs {
   color: #fff;
 }
 .export-button:hover {
-  background-color: #357abd;
+  background-color: #4426c8;
   transform: scale(1.05);
 }
 .tab-content {
@@ -2460,12 +2470,6 @@ button.formButton {
   align-items: center;
   font-weight: 700;
 }
-#resumen-codigo-1 span i,
-#resumen-codigo-2 span i,
-#resumen-codigo-3 span i,
-#resumen-codigo-digital i {
-  margin-right: 5px;
-}
 #resumen-codigo-3 {
   border-left: 5px solid #d50000;
   padding: 8px;
@@ -2477,11 +2481,15 @@ button.formButton {
   );
   border-radius: 5px;
 }
+#resumen-codigo-3 a {
+  text-decoration: none;
+  color: #d50000;
+}
 #resumen-codigo-3:hover {
-  box-shadow: inset 400px 0 0 0 #d5000039;
+  box-shadow: inset 400px 0 0 0 #d5000014;
 }
 #resumen-codigo-2 {
-  border-left: 5px solid #009812;
+  border-left: 5px solid #fef600;
   padding: 8px;
   background: red;
   background: linear-gradient(
@@ -2491,11 +2499,15 @@ button.formButton {
   );
   border-radius: 5px;
 }
+#resumen-codigo-2 a {
+  text-decoration: none;
+  color: #ccc600;
+}
 #resumen-codigo-2:hover {
-  box-shadow: inset 400px 0 0 0 #0098124f;
+  box-shadow: inset 400px 0 0 0 #fef60023;
 }
 #resumen-codigo-1 {
-  border-left: 5px solid #fef600;
+  border-left: 5px solid #009812;
   padding: 8px;
   background: red;
   background: linear-gradient(
@@ -2505,6 +2517,15 @@ button.formButton {
   );
   border-radius: 5px;
 }
+#resumen-codigo-1 a {
+  text-decoration: none;
+  color: #009812;
+}
 #resumen-codigo-1:hover {
-  box-shadow: inset 400px 0 0 0 #fef60058;
+  box-shadow: inset 400px 0 0 0 #00981214;
+}
+.title-fallos {
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-size: 1.3em;
 }

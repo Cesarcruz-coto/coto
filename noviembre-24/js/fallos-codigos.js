@@ -62,10 +62,8 @@ const mostrarResumen = (resumen) => {
             const enlaceDetalle = `<a href="#" onclick="abrirPanelDetalle('${codigo}')"><i class="fa-regular fa-eye"></i> Ver fallos</a>`;
 
             div.innerHTML = `
-                <h3>Codigo ${codigo} - ${resumen[codigo].total} Fallos</h3>
-                <p>Faltantes ${faltantesHTML}</p>
-                <p>Sobrantes ${sobrantesHTML}</p>
-                <p>${enlaceDetalle}</p>
+                <h3>Codigo ${codigo} - ${resumen[codigo].total} Fallos - ${enlaceDetalle}</h3>
+                <p>${faltantesHTML} - ${sobrantesHTML}</p>
             `;
 
             // Guardar los fallos detallados para usarlos en el panel
@@ -76,25 +74,40 @@ const mostrarResumen = (resumen) => {
             totalFaltantes += resumen[codigo].faltantes;
             totalSobrantes += resumen[codigo].sobrantes;
         }
-        
+
     });
 
     // Actualizar el div para mostrar el total de fallos
-const divTotalFallos = document.getElementById('resumen-codigo-digital');
-if (divTotalFallos) {
-    const iconoFaltante = '<i class="fa-solid fa-arrow-trend-down" style="color: #D50000;"></i>';
-    const iconoSobrante = '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>';
+    const divTotalFallos = document.getElementById('resumen-codigo-digital');
+    if (divTotalFallos) {
+        const iconoFaltante = '<i class="fa-solid fa-arrow-trend-down" style="color: #D50000;"></i>';
+        const iconoSobrante = '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>';
 
-    // Establecer el color dependiendo del importe
-    const colorFaltante = totalFaltantes > 0 ? '#D50000' : '#000'; // Rojo si hay faltantes, negro si no
-    const colorSobrante = totalSobrantes > 0 ? '#2E7D32' : '#000'; // Verde si hay sobrantes, negro si no
+        // Establecer el color dependiendo del importe
+        const colorFaltante = totalFaltantes > 0 ? '#D50000' : '#000'; // Rojo si hay faltantes, negro si no
+        const colorSobrante = totalSobrantes > 0 ? '#2E7D32' : '#000'; // Verde si hay sobrantes, negro si no
 
-    divTotalFallos.innerHTML = `
-        <h2 class="report-title">Fallos de caja x Codigo - ${totalFallos}</h2>
-        <b style="color: ${colorFaltante};">${iconoFaltante} $${totalFaltantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} - <b style="color: ${colorSobrante};">${iconoSobrante} $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></b>
-        <div class="comparison-fallos">Prom. mes previo <b id="diferencia-porcentaje-total"></b></div>
-        <br>`;
-}
+        divTotalFallos.innerHTML = `
+    <div class="comparison"> Evolutivo</div>
+                            <div class="title-fallos">
+                                <h2>Fallos de caja por Codigo</h2>
+                            </div>
+        <div class="contenedor-movimientos-fallos">
+    <div class="icono-fallos">
+        <b>${totalFallos}</b>
+    </div>
+    <div class="info-movimientos">
+        <div class="importe-movimientos">
+            <b style="color: ${colorFaltante}; font-size: 0.9em;">${iconoFaltante} $${totalFaltantes.toLocaleString('es-ES', {
+            minimumFractionDigits:
+                2, maximumFractionDigits: 2
+        })} - <b style="color: ${colorSobrante};">${iconoSobrante}
+                    $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></b>
+            <div class="comparison-fallos">Prom. mes previo <b id="diferencia-porcentaje-total"></b></div>
+        </div>
+    </div>
+</div>`;
+    }
 }
 
 function renderizarGraficoFallos(resumen) {
@@ -143,28 +156,28 @@ function renderizarGraficoFallos(resumen) {
     });
 
     // Función para calcular la diferencia porcentual
-function calcularDiferenciaPorcentual(mesActual, mesAnterior) {
-    if (mesAnterior === 0) {
-        return mesActual > 0 ? '∞%' : '0%';
+    function calcularDiferenciaPorcentual(mesActual, mesAnterior) {
+        if (mesAnterior === 0) {
+            return mesActual > 0 ? '∞%' : '0%';
+        }
+
+        // Calcular la diferencia porcentual
+        const diferencia = ((mesActual - mesAnterior) / mesAnterior) * 100;
+
+        // Formatear la diferencia con el signo + o -
+        const diferenciaFormateada = diferencia > 0 ? `+${diferencia.toFixed(2)}%` : `${diferencia.toFixed(2)}%`;
+
+        return diferenciaFormateada;
     }
 
+    // Accedes al total de fallos del mes anterior desde datosFijos2024 (esto depende de cómo lo obtienes)
+    const mesAnterior = datosFijos2024['Oct'];  // Asumiendo que 'SEP' es el mes anterior
+
     // Calcular la diferencia porcentual
-    const diferencia = ((mesActual - mesAnterior) / mesAnterior) * 100;
+    const diferencia = calcularDiferenciaPorcentual(totalFallosMesActual2024, mesAnterior);
 
-    // Formatear la diferencia con el signo + o -
-    const diferenciaFormateada = diferencia > 0 ? `+${diferencia.toFixed(2)}%` : `${diferencia.toFixed(2)}%`;
-
-    return diferenciaFormateada;
-}
-
-// Accedes al total de fallos del mes anterior desde datosFijos2024 (esto depende de cómo lo obtienes)
-const mesAnterior = datosFijos2024['Oct'];  // Asumiendo que 'SEP' es el mes anterior
-
-// Calcular la diferencia porcentual
-const diferencia = calcularDiferenciaPorcentual(totalFallosMesActual2024, mesAnterior);
-
-// Mostrar la diferencia porcentual en el div con el id 'diferencia-porcentaje-total'
-document.getElementById('diferencia-porcentaje-total').innerHTML = ` ${diferencia}`;
+    // Mostrar la diferencia porcentual en el div con el id 'diferencia-porcentaje-total'
+    document.getElementById('diferencia-porcentaje-total').innerHTML = ` ${diferencia}`;
 
 
     console.log(percentageDifferencesFallos);
@@ -256,7 +269,7 @@ document.getElementById('diferencia-porcentaje-total').innerHTML = ` ${diferenci
 // Función para abrir el panel de detalles con el resumen
 window.abrirPanelDetalle = (codigo) => {
     event.preventDefault();  // Si el panel se abre a través de un enlace <a> con href="#"
-    
+
     const div = document.getElementById(`resumen-codigo-${codigo}`);
     const fallos = JSON.parse(div.dataset.fallos || '[]');
 
@@ -275,14 +288,14 @@ window.abrirPanelDetalle = (codigo) => {
         </div>
         <div>
             ${fallos.map(fallo => {
-                const importe = parseFloat(fallo.Importe.replace(/\./g, '').replace('$', '').replace(',', '.').trim());
-                const codigoData = obtenerCodigo(importe, fallo.Motivo);
+        const importe = parseFloat(fallo.Importe.replace(/\./g, '').replace('$', '').replace(',', '.').trim());
+        const codigoData = obtenerCodigo(importe, fallo.Motivo);
 
-                const observacionCorta = fallo.Observacion && fallo.Observacion.length > 11
-                    ? `${fallo.Observacion.slice(0, 11)}... <br><span class="ver-mas">ver más</span>`
-                    : fallo.Observacion || 'Sin observación';
+        const observacionCorta = fallo.Observacion && fallo.Observacion.length > 11
+            ? `${fallo.Observacion.slice(0, 11)}... <br><span class="ver-mas">ver más</span>`
+            : fallo.Observacion || 'Sin observación';
 
-                return `
+        return `
                     <div class="row fade-in">
                         <div>${fallo.Suc}</div>
                         <div>${fallo.Fecha}</div>
@@ -296,7 +309,7 @@ window.abrirPanelDetalle = (codigo) => {
                         </div>
                     </div>
                 `;
-            }).join('')}
+    }).join('')}
         </div>
         <button id="cerrar-detalle" onclick="cerrarPanelDetalle()">&times; Cerrar</button>
     `;
@@ -304,7 +317,7 @@ window.abrirPanelDetalle = (codigo) => {
     // Agregar eventos de "ver más"
     const verMasLinks = contenido.querySelectorAll('.ver-mas');
     verMasLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             const observacionCompleta = this.parentElement.nextElementSibling;
             this.parentElement.style.display = 'none';
             observacionCompleta.style.display = 'inline';
@@ -327,7 +340,7 @@ window.cerrarPanelDetalle = () => {
 const obtenerCodigo = (importe, motivo) => {
     if (Math.abs(importe) >= 15000) return { codigo: 3, icono: 'fa-exclamation-triangle', color: 'red' };
     if (Math.abs(importe) >= 7500) return { codigo: 2, icono: 'fa-exclamation-circle', color: '#FFB900' };
-    if (Math.abs(importe) >= 3000) return { codigo: 1, icono: 'fa-info-circle', color: '#0061fe' };
+    if (Math.abs(importe) >= 3000) return { codigo: 1, icono: 'fa-info-circle', color: '#009812' };
     return { codigo: 0, icono: '', color: '' };
 };
 

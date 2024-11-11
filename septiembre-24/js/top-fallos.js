@@ -74,7 +74,7 @@ async function obtenerTopFallosDeCaja() {
             } else if (Math.abs(importe) >= 7500) {
                 return { codigo: 2, icono: 'fa-exclamation-circle', color: '#FFB900' };
             } else if (Math.abs(importe) >= 3000) {
-                return { codigo: 1, icono: 'fa-info-circle', color: '#0061fe' };
+                return { codigo: 1, icono: 'fa-info-circle', color: '#009812' };
             } else {
                 return { codigo: 0, icono: '', color: '' };
             }

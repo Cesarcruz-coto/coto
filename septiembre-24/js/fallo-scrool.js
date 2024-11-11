@@ -85,7 +85,7 @@ const convertirFecha = (fechaString) => {
 const obtenerCodigo = (importe) => {
     if (Math.abs(importe) >= 15000) return { codigo: 3, icono: 'fa-exclamation-triangle', color: 'red' };
     if (Math.abs(importe) >= 7500) return { codigo: 2, icono: 'fa-exclamation-circle', color: '#FFB900' };
-    if (Math.abs(importe) >= 3000) return { codigo: 1, icono: 'fa-info-circle', color: '#0061fe' };
+    if (Math.abs(importe) >= 3000) return { codigo: 1, icono: 'fa-info-circle', color: '#009812' };
     return { codigo: 0, icono: '', color: '' };
 };
 

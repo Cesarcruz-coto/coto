@@ -62,10 +62,8 @@ const mostrarResumen = (resumen) => {
             const enlaceDetalle = `<a href="#" onclick="abrirPanelDetalle('${codigo}')"><i class="fa-regular fa-eye"></i> Ver fallos</a>`;
 
             div.innerHTML = `
-                <h3>Codigo ${codigo} - ${resumen[codigo].total} Fallos</h3>
-                <p>Faltantes ${faltantesHTML}</p>
-                <p>Sobrantes ${sobrantesHTML}</p>
-                <p>${enlaceDetalle}</p>
+                <h3>Codigo ${codigo} - ${resumen[codigo].total} Fallos - ${enlaceDetalle}</h3>
+                <p>${faltantesHTML} - ${sobrantesHTML}</p>
             `;
 
             // Guardar los fallos detallados para usarlos en el panel
@@ -90,10 +88,25 @@ if (divTotalFallos) {
     const colorSobrante = totalSobrantes > 0 ? '#2E7D32' : '#000'; // Verde si hay sobrantes, negro si no
 
     divTotalFallos.innerHTML = `
-        <h2 class="report-title">Fallos de caja x Codigo - ${totalFallos}</h2>
-        <b style="color: ${colorFaltante};">${iconoFaltante} $${totalFaltantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} - <b style="color: ${colorSobrante};">${iconoSobrante} $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></b>
-    <div class="comparison-fallos">Prom. mes previo <b id="diferencia-porcentaje-total"></b></div>
-        <br>`;
+    <div class="comparison"> Evolutivo</div>
+                            <div class="title-fallos">
+                                <h2>Fallos de caja por Codigo</h2>
+                            </div>
+        <div class="contenedor-movimientos-fallos">
+    <div class="icono-fallos">
+        <b>${totalFallos}</b>
+    </div>
+    <div class="info-movimientos">
+        <div class="importe-movimientos">
+            <b style="color: ${colorFaltante}; font-size: 0.9em;">${iconoFaltante} $${totalFaltantes.toLocaleString('es-ES', {
+            minimumFractionDigits:
+                2, maximumFractionDigits: 2
+        })} - <b style="color: ${colorSobrante};">${iconoSobrante}
+                    $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></b>
+            <div class="comparison-fallos">Prom. mes previo <b id="diferencia-porcentaje-total"></b></div>
+        </div>
+    </div>
+</div>`;
 }
 }
 
@@ -318,7 +331,7 @@ window.cerrarPanelDetalle = () => {
 const obtenerCodigo = (importe, motivo) => {
     if (Math.abs(importe) >= 15000) return { codigo: 3, icono: 'fa-exclamation-triangle', color: 'red' };
     if (Math.abs(importe) >= 7500) return { codigo: 2, icono: 'fa-exclamation-circle', color: '#FFB900' };
-    if (Math.abs(importe) >= 3000) return { codigo: 1, icono: 'fa-info-circle', color: '#0061fe' };
+    if (Math.abs(importe) >= 3000) return { codigo: 1, icono: 'fa-info-circle', color: '#009812' };
     return { codigo: 0, icono: '', color: '' };
 };
 
