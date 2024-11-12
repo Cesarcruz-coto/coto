@@ -207,37 +207,3 @@
 
 
 
-
-
-
-
-
-
-
-
-
-<div class="contenedor-movimientos">
-    <div class="icono">
-        <b>${totalFallos}</b>
-    </div>
-    <div class="info-movimientos">
-        <div class="texto-principal">
-            <span class="pendientes-numero">Fallos de caja por Codigo</span>
-        </div>
-        <div class="importe-movimientos">
-            <b style="color: ${colorFaltante};">${iconoFaltante} $${totalFaltantes.toLocaleString('es-ES', { minimumFractionDigits:
-                2, maximumFractionDigits: 2 })} - <b style="color: ${colorSobrante};">${iconoSobrante}
-                    $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></b>
-            <div class="comparison-fallos">Prom. mes previo <b id="diferencia-porcentaje-total"></b></div>
-        </div>
-    </div>
-</div>
-
-
-
-<h2 class="report-title">Fallos de caja x Codigo - ${totalFallos}</h2>
-<b style="color: ${colorFaltante};">${iconoFaltante} $${totalFaltantes.toLocaleString('es-ES', { minimumFractionDigits:
-    2, maximumFractionDigits: 2 })} - <b style="color: ${colorSobrante};">${iconoSobrante}
-        $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></b>
-<div class="comparison-fallos">Prom. mes previo <b id="diferencia-porcentaje-total"></b></div>
-<br>

@@ -59,7 +59,7 @@ const mostrarResumen = (resumen) => {
             const faltantesHTML = `<span style="color: #D50000;">${iconoFaltante} $${resumen[codigo].faltantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
             const sobrantesHTML = `<span style="color: #2E7D32;">${iconoSobrante} $${resumen[codigo].sobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
 
-            const enlaceDetalle = `<a href="#" onclick="abrirPanelDetalle('${codigo}')"><i class="fa-regular fa-eye"></i> Ver fallos</a>`;
+            const enlaceDetalle = `<a href="#" onclick="abrirPanelDetalle('${codigo}')">Ver fallos</a>`;
 
             div.innerHTML = `
                 <h3>Codigo ${codigo} - ${resumen[codigo].total} Fallos - ${enlaceDetalle}</h3>
