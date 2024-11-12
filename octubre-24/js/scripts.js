@@ -56,8 +56,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentMonth = now.getMonth(); // 0-indexed (0 = Enero)
     const currentYear = now.getFullYear(); // Año actual
 
-    const startMonth = months.indexOf('junio'); // Mes de inicio (por ejemplo junio)
-    const startYear = 2023; // Año de inicio (puedes ajustarlo según tu necesidad)
+    const startMonth = months.indexOf('Enero'); // Mes de inicio (por ejemplo junio)
+    const startYear = 2024; // Año de inicio (puedes ajustarlo según tu necesidad)
 
     // Crear selector de años
     const yearSelector = document.createElement('select');

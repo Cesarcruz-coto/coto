@@ -8,7 +8,7 @@ async function obtenerTopFallosDeCaja() {
 
         const fallos = datos.filter(mov => 
             mov.TAjuste.includes("Fallo De Caja") && 
-            !(mov.Observacion && mov.Observacion.toLowerCase().includes("deja vuelto"))
+            !(mov.Observacion && mov.Observacion.toLowerCase().includes("vuelto"))
         );
         //const fechas = fallos.map(mov => new Date(mov.Fecha.split('/').reverse().join('-')));
         //const [fechaMasAntigua, fechaMasActual] = [new Date(Math.min(...fechas)), new Date(Math.max(...fechas))];

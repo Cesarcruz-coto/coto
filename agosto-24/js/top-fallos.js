@@ -8,9 +8,9 @@ async function obtenerTopFallosDeCaja() {
         //const fallosSobrante = datos.filter(mov => mov.TAjuste === "Fallo De Cajas - Sobrante");
 
         const fallosFaltante = datos.filter(mov => mov.TAjuste === "Fallo De Caja - Faltante" && 
-            !(mov.Observacion && mov.Observacion.toLowerCase().includes("deja vuelto")));
+            !(mov.Observacion && mov.Observacion.toLowerCase().includes("vuelto")));
         const fallosSobrante = datos.filter(mov => mov.TAjuste === "Fallo De Cajas - Sobrante" && 
-            !(mov.Observacion && mov.Observacion.toLowerCase().includes("deja vuelto")));
+            !(mov.Observacion && mov.Observacion.toLowerCase().includes("vuelto")));
 
         // const fechas = [...fallosFaltante, ...fallosSobrante].map(mov => {
             // const [day, month, year] = mov.Fecha.split('/');

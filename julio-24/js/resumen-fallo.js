@@ -33,9 +33,9 @@ async function obtenerFalloMovimientos() {
     function analizarFalloMovimientos(movimientos) {
         // Filtrar los ajustes "Fallo Sobrantes - Cajeros" y "Fallo Faltante - Cajeros"
         falloSobrantes = movimientos.filter(mov => mov.TAjuste === 'Fallo De Cajas - Sobrante' && 
-            !(mov.Observacion && mov.Observacion.toLowerCase().includes("deja vuelto")));
+            !(mov.Observacion && mov.Observacion.toLowerCase().includes("vuelto")));
         falloFaltantes = movimientos.filter(mov => mov.TAjuste === 'Fallo De Caja - Faltante' && 
-            !(mov.Observacion && mov.Observacion.toLowerCase().includes("deja vuelto")));
+            !(mov.Observacion && mov.Observacion.toLowerCase().includes("vuelto")));
 
     // Contar la cantidad de ajustes y sumar los importes para ambos tipos
     totalAjustes = falloSobrantes.length + falloFaltantes.length;

@@ -147,7 +147,7 @@ h6 {
   font-weight: 800;
 }
 body {
-  font-family: Ubuntu, sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-optical-sizing: auto;
   font-weight: 450;
   font-size: 15.5px;
@@ -1165,7 +1165,7 @@ div#resumen-codigo-digital {
     text-align: center;
     margin: 0;
   }
-  .info-item {
+  .info-item, .info-item-ajustesf {
     padding: 10px;
   }
   .sidebar {
@@ -1691,6 +1691,7 @@ a.ver-obs {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 0.9em;
 }
 #adjustment-summary span {
   font-weight: 700;
@@ -2036,11 +2037,10 @@ div.sucursal-detail-one div {
 #clasificacion {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
   font-weight: 700;
-  font-size: 0.9em;
+  font-size: 0.8em;
   color: #3a3939;
-  padding: 0 20px;
+  padding-top: 15px;
 }
 .logout {
   color: #fff;
