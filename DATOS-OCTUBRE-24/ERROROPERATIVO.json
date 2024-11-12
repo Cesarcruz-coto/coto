@@ -1,113 +1,5 @@
 [
   {
-    "Suc": "103",
-    "Fecha": "26/8/2024",
-    "Term": "3767",
-    "Empleado": "91436",
-    "Ajus": "687846",
-    "Moneda": "Pesos",
-    "Usuario": "114232",
-    "Importe": "-$ 13.399,98",
-    "TAjuste": "Ajuste Por Incidencia Ms",
-    "Observacion": "Incidencia en Multistore por error en ingreso de medio de pago (supera la cantidad de decimales permitidos), el sistema toma venta en negativo por lo que genera sobrante duplicando el monto del ticket. fecha 14/08/2024, terminal 3759, transacción 9921"
-  },
-  {
-    "Suc": "149",
-    "Fecha": "26/8/2024",
-    "Term": "3032",
-    "Empleado": "181757",
-    "Ajus": "371985",
-    "Moneda": "Pesos",
-    "Usuario": "169030",
-    "Importe": "-$ 507.903,29",
-    "TAjuste": "Ajuste Por Incidencia Ms",
-    "Observacion": "Incidencia en Multistore por error en ingreso de medio de pago (supera la cantidad de decimales permitidos), el sistema toma venta en negativo por lo que genera sobrante duplicando el monto del ticket. Fecha 12/08/24, term 3031 trx 2831."
-  },
-  {
-    "Suc": "178",
-    "Fecha": "26/8/2024",
-    "Term": "4833",
-    "Empleado": "171905",
-    "Ajus": "525638",
-    "Moneda": "Pesos",
-    "Usuario": "147057",
-    "Importe": "-$ 235.231,31",
-    "TAjuste": "Ajuste Por Incidencia Ms",
-    "Observacion": "¿Incidencia en Multistore por error en ingreso de medio de pago (supera la cantidad de decimales permitidos),sistema toma venta en negativo por lo que genera sobrante duplicando el monto del ticket. fecha 28/07/2024, tm 4800 tran 3620.¿"
-  },
-  {
-    "Suc": "182",
-    "Fecha": "26/8/2024",
-    "Term": "8143",
-    "Empleado": "57759",
-    "Ajus": "1568134",
-    "Moneda": "Pesos",
-    "Usuario": "71612",
-    "Importe": "-$ 471.992,86",
-    "TAjuste": "Ajuste Por Incidencia Ms",
-    "Observacion": "¿Incidencia en Multistore por error en ingreso de medio de pago (supera la cantidad de decimales permitidos), el sistema toma venta en negativo por lo que genera sobrante duplicando el monto del ticket. fecha 03/08/2024, terminal 8128, transaccion 8229.¿"
-  },
-  {
-    "Suc": "182",
-    "Fecha": "26/8/2024",
-    "Term": "8143",
-    "Empleado": "57759",
-    "Ajus": "1568136",
-    "Moneda": "Pesos",
-    "Usuario": "71612",
-    "Importe": "-$ 3.199.998,00",
-    "TAjuste": "Ajuste Por Incidencia Ms",
-    "Observacion": "¿Incidencia en Multistore por error en ingreso de medio de pago (supera la cantidad de decimales permitidos), el sistema toma venta en negativo por lo que genera sobrante duplicando el monto del ticket. fecha 22/08/2024, terminal 8119, transaccion 0517.¿"
-  },
-  {
-    "Suc": "219",
-    "Fecha": "28/8/2024",
-    "Term": "3316",
-    "Empleado": "5015",
-    "Ajus": "619097",
-    "Moneda": "Pesos",
-    "Usuario": "58707",
-    "Importe": "-$ 36.200,00",
-    "TAjuste": "Ajuste Por Incidencia Ms",
-    "Observacion": "¿Incidencia en Multistore por error en ingreso de medio de pago (supera la cantidad de decimales permitidos), el sistema toma venta en negativo por lo que genera sobrante duplicando monto del ticket. F.21/8/2024, term3329 trx5363"
-  },
-  {
-    "Suc": "192",
-    "Fecha": "29/8/2024",
-    "Term": "3262",
-    "Empleado": "121114",
-    "Ajus": "392986",
-    "Moneda": "Pesos",
-    "Usuario": "122621",
-    "Importe": "-$ 949.884,73",
-    "TAjuste": "Ajuste Por Incidencia Ms",
-    "Observacion": "Incidencia en Multistore por error en ingreso de medio de pago (supera la cantidad de decimales permitidos), el sistema toma venta en negativo por lo que genera sobrante duplicando el monto del ticket. fecha 29/08/2024, terminal 3258, transaccion 8019"
-  },
-  {
-    "Suc": "37",
-    "Fecha": "16/9/2024",
-    "Term": "2844",
-    "Empleado": "187220",
-    "Ajus": "148939",
-    "Moneda": "Pesos",
-    "Usuario": "82301",
-    "Importe": "-$ 18.399,68",
-    "TAjuste": "Ajuste Por Incidencia Ms",
-    "Observacion": "Incidencia en Multistore por error en ingreso de medio de pago (supera la cantidad de decimales permitidos), el sistema toma venta en negativo por lo que genera sobrante duplicando el monto del ticket. fecha 16/09/2024, terminal 2844, transaccion 2133.¿"
-  },
-  {
-    "Suc": "192",
-    "Fecha": "25/9/2024",
-    "Term": "3257",
-    "Empleado": "176561",
-    "Ajus": "395037",
-    "Moneda": "Pesos",
-    "Usuario": "83528",
-    "Importe": "-$ 826.830,08",
-    "TAjuste": "Ajuste Por Incidencia Ms",
-    "Observacion": "Incidencia en Multistore en caja 19 terminal 3258 trx 2238 el día 25/9, sistema genera incidencia en monto ingresado/vuelto y anulación del descuento .En reporte sts duplica el monto de venta por $ 826830.08comunidad.Monto sin descuento del 15 $413415.04"
-  },
-  {
     "Suc": "101",
     "Fecha": "10/10/2024",
     "Term": "3369",
@@ -250,6 +142,18 @@
     "Importe": "$ 28.599,35",
     "TAjuste": "Ajuste Por Incidencia Ms",
     "Observacion": "La incidencia es de Ms. Segun lo hablado no pueden usar el ajuste de venta perdida porque no corresponde."
+  },
+  {
+    "Suc": "56",
+    "Fecha": "30/10/2024",
+    "Term": "3158",
+    "Empleado": "101791",
+    "Ajus": "556227",
+    "Moneda": "Pesos",
+    "Usuario": "180591",
+    "Importe": "$ 84.600,00",
+    "TAjuste": "Ajuste Por Incidencia Ms",
+    "Observacion": "La colaboradora cerro por 53 con una diferencia de -22.51 se chequean todos los importes declarados y se ingreso dotación sin inconvenientes. Ticket Nº 18764 ( Error de sistema- importe de retiro de USD a $94.000 e importe de cobro USD a $96 real $9.600)"
   },
   {
     "Suc": "35",
