@@ -134,7 +134,7 @@ window.abrirPanelDetalle = (codigo) => {
                 `;
             }).join('')}
         </div>
-        <button id="cerrar-detalle" onclick="cerrarPanelDetalle()">&times; Cerrar</button>
+        <button id="cerrar-detalle" onclick="cerrarPanelDetalle()">&times;</button>
     `;
 
     // Agregar eventos de "ver más"

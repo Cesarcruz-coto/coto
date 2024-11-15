@@ -152,7 +152,6 @@ async function obtenerTopFallosDeCaja() {
                         <div>Fallo</div>
                         <div>Importe</div>
                         <div>Observación</div>
-                        <div>Código</div>
                     </div>
                     <div>
                         ${observaciones.map(obs => {

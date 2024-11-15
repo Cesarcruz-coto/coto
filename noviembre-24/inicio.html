@@ -16,6 +16,7 @@
     <script src="https://kit.fontawesome.com/9a289aa4a3.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="../css/styles.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -152,40 +153,40 @@
                         <div class="down-informe"><a id="generate-pdf"><i class="fa-regular fa-file-pdf"></i>
                                 Exportar</a> </div>
                     </div>
-                    <div class="layout-container">
-                        <div class="chart-container-sf">
-                            <div id="adjustment-summary">
 
-                                <span class="igual">
-                                    <p class="total-summary" id="total-adjustments"></p>
-                                    <div class="igual2">
-                                        <p class="total-error-importe-sf"></p>
-                                        <p class="comparison-ajustes">Prom. mes previo <span class="percentage-change"
-                                                id="change-percentage"></span></p>
-                                    </div>
-                                </span>
+                    <div class="chart-container-sf">
+                        <div id="adjustment-summary">
 
-                                <span id="suc-no-venta-total">0</span>
-                                <span id="suc-venta-total">0</span>
+                            <span class="igual">
+                                <p class="total-summary" id="total-adjustments"></p>
+                                <div class="igual2">
+                                    <p class="total-error-importe-sf"></p>
+                                    <p class="comparison-ajustes">Prom. mes previo <span class="percentage-change"
+                                            id="change-percentage"></span></p>
+                                </div>
+                            </span>
 
+                            <span id="suc-no-venta-total">0</span>
+                            <span id="suc-venta-total">0</span>
+
+                        </div>
+                        <div id="chart"></div>
+                        <div id="clasificacion">
+                            <div id="prosegur-total" class="result-item">
+                                Prosegur: 0 Ajustes - $0.00
                             </div>
-                            <div id="chart"></div>
-                            <div id="clasificacion">
-                                <div id="prosegur-total" class="result-item">
-                                    Prosegur: 0 Ajustes - $0.00
-                                </div>
 
-                                <div id="redondeo-total" class="result-item">
-                                    Redondeo: 0 Ajustes - $0.00
-                                </div>
-
-                                <div id="operativo-total" class="result-item">
-                                    Operativo: 0 Ajustes - $0.00
-                                </div>
-
+                            <div id="redondeo-total" class="result-item">
+                                Redondeo: 0 Ajustes - $0.00
                             </div>
+
+                            <div id="operativo-total" class="result-item">
+                                Operativo: 0 Ajustes - $0.00
+                            </div>
+
                         </div>
                     </div>
+
                 </div>
                 <div class="info-item">
                     <div class="container-index">
@@ -207,10 +208,10 @@
             </section>
 
             <div id="detalle-fallo-panel" class="detalle-panel oculto">
-                <button id="cerrar-detalle" onclick="cerrarPanelDetalle()">&times; Cerrar</button>
+                <button id="cerrar-detalle" onclick="cerrarPanelDetalle()">&times;</button>
                 <div id="detalle-fallo-contenido"></div>
             </div>
-            
+
 
             <section id="info">
                 <div class="info-item">
@@ -335,8 +336,8 @@
     <script src="js/fallos-codigos.js" type="module" async></script>
     <script src="js/evolutivo-eo-mac.js" type="module" async></script>
     <script src="js/top-fallos.js" type="module" async></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.0/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.0/dist/xlsx.full.min.js" async></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";

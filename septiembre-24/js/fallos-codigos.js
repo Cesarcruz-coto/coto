@@ -90,7 +90,7 @@ if (divTotalFallos) {
     divTotalFallos.innerHTML = `
     <div class="comparison"> Evolutivo</div>
                             <div class="title-fallos">
-                                <h2>Fallos de caja por Codigo</h2>
+                                <h2>Fallos por Codigo</h2>
                             </div>
         <div class="contenedor-movimientos-fallos">
     <div class="icono-fallos">
@@ -304,7 +304,7 @@ window.abrirPanelDetalle = (codigo) => {
                 `;
             }).join('')}
         </div>
-        <button id="cerrar-detalle" onclick="cerrarPanelDetalle()">&times; Cerrar</button>
+        <button id="cerrar-detalle" onclick="cerrarPanelDetalle()">&times;</button>
     `;
 
     // Agregar eventos de "ver más"
