@@ -28,6 +28,9 @@ h1 {
 #loader {
   width: 100%;
 }
+span {
+  font-weight: bold;
+}
 .observacion a:hover,
 abbr[title] {
   text-decoration: underline;
@@ -80,10 +83,6 @@ a {
 abbr[title] {
   border-bottom: none;
   text-decoration: underline dotted;
-}
-b,
-strong {
-  font-weight: bolder;
 }
 small {
   font-size: 80%;
@@ -176,12 +175,10 @@ h3 {
   font-weight: 700;
 }
 body {
-  font-family: Ubuntu, sans-serif;
-  font-optical-sizing: auto;
-  font-display: swap;
-  font-weight: 500;
-  font-size: 15px;
+  font-family: "ubuntu", sans-serif;
   font-style: normal;
+  font-display: swap;
+  font-size: 16px;
   background-color: #eee;
   color: #000;
   margin: 0;
@@ -615,7 +612,7 @@ hr {
   transition: 1s;
 }
 .header {
-  font-weight: 800;
+  font-weight: 600;
   background-color: #4f34ff;
   color: #fff;
 }
@@ -914,7 +911,7 @@ img.perfil-foto:hover {
   background-color: #b4bdef;
 }
 .header-ii {
-  font-weight: 700;
+  font-weight: 600;
   background-color: #4f34ff;
   color: #fff;
 }
@@ -969,7 +966,7 @@ button#exportar-excel {
   color: #555;
   display: flex;
   align-items: center;
-  font-weight: 500;
+  font-weight: 400;
 }
 .icono-fallos {
   font-size: 2.5em;
@@ -1472,8 +1469,8 @@ div.sucursal-detail-one div {
 }
 #toggle-feedback-button {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 10px;
+  right: 2%;
   background-color: #ffd740;
   color: #6d5600;
   font-weight: bolder;
