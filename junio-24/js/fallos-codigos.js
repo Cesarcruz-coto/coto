@@ -27,6 +27,9 @@ async function obtenerFallosDeCodigo() {
 
         mostrarResumen(resumen); // Pasar el resumen
         renderizarGraficoFallos(resumen); // Renderizar el gráfico de fallos
+        renderizarGraficoCodigo3(resumen); // Renderizar el gráfico específico para código 3
+        renderizarGraficoCodigo2(resumen); // Renderizar el gráfico específico para código 2
+        renderizarGraficoCodigo1(resumen); // Renderizar el gráfico específico para código 1
 
     } catch (error) {
         console.error('Error al obtener los datos:', error);
@@ -253,6 +256,367 @@ document.getElementById('diferencia-porcentaje-total').innerHTML = `${diferencia
     chart.render();
 }
 
+function renderizarGraficoCodigo3(resumen) {
+    // Datos de fallos específicos para código 3
+    const datosCodigo3 = resumen[3] || { total: 0, fallos: [] };
+
+    // Datos fijos para los meses (puedes adaptarlo según los datos reales)
+    const datosMensuales2023 = {
+        'Ene': 100,
+        'Feb': 104,
+        'Mar': 73,
+        'Abr': 87,
+        'May': 126,
+        'Jun': 101
+    };
+
+    const datosMensuales2024 = {
+        'Ene': 104,
+        'Feb': 125,
+        'Mar': 125,
+        'Abr': 135,
+        'May': 141,
+        'Jun': datosCodigo3.total // Fallos reales para noviembre
+    };
+
+    const meses = Object.keys(datosMensuales2024);
+
+    // Datos para el gráfico
+    const fallosPorMes2023 = Object.values(datosMensuales2023);
+    const fallosPorMes2024 = Object.values(datosMensuales2024);
+
+    // Calcular la diferencia porcentual
+    const diferenciasPorcentuales = meses.map((mes, index) => {
+        const valor2023 = fallosPorMes2023[index] || 0;
+        const valor2024 = fallosPorMes2024[index] || 0;
+        if (valor2023 === 0) return "N/A"; // Evitar divisiones por cero
+        const diferencia = ((valor2024 - valor2023) / valor2023) * 100;
+        return diferencia.toFixed(2); // Limitar a dos decimales
+    });
+
+    const opciones = {
+        chart: {
+            height: 300,
+            type: 'area',
+            zoom: { enabled: false },
+            toolbar: { show: false },
+            animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 1000,
+                animateGradually: { enabled: true, delay: 150 },
+                dynamicAnimation: { speed: 1000 }
+            },
+        },
+        series: [
+            { name: '2023', data: fallosPorMes2023 },
+            { name: '2024', data: fallosPorMes2024 }
+        ],
+        dataLabels: { enabled: false },
+        stroke: {
+            curve: 'straight',
+            width: [3, 3],
+            dashArray: [4, 0]
+        },
+        markers: {
+            size: 4,
+            colors: ['#c9c9c9', '#311b92'],
+            strokeColors: '#fff',
+            strokeWidth: 4,
+            hover: {
+                size: 8
+            }
+        },
+        xaxis: {
+            categories: meses,
+            labels: { show: true },
+            axisBorder: { show: false },
+            axisTicks: { show: false }
+        },
+        yaxis: {
+            labels: { show: false },
+            axisBorder: { show: false },
+            axisTicks: { show: false }
+        },
+        grid: {
+            show: true,
+            borderColor: '#e0e0e0',
+            strokeDashArray: 5,
+            xaxis: { lines: { show: true } },
+            yaxis: { lines: { show: false } }
+        },
+        legend: { show: false },
+        tooltip: {
+            theme: 'dark',
+            y: {
+                formatter: function (value, { seriesIndex, dataPointIndex }) {
+                    if (seriesIndex === 1) { // Mostrar solo para 2024
+                        const diferencia = diferenciasPorcentuales[dataPointIndex];
+                        return `${value} fallos (${diferencia}% respecto a 2023)`;
+                    }
+                    return `${value} fallos`; // Para 2023
+                }
+            }
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.8,
+                opacityTo: 0.6,
+                stops: [0, 90, 100]
+            }
+        },
+        colors: ['#bdbdbd', '#311b92'],
+    };
+
+    // Renderizar el gráfico
+    const chartDiv = document.querySelector("#grafico-codigo-3");
+    const chart = new ApexCharts(chartDiv, opciones);
+    chart.render();
+}
+
+
+function renderizarGraficoCodigo2(resumen) {
+    // Datos de fallos específicos para código 2
+    const datosCodigo2 = resumen[2] || { total: 0, fallos: [] };
+
+    // Datos fijos para los meses
+    const datosMensuales2023 = {
+        'Ene': 289,
+        'Feb': 124,
+        'Mar': 76,
+        'Abr': 117,
+        'May': 142,
+        'Jun': 130
+    };
+
+    const datosMensuales2024 = {
+        'Ene': 106,
+        'Feb': 122,
+        'Mar': 120,
+        'Abr': 134,
+        'May': 94,
+        'Jun': datosCodigo2.total // Fallos reales para noviembre
+    };
+
+    const meses = Object.keys(datosMensuales2024);
+
+    // Datos para el gráfico
+    const fallosPorMes2023 = Object.values(datosMensuales2023);
+    const fallosPorMes2024 = Object.values(datosMensuales2024);
+
+    // Calcular la diferencia porcentual
+    const diferenciasPorcentuales = meses.map((mes, index) => {
+        const valor2023 = fallosPorMes2023[index] || 0;
+        const valor2024 = fallosPorMes2024[index] || 0;
+        if (valor2023 === 0) return "N/A"; // Evitar divisiones por cero
+        const diferencia = ((valor2024 - valor2023) / valor2023) * 100;
+        return diferencia.toFixed(2); // Limitar a dos decimales
+    });
+
+    const opciones = {
+        chart: {
+            height: 300,
+            type: 'area',
+            zoom: { enabled: false },
+            toolbar: { show: false },
+            animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 1000,
+                animateGradually: { enabled: true, delay: 150 },
+                dynamicAnimation: { speed: 1000 }
+            },
+        },
+        series: [
+            { name: '2023', data: fallosPorMes2023 },
+            { name: '2024', data: fallosPorMes2024 }
+        ],
+        dataLabels: { enabled: false },
+        stroke: {
+            curve: 'straight',
+            width: [3, 3],
+            dashArray: [4, 0]
+        },
+        markers: {
+            size: 4,
+            colors: ['#c9c9c9', '#311b92'],
+            strokeColors: '#fff',
+            strokeWidth: 4,
+            hover: {
+                size: 8
+            }
+        },
+        xaxis: {
+            categories: meses,
+            labels: { show: true },
+            axisBorder: { show: false },
+            axisTicks: { show: false }
+        },
+        yaxis: {
+            labels: { show: false },
+            axisBorder: { show: false },
+            axisTicks: { show: false }
+        },
+        grid: {
+            show: true,
+            borderColor: '#e0e0e0',
+            strokeDashArray: 5,
+            xaxis: { lines: { show: true } },
+            yaxis: { lines: { show: false } }
+        },
+        legend: { show: false },
+        tooltip: {
+            theme: 'dark',
+            y: {
+                formatter: function (value, { seriesIndex, dataPointIndex }) {
+                    if (seriesIndex === 1) { // Mostrar solo para 2024
+                        const diferencia = diferenciasPorcentuales[dataPointIndex];
+                        return `${value} fallos (${diferencia}% respecto a 2023)`;
+                    }
+                    return `${value} fallos`; // Para 2023
+                }
+            }
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.8,
+                opacityTo: 0.6,
+                stops: [0, 90, 100]
+            }
+        },
+        colors: ['#bdbdbd', '#311b92'],
+    };
+
+    // Renderizar el gráfico
+    const chartDiv = document.querySelector("#grafico-codigo-2");
+    const chart = new ApexCharts(chartDiv, opciones);
+    chart.render();
+}
+
+
+function renderizarGraficoCodigo1(resumen) {
+    // Datos de fallos específicos para código 1
+    const datosCodigo1 = resumen[1] || { total: 0, fallos: [] };
+
+    // Datos fijos para los meses
+    const datosMensuales2023 = {
+        'Ene': 911,
+        'Feb': 744,
+        'Mar': 462,
+        'Abr': 674,
+        'May': 771,
+        'Jun': 738
+    };
+
+    const datosMensuales2024 = {
+        'Ene': 208,
+        'Feb': 212,
+        'Mar': 211,
+        'Abr': 226,
+        'May': 234,
+        'Jun': datosCodigo1.total // Fallos reales para noviembre
+    };
+
+    const meses = Object.keys(datosMensuales2024);
+
+    // Datos para el gráfico
+    const fallosPorMes2023 = Object.values(datosMensuales2023);
+    const fallosPorMes2024 = Object.values(datosMensuales2024);
+
+    // Calcular la diferencia porcentual
+    const diferenciasPorcentuales = meses.map((mes, index) => {
+        const valor2023 = fallosPorMes2023[index] || 0;
+        const valor2024 = fallosPorMes2024[index] || 0;
+        if (valor2023 === 0) return "N/A"; // Evitar divisiones por cero
+        const diferencia = ((valor2024 - valor2023) / valor2023) * 100;
+        return diferencia.toFixed(2); // Limitar a dos decimales
+    });
+
+    const opciones = {
+        chart: {
+            height: 300,
+            type: 'area',
+            zoom: { enabled: false },
+            toolbar: { show: false },
+            animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 1000,
+                animateGradually: { enabled: true, delay: 150 },
+                dynamicAnimation: { speed: 1000 }
+            },
+        },
+        series: [
+            { name: '2023', data: fallosPorMes2023 },
+            { name: '2024', data: fallosPorMes2024 }
+        ],
+        dataLabels: { enabled: false },
+        stroke: {
+            curve: 'straight',
+            width: [3, 3],
+            dashArray: [4, 0]
+        },
+        markers: {
+            size: 4,
+            colors: ['#c9c9c9', '#311b92'],
+            strokeColors: '#fff',
+            strokeWidth: 4,
+            hover: {
+                size: 8
+            }
+        },
+        xaxis: {
+            categories: meses,
+            labels: { show: true },
+            axisBorder: { show: false },
+            axisTicks: { show: false }
+        },
+        yaxis: {
+            labels: { show: false },
+            axisBorder: { show: false },
+            axisTicks: { show: false }
+        },
+        grid: {
+            show: true,
+            borderColor: '#e0e0e0',
+            strokeDashArray: 5,
+            xaxis: { lines: { show: true } },
+            yaxis: { lines: { show: false } }
+        },
+        legend: { show: false },
+        tooltip: {
+            theme: 'dark',
+            y: {
+                formatter: function (value, { seriesIndex, dataPointIndex }) {
+                    if (seriesIndex === 1) { // Mostrar solo para 2024
+                        const diferencia = diferenciasPorcentuales[dataPointIndex];
+                        return `${value} fallos (${diferencia}% respecto a 2023)`;
+                    }
+                    return `${value} fallos`; // Para 2023
+                }
+            }
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.8,
+                opacityTo: 0.6,
+                stops: [0, 90, 100]
+            }
+        },
+        colors: ['#bdbdbd', '#311b92'],
+    };
+
+    // Renderizar el gráfico
+    const chartDiv = document.querySelector("#grafico-codigo-1");
+    const chart = new ApexCharts(chartDiv, opciones);
+    chart.render();
+}
 
 // Función para abrir el panel de detalles con el resumen
 window.abrirPanelDetalle = (codigo) => {
@@ -335,3 +699,49 @@ const obtenerCodigo = (importe, motivo) => {
 document.addEventListener('DOMContentLoaded', () => {
     obtenerFallosDeCodigo(); // Llamar a la función al cargar el documento
 });
+
+function openTab(event, tabId) {
+    // Ocultar todas las pestañas
+    const tabPanes = document.querySelectorAll('.tab-pane');
+    tabPanes.forEach(tab => {
+        tab.classList.remove('active');
+        tab.style.display = 'none';  // Ocultar contenido de todas las pestañas
+    });
+
+    // Desactivar todos los botones
+    const tabLinks = document.querySelectorAll('.tab-link');
+    tabLinks.forEach(link => link.classList.remove('active'));
+
+    // Mostrar la pestaña seleccionada
+    const tabToShow = document.getElementById(tabId);
+    if (tabToShow) {
+        tabToShow.classList.add('active');
+        tabToShow.style.display = 'block'; // Mostrar la pestaña seleccionada
+    } else {
+        console.error(`No se encontró el tab con id: ${tabId}`);
+        return;
+    }
+
+    // Activar el botón seleccionado
+    event.currentTarget.classList.add('active');
+}
+
+// Inicializar al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    // Por defecto, activar la pestaña "General"
+    const defaultTab = document.getElementById('tab-general');
+    if (defaultTab) {
+        defaultTab.classList.add('active');
+        defaultTab.style.display = 'block'; // Mostrar el contenido por defecto
+    }
+
+    // Activar el botón correspondiente a la pestaña "General"
+    const defaultButton = document.querySelector('.tab-link[onclick="openTab(event, \'tab-general\')"]');
+    if (defaultButton) {
+        defaultButton.classList.add('active');
+    }
+});
+
+// Exponer la función openTab al ámbito global
+window.openTab = openTab;
+

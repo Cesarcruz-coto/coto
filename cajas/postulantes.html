@@ -390,6 +390,7 @@
 
                         <p id="evaluationDisplay">
                         <button onclick="showHistory('${doc.id}', this.parentNode)">Ver Historial</button>
+                        <button class="deleteButton" onclick="employeeDelete('${doc.id}')">Eliminar</button>
                         </p>
                     </div>
 
@@ -648,6 +649,24 @@
         }, 500); // Esperar que termine la animación
       }
     };
+
+    window.employeeDelete = async function (employeeId) {
+      try {
+        const confirmation = confirm("¿Estás seguro de que deseas eliminar a este empleado?");
+        if (!confirmation) return; // Cancelar si el usuario no confirma
+
+        // Elimina el documento del empleado
+        await deleteDoc(doc(db, "employees", employeeId));
+
+        alert("Empleado eliminado correctamente.");
+        // Recargar la lista de empleados
+        loadEmployees();
+      } catch (error) {
+        console.error("Error al eliminar el empleado:", error);
+        alert("Ocurrió un error al intentar eliminar al empleado.");
+      }
+    };
+
 
 
 

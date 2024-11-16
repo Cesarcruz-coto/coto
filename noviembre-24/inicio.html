@@ -233,12 +233,37 @@
                 </div>
                 <div class="info-item-ajustesf">
                     <div id="resumen-codigo-digital"></div>
+                    
+                    <div class="tabs-container">
+                        <div class="tab-content-fallos">
+                            <div id="tab-general" class="tab-pane active">
+                                <div id="grafico-fallos"></div>
+                            </div>
+                            <div id="tab-codigo-3" class="tab-pane">
+                                <div id="grafico-codigo-3"></div>
+                            </div>
+                            <div id="tab-codigo-2" class="tab-pane">
+                                <div id="grafico-codigo-2"></div>
+                            </div>
+                            <div id="tab-codigo-1" class="tab-pane">
+                                <div id="grafico-codigo-1"></div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="adjustment-summary">
                         <div id="resumen-codigo-3"></div>
                         <div id="resumen-codigo-2"></div>
                         <div id="resumen-codigo-1"></div>
                     </div>
-                    <div id="grafico-fallos"></div>
+                    
+                    <div class="tabss">
+                        <button class="tab-link active" onclick="openTab(event, 'tab-general')">Total codigos</button>
+                        <button class="tab-link" onclick="openTab(event, 'tab-codigo-3')">Codigo 3</button>
+                        <button class="tab-link" onclick="openTab(event, 'tab-codigo-2')">Codigo 2</button>
+                        <button class="tab-link" onclick="openTab(event, 'tab-codigo-1')">Codigo 1</button>
+                    </div>
+                    
                 </div>
             </section>
 
