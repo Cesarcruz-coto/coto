@@ -2322,3 +2322,15 @@ button.formButton {
     padding: 10px 0;
   }
 }
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: landscape) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    body {
+      font-size: 12px;
+    }
+
+}
