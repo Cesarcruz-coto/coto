@@ -132,7 +132,7 @@ const obtenerSucursalMayorGasto = (data) => {
     // Actualizar el div con el nombre de la sucursal y el importe del gasto
     document.getElementById('sucursal-mayor-gasto').textContent = `${sucursal}`;
     document.getElementById('importe-mayor-gasto').innerHTML = `
-        <span style="color: ${totalGasto < 0 ? '#2E7D32' : '#D50000'};">
+        <span style="color: ${totalGasto < 0 ? '#256528' : '#b50000'};">
             <i class="fa-solid ${totalGasto < 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down'}"></i>
             <b>$ ${totalGasto.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b>
         </span>
@@ -148,7 +148,7 @@ const actualizarTotales = (data) => {
     // Actualizar los divs con los valores calculados
     document.getElementById('total-gastos').textContent = cantidadGastos;
     // Para total-gasto-importe
-document.getElementById('total-gasto-importe').innerHTML = `<span style="color: ${totalGastos < 0 ? '#2E7D32' : '#D50000'};">
+document.getElementById('total-gasto-importe').innerHTML = `<span style="color: ${totalGastos < 0 ? '#256528' : '#b50000'};">
   <i class="fa-solid ${totalGastos < 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down'}"></i>
   $ ${totalGastos.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
 </span>
@@ -172,7 +172,7 @@ const porcentajeGastosElement = document.getElementById('porcentajeee-gastos');
 
 // Establece el contenido y el color según el valor
 porcentajeGastosElement.textContent = porcentajeCrecimiento.toFixed(2) + '%';
-porcentajeGastosElement.style.color = porcentajeCrecimiento < 0 ? '#2E7D32' : '#D50000';
+porcentajeGastosElement.style.color = porcentajeCrecimiento < 0 ? '#256528' : '#b50000';
 
 };
 
@@ -195,7 +195,7 @@ const actualizarPromedioGastos = (data) => {
     document.getElementById('promedio-gastos').textContent = totalSucursales;
     // Para promedio-gasto-importe
 // Para promedio-gasto-importe
-document.getElementById('promedio-gasto-importe').innerHTML = `<span style="color: ${promedioGastos < 0 ? '#2E7D32' : '#D50000'};">
+document.getElementById('promedio-gasto-importe').innerHTML = `<span style="color: ${promedioGastos < 0 ? '#256528' : '#b50000'};">
     <i class="fa-solid ${promedioGastos < 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down'}"></i>
     $ ${promedioGastos.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
   </span>

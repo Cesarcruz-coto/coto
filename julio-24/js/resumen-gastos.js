@@ -44,11 +44,11 @@ function mostrarGastosPorSucursal(data, sucursalSeleccionada) {
     // Lógica para determinar el icono y color
     const isImportePositive = totalGastosSucursal >= 0; // Si es positivo, el color es rojo con flecha hacia abajo
     const icon = isImportePositive ? 
-        '<i class="fa-solid fa-arrow-trend-down" style="color: #D50000;"></i>' :  // Rojo con flecha hacia abajo
-        '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>';     // Verde con flecha hacia arriba
+        '<i class="fa-solid fa-arrow-trend-down" style="color: #b50000;"></i>' :  // Rojo con flecha hacia abajo
+        '<i class="fa-solid fa-arrow-trend-up" style="color: #256528;"></i>';     // Verde con flecha hacia arriba
     
     const formattedImporteTotal = formatCurrency(totalGastosSucursal);
-    const textColor = isImportePositive ? 'color: #D50000;' : 'color: #2E7D32;'; // Rojo si positivo, verde si negativo
+    const textColor = isImportePositive ? 'color: #b50000;' : 'color: #256528;'; // Rojo si positivo, verde si negativo
 
     // Mostrar importe total con icono y color de texto
     totalImporteNoCompensadosErrores.innerHTML = `<span style="${textColor}">${icon} ${formattedImporteTotal}</span>`;

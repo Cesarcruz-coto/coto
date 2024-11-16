@@ -25,12 +25,12 @@ async function obtenerAjustesPorIncidencia() {
             let colorTexto = '';
             if (importe < 0) {
                 iconoImporte = 'fa-arrow-trend-up';
-                colorIcono = '#2E7D32'; // Verde para ícono
-                colorTexto = '#2E7D32'; // Verde para texto negativo
+                colorIcono = '#256528'; // Verde para ícono
+                colorTexto = '#256528'; // Verde para texto negativo
             } else {
                 iconoImporte = 'fa-arrow-trend-down';
-                colorIcono = '#D50000'; // Rojo para ícono
-                colorTexto = '#D50000'; // Rojo para texto positivo
+                colorIcono = '#b50000'; // Rojo para ícono
+                colorTexto = '#b50000'; // Rojo para texto positivo
             }
 
             // Inserción del contenido HTML dinámico

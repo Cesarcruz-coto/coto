@@ -56,11 +56,11 @@ const mostrarResumen = (resumen) => {
     codigos.forEach(codigo => {
         const div = document.getElementById(`resumen-codigo-${codigo}`);
         if (div) {
-            const iconoFaltante = '<i class="fa-solid fa-arrow-trend-down" style="color: #D50000;"></i>';
-            const iconoSobrante = '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>';
+            const iconoFaltante = '<i class="fa-solid fa-arrow-trend-down" style="color: #b50000;"></i>';
+            const iconoSobrante = '<i class="fa-solid fa-arrow-trend-up" style="color: #256528;"></i>';
 
-            const faltantesHTML = `<span style="color: #D50000;">${iconoFaltante} $${resumen[codigo].faltantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
-            const sobrantesHTML = `<span style="color: #2E7D32;">${iconoSobrante} $${resumen[codigo].sobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
+            const faltantesHTML = `<span style="color: #b50000;">${iconoFaltante} $${resumen[codigo].faltantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
+            const sobrantesHTML = `<span style="color: #256528;">${iconoSobrante} $${resumen[codigo].sobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
 
             const enlaceDetalle = `<a href="#" onclick="abrirPanelDetalle('${codigo}')">Ver fallos</a>`;
 
@@ -83,12 +83,12 @@ const mostrarResumen = (resumen) => {
     // Actualizar el div para mostrar el total de fallos
 const divTotalFallos = document.getElementById('resumen-codigo-digital');
 if (divTotalFallos) {
-    const iconoFaltante = '<i class="fa-solid fa-arrow-trend-down" style="color: #D50000;"></i>';
-    const iconoSobrante = '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>';
+    const iconoFaltante = '<i class="fa-solid fa-arrow-trend-down" style="color: #b50000;"></i>';
+    const iconoSobrante = '<i class="fa-solid fa-arrow-trend-up" style="color: #256528;"></i>';
 
     // Establecer el color dependiendo del importe
-    const colorFaltante = totalFaltantes > 0 ? '#D50000' : '#000'; // Rojo si hay faltantes, negro si no
-    const colorSobrante = totalSobrantes > 0 ? '#2E7D32' : '#000'; // Verde si hay sobrantes, negro si no
+    const colorFaltante = totalFaltantes > 0 ? '#b50000' : '#000'; // Rojo si hay faltantes, negro si no
+    const colorSobrante = totalSobrantes > 0 ? '#256528' : '#000'; // Verde si hay sobrantes, negro si no
 
     divTotalFallos.innerHTML = `
     <div class="comparison"> Evolutivo</div>

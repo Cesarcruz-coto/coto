@@ -52,11 +52,11 @@ const mostrarResumen = (resumen) => {
     codigos.forEach(codigo => {
         const div = document.getElementById(`resumen-codigo-${codigo}`);
         if (div) {
-            const iconoFaltante = '<i class="fa-solid fa-arrow-trend-down" style="color: #D50000;"></i>';
-            const iconoSobrante = '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>';
+            const iconoFaltante = '<i class="fa-solid fa-arrow-trend-down" style="color: #b50000;"></i>';
+            const iconoSobrante = '<i class="fa-solid fa-arrow-trend-up" style="color: #256528;"></i>';
 
-            const faltantesHTML = `<span style="color: #D50000;">${iconoFaltante} $${resumen[codigo].faltantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
-            const sobrantesHTML = `<span style="color: #2E7D32;">${iconoSobrante} $${resumen[codigo].sobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
+            const faltantesHTML = `<span style="color: #b50000;">${iconoFaltante} $${resumen[codigo].faltantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
+            const sobrantesHTML = `<span style="color: #256528;">${iconoSobrante} $${resumen[codigo].sobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
 
             const enlaceDetalle = `<a href="#" onclick="abrirPanelDetalle('${codigo}')">Ver detalles</a>`;
 

@@ -72,7 +72,7 @@ function actualizarResumenMovimientosConciliar() {
 
     const importeNoCompensadosFormatted = `$ ${sumaImportesErroresActual.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     const iconClass = sumaImportesErroresActual > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up';
-    const iconColor = sumaImportesErroresActual > 0 ? '#D50000' : '#2E7D32';
+    const iconColor = sumaImportesErroresActual > 0 ? '#b50000' : '#256528';
 
     document.getElementById('total-importe-no-compensados-conciliar').innerHTML = `
         <i class="fa-solid ${iconClass}" style="color: ${iconColor};"></i>
@@ -159,7 +159,7 @@ function actualizarResumenMovimientosErrores() {
 
     const importeNoCompensadosFormatted = `$ ${sumaImportesErroresActual.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     const iconClass = sumaImportesErroresActual > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up';
-    const iconColor = sumaImportesErroresActual > 0 ? '#D50000' : '#2E7D32';
+    const iconColor = sumaImportesErroresActual > 0 ? '#b50000' : '#256528';
 
     document.getElementById('total-importe-no-compensados-errores').innerHTML = `
         <i class="fa-solid ${iconClass}" style="color: ${iconColor};"></i>

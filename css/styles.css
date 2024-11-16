@@ -29,7 +29,7 @@ h1 {
   width: 100%;
 }
 span {
-  font-weight: bold;
+  font-weight: 700;
 }
 .observacion a:hover,
 abbr[title] {
@@ -175,7 +175,7 @@ h3 {
   font-weight: 700;
 }
 body {
-  font-family: "ubuntu", sans-serif;
+  font-family: ubuntu, sans-serif;
   font-style: normal;
   font-display: swap;
   font-size: 16px;
@@ -296,7 +296,7 @@ span.igual {
 }
 .row p {
   font-size: 0.6875em;
-  color: #6b6b6b;
+  color: #515151;
   font-weight: 400;
 }
 .container-index {
@@ -717,7 +717,7 @@ p.total-importe {
   transition: 1s;
   text-align: center;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 700;
   position: relative;
   top: 120px;
   right: 30px;
@@ -827,7 +827,7 @@ a#enlace-exportar-fallos:hover {
 img.perfil-foto {
   display: block;
   width: 90px;
-  height: 80px;
+  height: 90px;
   border-radius: 50%;
   margin-top: 0;
   transition: 2s;
@@ -1472,7 +1472,7 @@ div.sucursal-detail-one div {
   bottom: 10px;
   right: 2%;
   background-color: #ffd740;
-  color: #6d5600;
+  color: #4c3c00;
   font-weight: bolder;
   border-radius: 5px;
   z-index: 1000;
@@ -2066,14 +2066,11 @@ button.formButton {
   align-items: center;
   font-weight: 700;
 }
+#resumen-codigo-1 a,
+#resumen-codigo-2 a,
 #resumen-codigo-3 a {
-  color: #d50000;
-}
-#resumen-codigo-2 a {
-  color: #ccc600;
-}
-#resumen-codigo-1 a {
-  color: #009812;
+  color: #1a2967;
+  text-decoration: underline;
 }
 #resumen-codigo-1 span i,
 #resumen-codigo-2 span i,
@@ -2085,20 +2082,15 @@ button.formButton {
   margin-bottom: 5px;
   font-size: 1.3em;
 }
-
-/* Estilo general para el contenedor de las pestañas */
 .tabs-container {
-  width: 100%; /* O el tamaño que desees */
+  width: 100%;
 }
-
-/* Estilos de las pestañas (botones) */
 .tabss {
   display: flex;
 }
-
 .tab-link {
   background-color: transparent;
-  color: #1a0285;
+  color: #fff;
   border: 0;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -2107,33 +2099,23 @@ button.formButton {
   padding: 10px;
   background-color: #4f34ff;
   border-radius: 5px;
-  font-weight: bold;
+  font-weight: 700;
   margin: 0 5px 0 5px;
-  /* position: relative; */
-  /* top: 15px; */
-  /* z-index: 1; */
   font-size: 0.9em;
 }
 .tab-link.active {
-  background-color: #200f8f; /* Fondo azul para la pestaña activa */
-  color: white; /* Texto blanco cuando la pestaña está activa */
+  background-color: #200f8f;
+  color: #fff;
 }
-
-/* Efecto hover */
 .tab-link:hover {
-  background-color: #381afd; /* Fondo al pasar el ratón sobre una pestaña */
+  background-color: #381afd;
 }
-
-/* Ocultar todas las pestañas de contenido por defecto */
 .tab-pane {
-  display: none; /* Todas las pestañas estarán ocultas por defecto */
+  display: none;
 }
-
-/* Mostrar el contenido de la pestaña activa */
 .tab-pane.active {
-  display: block; /* Solo la pestaña activa será visible */
+  display: block;
 }
-
 @media (max-width: 768px) {
   .info-item,
   .info-item-ajustesf {
@@ -2319,15 +2301,8 @@ button.formButton {
     padding: 10px 0;
   }
 }
-
-/* Landscape */
-@media only screen 
-  and (min-device-width: 768px) 
-  and (max-device-width: 1024px) 
-  and (orientation: landscape) 
-  and (-webkit-min-device-pixel-ratio: 2) {
-    body {
-      font-size: 11px;
-    }
-
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
+  body {
+    font-size: 11px;
+  }
 }

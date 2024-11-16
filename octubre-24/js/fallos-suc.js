@@ -76,7 +76,7 @@ async function obtenerTopFallosDeCaja() {
                     const textoEmpleado = fallosEmpleado > 5 ? 'R. Capacitación' : fallosEmpleado >= 3 ? 'R. Observación' : '';
                     const textoSucursal = totalFallos > 60 ? 'R. Auditoría' : totalFallos >= 40 ? 'R. Observación' : '';
                     const iconoImporte = totalImporte >= 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up';
-                    const colorIcono = totalImporte >= 0 ? 'red' : '#2E7D32';
+                    const colorIcono = totalImporte >= 0 ? 'red' : '#256528';
 
                     const row = document.createElement('div');
                     row.className = 'row fade-in';

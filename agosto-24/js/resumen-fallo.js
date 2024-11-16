@@ -57,8 +57,8 @@ function formatCurrency(value) {
 function actualizarFalloResumen() {
     const isImportePositive = importeTotalAjustes < 0;
     const icon = isImportePositive ? 
-        '<i class="fa-solid fa-arrow-trend-up" style="color: #2E7D32;"></i>' : 
-        '<i class="fa-solid fa-arrow-trend-down" style="color: #D50000;"></i>';
+        '<i class="fa-solid fa-arrow-trend-up" style="color: #256528;"></i>' : 
+        '<i class="fa-solid fa-arrow-trend-down" style="color: #b50000;"></i>';
     const formattedImporteTotal = formatCurrency(importeTotalAjustes);
 
     // Mostrar el total de ajustes
@@ -66,7 +66,7 @@ function actualizarFalloResumen() {
 
     // Mostrar el importe total de ajustes
     document.getElementById('importe-total-ajustes-resumen').innerHTML = `
-        ${icon} <span style="font-weight: bold; color:${isImportePositive ? '#2E7D32' : '#D50000'}">${formattedImporteTotal}</span>
+        ${icon} <span style="font-weight: bold; color:${isImportePositive ? '#256528' : '#b50000'}">${formattedImporteTotal}</span>
     `;
 
     // Crear el contenido del tooltip

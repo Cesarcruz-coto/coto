@@ -90,14 +90,14 @@ async function obtenerErroresOperativos() {
                     colorIcono = 'red';
                 } else {
                     iconoImporte = 'fa-arrow-trend-up';
-                    colorIcono = '#2E7D32';
+                    colorIcono = '#256528';
                 }
 
                 let iconoImporteEmpleado = '';
                 let colorIconoEmpleado = '';
                 if (item.totalImporteEmpleado < 0) {
                     iconoImporteEmpleado = 'fa-arrow-trend-up';
-                    colorIconoEmpleado = '#2E7D32';
+                    colorIconoEmpleado = '#256528';
                 } else {
                     iconoImporteEmpleado = 'fa-arrow-trend-down';
                     colorIconoEmpleado = 'red';

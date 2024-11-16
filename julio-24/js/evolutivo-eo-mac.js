@@ -73,21 +73,21 @@ const obtenerDatos = async () => {
         // Actualizar la interfaz de usuario
         document.getElementById('total-errors').innerHTML = `${cantidadErroresActual}`;
         document.getElementById('total-error-importes').innerHTML = `
-            <i class="fa-solid ${sumaImportesErroresActual > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up'}" style="color: ${sumaImportesErroresActual > 0 ? '#D50000' : '#2E7D32'};"></i>
-            <span style="color: ${sumaImportesErroresActual > 0 ? '#D50000' : '#2E7D32'};">$ ${sumaImportesErroresActual.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <i class="fa-solid ${sumaImportesErroresActual > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up'}" style="color: ${sumaImportesErroresActual > 0 ? '#b50000' : '#256528'};"></i>
+            <span style="color: ${sumaImportesErroresActual > 0 ? '#b50000' : '#256528'};">$ ${sumaImportesErroresActual.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         `;
         document.getElementById('total-error-resuelto-importes').innerHTML = `
-            <i class="fa-solid ${sumaImportesErroresResueltosActual > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up'}" style="color: ${sumaImportesErroresResueltosActual > 0 ? '#D50000' : '#2E7D32'};"></i>
-            <span style="color: ${sumaImportesErroresResueltosActual > 0 ? '#D50000' : '#2E7D32'};">$ ${sumaImportesErroresResueltosActual.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <i class="fa-solid ${sumaImportesErroresResueltosActual > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up'}" style="color: ${sumaImportesErroresResueltosActual > 0 ? '#b50000' : '#256528'};"></i>
+            <span style="color: ${sumaImportesErroresResueltosActual > 0 ? '#b50000' : '#256528'};">$ ${sumaImportesErroresResueltosActual.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         `;
         document.getElementById('total-movimientos-i').innerText = cantidadMovimientosActual;
         document.getElementById('total-importes').innerHTML = `
-            <i class="fa-solid ${sumaImportesActual > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up'}" style="color: ${sumaImportesActual > 0 ? '#D50000' : '#2E7D32'};"></i>
-            <span style="color: ${sumaImportesActual > 0 ? '#D50000' : '#2E7D32'};">$ ${sumaImportesActual.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <i class="fa-solid ${sumaImportesActual > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up'}" style="color: ${sumaImportesActual > 0 ? '#b50000' : '#256528'};"></i>
+            <span style="color: ${sumaImportesActual > 0 ? '#b50000' : '#256528'};">$ ${sumaImportesActual.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         `;
         document.getElementById('total-movimientos-conciliados-importes').innerHTML = `
-            <i class="fa-solid ${sumaImportesMovimientosConciliadosActual > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up'}" style="color: ${sumaImportesMovimientosConciliadosActual > 0 ? '#D50000' : '#2E7D32'};"></i>
-            <span style="color: ${sumaImportesMovimientosConciliadosActual > 0 ? '#D50000' : '#2E7D32'};">$ ${sumaImportesMovimientosConciliadosActual.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <i class="fa-solid ${sumaImportesMovimientosConciliadosActual > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up'}" style="color: ${sumaImportesMovimientosConciliadosActual > 0 ? '#b50000' : '#256528'};"></i>
+            <span style="color: ${sumaImportesMovimientosConciliadosActual > 0 ? '#b50000' : '#256528'};">$ ${sumaImportesMovimientosConciliadosActual.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         `;
 
         // Calcular y mostrar la comparación en porcentaje

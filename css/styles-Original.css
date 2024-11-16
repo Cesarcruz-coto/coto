@@ -2457,7 +2457,7 @@ button.formButton {
   font-weight: 700;
 }
 #resumen-codigo-3 {
-  border-left: 5px solid #d50000;
+  border-left: 5px solid #b50000;
   padding: 8px;
   background: red;
   background: linear-gradient(
@@ -2469,10 +2469,10 @@ button.formButton {
 }
 #resumen-codigo-3 a {
   text-decoration: none;
-  color: #d50000;
+  color: #b50000;
 }
 #resumen-codigo-3:hover {
-  box-shadow: inset 400px 0 0 0 #d5000014;
+  box-shadow: inset 400px 0 0 0 #b5000014;
 }
 #resumen-codigo-2 {
   border-left: 5px solid #fef600;

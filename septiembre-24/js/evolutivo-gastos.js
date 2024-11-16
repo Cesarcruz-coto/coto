@@ -84,7 +84,7 @@ function generarGrafico(totales) {
         },
         markers: {
             size: 4, // Tamaño de los puntos
-            colors: ['#D50000'], // Color de los puntos
+            colors: ['#b50000'], // Color de los puntos
             strokeColors: '#fff', // Color del borde de los puntos
             strokeWidth: 4,
             hover: {

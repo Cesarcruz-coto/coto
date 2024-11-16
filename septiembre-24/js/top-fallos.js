@@ -109,7 +109,7 @@ async function obtenerTopFallosDeCaja() {
                     colorIcono = 'red';
                 } else {
                     iconoImporte = 'fa-arrow-trend-up';
-                    colorIcono = '#2E7D32';
+                    colorIcono = '#256528';
                 }
 
                 row.innerHTML = `
