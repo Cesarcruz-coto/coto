@@ -57,11 +57,22 @@
           <div class="puesto" id="puesto">Puesto</div>
           <div class="nombre" id="nombre">Nombre del Usuario</div>
           <div class="legajo" id="legajo">Legajo</div>
-          <div class="logout"><a id="logout">Cerrar Sesión</a></div>
+          <div class="logout"><button class="notification-btn">
+                        <i class="fa-regular fa-bell fa-shake"></i>
+                        <span class="notification-count" id="notification-count">0</span>
+                      </button> <i class="fa-solid fa-gear"></i> <a id="logout">Cerrar Sesion</a></div>
         </div>
       </div>
     </div>
-    <div class="dashboard-container">
+    <div class="notification-container">
+                        
+            <div class="notification-panel" id="notification-panel">
+              <h4>Notificaciones</h4>
+              <ul id="notification-list"></ul>
+              <p class="no-notifications">No tienes notificaciones</p>
+            </div>
+          </div>
+        <div class="dashboard-container">
 
       <section id="info">
         <div class="info-item">
