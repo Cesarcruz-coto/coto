@@ -43,109 +43,102 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(hideLoader, loaderTime);
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const dropdownContent = document.getElementById('dropdown-content');
-    const selectedMonthDisplay = document.getElementById('selected-month-display'); // Elemento para mostrar el mes y año seleccionado
-
+document.addEventListener("DOMContentLoaded", function () {
+    const dropdownContent = document.getElementById("dropdown-content");
+    const selectedMonthDisplay = document.getElementById("selected-month-display");
     const months = [
-        'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-        'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+        "enero", "febrero", "marzo", "abril", "mayo", "junio",
+        "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
     ];
 
-    const now = new Date();
-    const currentMonth = now.getMonth(); // 0-indexed (0 = Enero)
-    const currentYear = now.getFullYear(); // Año actual
+    let currentYear = new Date().getFullYear();
+    const calendarMonthsContainer = document.querySelector(".calendar-months");
+    const yearDisplay = document.getElementById("current-year-display");
+    const prevYearButton = document.getElementById("prev-year");
+    const nextYearButton = document.getElementById("next-year");
 
-    const startMonth = months.indexOf('Enero'); // Mes de inicio (por ejemplo junio)
-    const startYear = 2024; // Año de inicio (puedes ajustarlo según tu necesidad)
-
-    // Crear selector de años
-    const yearSelector = document.createElement('select');
-    let defaultYear = currentYear; // Año por defecto será el año actual
-    for (let year = startYear; year <= currentYear; year++) {
-        const yearOption = document.createElement('option');
-        yearOption.value = year;
-        yearOption.textContent = year;
-        if (year === defaultYear) {
-            yearOption.selected = true; // Establecer el año por defecto (puede ser el primero en la lista)
-        }
-        yearSelector.appendChild(yearOption);
-    }
-    yearSelector.title = "Hacer click para selecciona el año"; // Tooltip para el selector de años
-    dropdownContent.appendChild(yearSelector);
-
-    // Crear selector de meses
-    const monthSelector = document.createElement('select');
-    for (let i = startMonth; i < months.length; i++) {
-        const monthOption = document.createElement('option');
-        monthOption.value = months[i];
-        monthOption.textContent = months[i];
-        monthSelector.appendChild(monthOption);
-    }
-    monthSelector.title = "Hacer click para selecciona el mes"; // Tooltip para el selector de meses
-    dropdownContent.appendChild(monthSelector);
-
-    // Variable para almacenar el año seleccionado (por defecto es el año inicial del selector)
-    let selectedYear = defaultYear;
-
-    // Función para actualizar el mes y año seleccionado
-    function updateSelectedMonth() {
-        const selectedMonth = monthSelector.value;
-
-        // Obtener el nombre de la página actual
-        const currentPath = window.location.pathname;
-        const currentPage = currentPath.substring(currentPath.lastIndexOf('/') + 1);
-
-        // Generar la nueva URL solo si se selecciona un mes
-        const url = `../${selectedMonth.toLowerCase()}-${selectedYear.toString().slice(-2)}/${currentPage}`;
-        window.location.href = url; // Redirecciona a la URL generada
+    // Actualizar el encabezado del año
+    function updateYearDisplay() {
+        yearDisplay.textContent = currentYear;
     }
 
-    // Agregar evento de cambio para actualizar el año seleccionado
-    yearSelector.addEventListener('change', function() {
-        selectedYear = parseInt(yearSelector.value); // Actualiza el año seleccionado
+    // Generar los botones de los meses
+    function generateMonths() {
+        calendarMonthsContainer.innerHTML = ""; // Limpiar contenido previo
+        months.forEach((month, index) => {
+            const monthButton = document.createElement("button");
+            monthButton.textContent = month;
+            monthButton.classList.add("month-button");
+            monthButton.dataset.monthIndex = index;
+
+            // Evento al hacer clic en un mes
+            monthButton.addEventListener("click", function () {
+                const selectedMonth = month.toLowerCase();
+                const currentPath = window.location.pathname;
+                const currentPage = currentPath.substring(currentPath.lastIndexOf("/") + 1);
+
+                const url = `../${selectedMonth}-${currentYear.toString().slice(-2)}/${currentPage}`;
+                window.location.href = url; // Redirigir
+            });
+
+            calendarMonthsContainer.appendChild(monthButton);
+        });
+    }
+
+    // Eventos de navegación
+    prevYearButton.addEventListener("click", function () {
+        currentYear--;
+        updateYearDisplay();
     });
 
-    // Agregar evento de cambio para actualizar la URL solo cuando se seleccione un mes
-    monthSelector.addEventListener('change', updateSelectedMonth);
+    nextYearButton.addEventListener("click", function () {
+        currentYear++;
+        updateYearDisplay();
+    });
 
     // Mostrar el menú al hacer clic en el div #selected-month-display
-    selectedMonthDisplay.addEventListener('click', function(event) {
-        // Evitar que el clic se propague y cierre el menú de inmediato
+    selectedMonthDisplay.addEventListener("click", function (event) {
         event.stopPropagation();
-        dropdownContent.classList.toggle('show'); // Alternar la visibilidad del menú
+        dropdownContent.classList.toggle("show");
     });
 
-    // Cerrar el menú si el clic es fuera del div o el menú
-    document.addEventListener('click', function(event) {
+    // Cerrar el menú si se hace clic fuera
+    document.addEventListener("click", function (event) {
         if (!dropdownContent.contains(event.target) && event.target !== selectedMonthDisplay) {
-            dropdownContent.classList.remove('show'); // Ocultar el menú si el clic es fuera
+            dropdownContent.classList.remove("show");
         }
     });
 
-    // Extraer mes y año de la URL después de que la página se carga
+    // Inicializar el calendario
+    function initCalendar() {
+        updateYearDisplay();
+        generateMonths();
+    }
+
+    initCalendar();
+
+    // Extraer mes y año de la URL después de cargar la página
     const currentPath = window.location.pathname;
-    const pathParts = currentPath.split('/');
+    const pathParts = currentPath.split("/");
 
     if (pathParts.length > 1) {
-        const folderName = pathParts[pathParts.length - 2]; // Obtener el nombre de la carpeta (mes-año)
+        const folderName = pathParts[pathParts.length - 2];
+        const [monthName, year] = folderName.split("-");
 
-        // Separar el mes y el año
-        const [monthName, year] = folderName.split('-'); // 'junio-23' => ['junio', '23']
-
-        // Obtener el índice del mes en el array 'months'
         const monthIndex = months.indexOf(monthName);
-
-        // Crear una nueva fecha con el mes y el año
         if (monthIndex !== -1) {
-            const date = new Date(`20${year}`, monthIndex); // Año completo '2023'
-            const shortDate = date.toLocaleDateString('es-ES', { year: '2-digit', month: 'short' }); // Fecha corta en español (ej: 'jun. 23')
+            const date = new Date(`20${year}`, monthIndex);
+            const shortDate = date.toLocaleDateString("es-ES", { year: "2-digit", month: "short" });
 
-            // Mostrar la fecha corta en el elemento seleccionado
-            selectedMonthDisplay.innerHTML = `<i class="fa-solid fa-chart-simple"></i> ${shortDate} <i class="fa-solid fa-angle-down" style="color:#e3d9d9;margin-left:10px"></i>`;
+            selectedMonthDisplay.innerHTML = `
+                <i class="fa-solid fa-chart-simple"></i> ${shortDate}
+                <i class="fa-solid fa-angle-down" style="color:#e3d9d9;margin-left:10px"></i>
+            `;
         }
     }
 });
+
+
 function toggleMenu() {
     const hamburger = document.querySelector('.hamburger');
     const sidebar = document.querySelector('.sidebar');

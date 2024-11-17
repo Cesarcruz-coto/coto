@@ -67,14 +67,23 @@
 
             <section id="info">
                 <div class="info-item-fecha">
-                    <div class="dropdown">
-                        <p id="selected-month-display">Mes seleccionado: Ninguno</p>
-
-                        <div class="dropdown-content" id="dropdown-content">
-                            <!-- Los meses se agregarán aquí con JavaScript -->
-                        </div>
-                    </div>
+    <div class="dropdown">
+        <p id="selected-month-display">Mes seleccionado: Ninguno</p>
+        <div class="dropdown-content" id="dropdown-content">
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button id="prev-year" class="arrow">←</button>
+                    <span id="current-year-display"></span>
+                    <button id="next-year" class="arrow">→</button>
                 </div>
+                <div class="calendar-months">
+                    <!-- Los meses se generarán dinámicamente aquí -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                 <div id="incidencias-container">
                     <div id="titulo-incidencias">
                         Incidencias Ms
@@ -127,8 +136,8 @@
     <script src="js/evolutivo-sf.js" type="module" async></script>
     <script src="js/evolutivo-eo-mac.js" type="module" async></script>
     <script src="js/top-fallos.js" type="module" async></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts" async></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.0/dist/xlsx.full.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@4.0.0/dist/apexcharts.min.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
