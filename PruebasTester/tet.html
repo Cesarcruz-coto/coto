@@ -1,0 +1,68 @@
+<div class="container-new">
+    <div class="box box1">Box 1</div>
+    <div class="box box2">Box 2</div>
+    <div class="box box3">Box 3</div>
+    <div class="box box4">Box 4</div>
+  </div>
+  
+
+  
+  <style>
+/* Estilos generales */
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.container-new {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se ajusten en múltiples filas si es necesario */
+  gap: 10px; /* Espaciado entre divs */
+  width: 90%; /* Ancho flexible */
+  max-width: 1200px; /* Limitar el ancho máximo */
+}
+
+/* Estilos para los divs */
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  height: 150px;
+}
+
+/* Divs grandes */
+.box1 {
+  background-color: #ff6f61;
+  flex: 2 1 calc(66.66% - 10px); /* Ocupa 2/3 del ancho total */
+}
+
+.box4 {
+  background-color: #ff6f61;
+  flex: 2 1 calc(66.66% - 10px); /* Ocupa 2/3 del ancho total */
+}
+
+/* Divs pequeños */
+.box2, .box3 {
+  background-color: #6fafff;
+  flex: 1 1 calc(33.33% - 10px); /* Ocupa 1/3 del ancho total */
+}
+
+/* Diseño responsivo para móviles */
+@media (max-width: 768px) {
+  .box1, .box4 {
+    flex: 1 1 100%; /* Ocupa toda la fila en dispositivos móviles */
+  }
+
+  .box2, .box3 {
+    flex: 1 1 calc(50% - 10px); /* Ocupa 50% del ancho en móviles */
+  }
+}
+
+  </style>
