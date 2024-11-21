@@ -2465,4 +2465,8 @@ i.fa-regular.fa-comments.fa-shake {
   body {
     font-size: 11px;
   }
+  .perfil-container {
+    margin: 0 10px 10px;
+    width: 210px;
+}
 }
