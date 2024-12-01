@@ -65,7 +65,7 @@ const mostrarResumen = (resumen) => {
             const enlaceDetalle = `<a href="#" onclick="abrirPanelDetalle('${codigo}')">Ver fallos</a>`;
 
             div.innerHTML = `
-                <h3>Codigo ${codigo} - ${resumen[codigo].total} Fallos - ${enlaceDetalle}</h3>
+                <h3>Codigo ${codigo} | ${resumen[codigo].total} Fallos | ${enlaceDetalle}</h3>
                 <p>${faltantesHTML} - ${sobrantesHTML}</p>
             `;
 
@@ -106,7 +106,7 @@ if (divTotalFallos) {
                 2, maximumFractionDigits: 2
         })} - <b style="color: ${colorSobrante};">${iconoSobrante}
                     $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></b>
-            <div class="comparison-fallos">Prom. mes previo <b id="diferencia-porcentaje-total"></b></div>
+            <div class="comparison-fallos">Prom. Mes Anterior <b id="diferencia-porcentaje-total"></b></div>
         </div>
     </div>
 </div>`;
@@ -184,7 +184,7 @@ document.getElementById('diferencia-porcentaje-total').innerHTML = `${diferencia
 
     const opciones = {
         chart: {
-            height: 300,
+            height: 320,
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
@@ -312,7 +312,7 @@ function renderizarGraficoCodigo3(resumen) {
 
     const opciones = {
         chart: {
-            height: 300,
+            height: 320,
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
@@ -441,7 +441,7 @@ function renderizarGraficoCodigo2(resumen) {
 
     const opciones = {
         chart: {
-            height: 300,
+            height: 320,
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
@@ -570,7 +570,7 @@ function renderizarGraficoCodigo1(resumen) {
 
     const opciones = {
         chart: {
-            height: 300,
+            height: 320,
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
@@ -654,6 +654,7 @@ function renderizarGraficoCodigo1(resumen) {
 // Función para abrir el panel de detalles con el resumen
 window.abrirPanelDetalle = (codigo) => {
     event.preventDefault();  // Si el panel se abre a través de un enlace <a> con href="#"
+
     const div = document.getElementById(`resumen-codigo-${codigo}`);
     const fallos = JSON.parse(div.dataset.fallos || '[]');
 
@@ -672,14 +673,14 @@ window.abrirPanelDetalle = (codigo) => {
         </div>
         <div>
             ${fallos.map(fallo => {
-                const importe = parseFloat(fallo.Importe.replace(/\./g, '').replace('$', '').replace(',', '.').trim());
-                const codigoData = obtenerCodigo(importe, fallo.Motivo);
+        const importe = parseFloat(fallo.Importe.replace(/\./g, '').replace('$', '').replace(',', '.').trim());
+        const codigoData = obtenerCodigo(importe, fallo.Motivo);
 
-                const observacionCorta = fallo.Observacion && fallo.Observacion.length > 11
-                    ? `${fallo.Observacion.slice(0, 11)}... <br><span class="ver-mas">ver más</span>`
-                    : fallo.Observacion || 'Sin observación';
+        const observacionCorta = fallo.Observacion && fallo.Observacion.length > 11
+            ? `${fallo.Observacion.slice(0, 11)}... <br><span class="ver-mas">ver más</span>`
+            : fallo.Observacion || 'Sin observación';
 
-                return `
+        return `
                     <div class="row fade-in">
                         <div>${fallo.Suc}</div>
                         <div>${fallo.Fecha}</div>
@@ -693,7 +694,7 @@ window.abrirPanelDetalle = (codigo) => {
                         </div>
                     </div>
                 `;
-            }).join('')}
+    }).join('')}
         </div>
         <button id="cerrar-detalle" onclick="cerrarPanelDetalle()">&times;</button>
     `;
@@ -701,7 +702,7 @@ window.abrirPanelDetalle = (codigo) => {
     // Agregar eventos de "ver más"
     const verMasLinks = contenido.querySelectorAll('.ver-mas');
     verMasLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             const observacionCompleta = this.parentElement.nextElementSibling;
             this.parentElement.style.display = 'none';
             observacionCompleta.style.display = 'inline';
@@ -732,3 +733,48 @@ const obtenerCodigo = (importe, motivo) => {
 document.addEventListener('DOMContentLoaded', () => {
     obtenerFallosDeCodigo(); // Llamar a la función al cargar el documento
 });
+
+function openTab(event, tabId) {
+    // Ocultar todas las pestañas
+    const tabPanes = document.querySelectorAll('.tab-pane');
+    tabPanes.forEach(tab => {
+        tab.classList.remove('active');
+        tab.style.display = 'none';  // Ocultar contenido de todas las pestañas
+    });
+
+    // Desactivar todos los botones
+    const tabLinks = document.querySelectorAll('.tab-link');
+    tabLinks.forEach(link => link.classList.remove('active'));
+
+    // Mostrar la pestaña seleccionada
+    const tabToShow = document.getElementById(tabId);
+    if (tabToShow) {
+        tabToShow.classList.add('active');
+        tabToShow.style.display = 'block'; // Mostrar la pestaña seleccionada
+    } else {
+        console.error(`No se encontró el tab con id: ${tabId}`);
+        return;
+    }
+
+    // Activar el botón seleccionado
+    event.currentTarget.classList.add('active');
+}
+
+// Inicializar al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    // Por defecto, activar la pestaña "General"
+    const defaultTab = document.getElementById('tab-general');
+    if (defaultTab) {
+        defaultTab.classList.add('active');
+        defaultTab.style.display = 'block'; // Mostrar el contenido por defecto
+    }
+
+    // Activar el botón correspondiente a la pestaña "General"
+    const defaultButton = document.querySelector('.tab-link[onclick="openTab(event, \'tab-general\')"]');
+    if (defaultButton) {
+        defaultButton.classList.add('active');
+    }
+});
+
+// Exponer la función openTab al ámbito global
+window.openTab = openTab;

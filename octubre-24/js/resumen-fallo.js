@@ -71,8 +71,8 @@ function actualizarFalloResumen() {
 
     // Crear el contenido del tooltip
     const tooltipContent = `
-        <strong><i class="fa-brands fa-confluence"></i> Faltante:</strong> ${falloFaltantes.length} - ${formatCurrency(falloFaltantes.reduce((total, mov) => total + convertirMonto(mov.Importe), 0))}<br><br>
-        <strong><i class="fa-brands fa-confluence"></i> Sobrante:</strong> ${falloSobrantes.length} - ${formatCurrency(falloSobrantes.reduce((total, mov) => total + convertirMonto(mov.Importe), 0))}
+        <strong>Faltante ${falloFaltantes.length}</strong> | <strong style="color:#b50000"><i class="fa-solid fa-arrow-trend-down"></i> ${formatCurrency(falloFaltantes.reduce((total, mov) => total + convertirMonto(mov.Importe), 0))}</strong><br><br>
+        <strong>Sobrante ${falloSobrantes.length}</strong> | <strong style="color:#256528"><i class="fa-solid fa-arrow-trend-up" style="color:#256528"></i> ${formatCurrency(falloSobrantes.reduce((total, mov) => total + convertirMonto(mov.Importe), 0))}</strong>
     `;
 
     // Tooltip

@@ -16,8 +16,7 @@
     <script src="https://kit.fontawesome.com/9a289aa4a3.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-    <link rel="stylesheet" href="https://use.typekit.net/lrd7mts.css">    
+    <link rel="stylesheet" href="https://use.typekit.net/lrd7mts.css">
 </head>
 
 <body>
@@ -35,7 +34,7 @@
             <img src="https://cesarcruz-coto.github.io/coto/img/coto.png" alt="">
             <h1>Gerencia de<br>Recaudaciones</h1>
 
-           
+
 
             <ul>
                 <li><a href="inicio.html">Inicio</a></li>
@@ -53,47 +52,49 @@
                     <div class="puesto" id="puesto">Puesto</div>
                     <div class="nombre" id="nombre">Nombre del Usuario</div>
                     <div class="legajo" id="legajo">Legajo</div>
-                    <div class="logout"><button class="notification-btn">
-                        <i class="fa-regular fa-bell fa-shake"></i>
-                        <span class="notification-count" id="notification-count">0</span>
-                      </button> <i class="fa-solid fa-gear"></i> <a id="logout">Cerrar Sesion</a></div>
+                    <div class="logout">
+                        <button class="notification-btn">
+                            <i class="fa-regular fa-bell fa-shake"></i>
+                            <span class="notification-count" id="notification-count">0</span>
+                        </button> <i class="fa-solid fa-gear"></i> <a id="logout">salir</a>
+                    </div>
                 </div>
             </div>
-        <!-- Menú hamburguesa -->
-             <div class="hamburger" onclick="toggleMenu()">
+            <!-- Menú hamburguesa -->
+            <div class="hamburger" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
-</div>
-    <div class="notification-container">
-                        
+        </div>
+        <div class="notification-container">
+
             <div class="notification-panel" id="notification-panel">
-              <h4>Notificaciones</h4>
-              <ul id="notification-list"></ul>
-              <p class="no-notifications">No tienes notificaciones</p>
+                <h4>Notificaciones</h4>
+                <ul id="notification-list"></ul>
+                <p class="no-notifications">No tienes notificaciones</p>
             </div>
-          </div>
+        </div>
         <div class="dashboard-container">
 
             <section id="info">
                 <div class="info-item-fecha">
-    <div class="dropdown">
-        <p id="selected-month-display">Mes seleccionado: Ninguno</p>
-        <div class="dropdown-content" id="dropdown-content">
-            <div class="calendar-container">
-                <div class="calendar-header">
-                    <button id="prev-year" class="arrow">←</button>
-                    <span id="current-year-display"></span>
-                    <button id="next-year" class="arrow">→</button>
+                    <div class="dropdown">
+                        <p id="selected-month-display">Mes seleccionado: Ninguno</p>
+                        <div class="dropdown-content" id="dropdown-content">
+                            <div class="calendar-container">
+                                <div class="calendar-header">
+                                    <button id="prev-year" class="arrow">←</button>
+                                    <span id="current-year-display"></span>
+                                    <button id="next-year" class="arrow">→</button>
+                                </div>
+                                <div class="calendar-months">
+                                    <!-- Los meses se generarán dinámicamente aquí -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="calendar-months">
-                    <!-- Los meses se generarán dinámicamente aquí -->
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
                 <div id="incidencias-container">
                     <div id="titulo-incidencias">
@@ -115,7 +116,7 @@
                     </div>
                     <div class="info-movimientos">
                         <div class="texto-principal">
-                            <span class="pendientes-numero">Mov. A Conciliar pendientes</span>
+                            <span class="pendientes-numero">Movimientos No Conciliados</span>
                         </div>
                         <div class="importe-movimientos">
                             <!-- Importe de los movimientos pendientes -->
@@ -131,7 +132,7 @@
                     </div>
                     <div class="info-movimientos">
                         <div class="texto-principal">
-                            <span class="pendientes-numero">EO. Sin Resolver pendientes</span>
+                            <span class="pendientes-numero">Errores No Resueltos</span>
                         </div>
                         <div class="importe-movimientos">
                             <!-- Importe de los movimientos pendientes -->
@@ -147,7 +148,7 @@
                     </div>
                     <div class="info-movimientos">
                         <div class="texto-principal">
-                            <span class="pendientes-numero">Total Fallos de cajas</span>
+                            <span class="pendientes-numero">Fallos Totales en Cajas</span>
                         </div>
                         <div class="importe-movimientos">
                             <!-- Importe de los movimientos pendientes -->
@@ -168,40 +169,40 @@
                         <div class="down-informe"><a id="generate-pdf"><i class="fa-regular fa-file-pdf"></i>
                                 Exportar</a> </div>
                     </div>
-                  
-                        <div class="chart-container-sf">
-                            <div id="adjustment-summary">
 
-                                <span class="igual">
-                                    <p class="total-summary" id="total-adjustments"></p>
-                                    <div class="igual2">
-                                        <p class="total-error-importe-sf"></p>
-                                        <p class="comparison-ajustes">Prom. mes previo <span class="percentage-change"
-                                                id="change-percentage"></span></p>
-                                    </div>
-                                </span>
+                    <div class="chart-container-sf">
+                        <div id="adjustment-summary">
 
-                                <span id="suc-no-venta-total">0</span>
-                                <span id="suc-venta-total">0</span>
-
-                            </div>
-                            <div id="chart"></div>
-                            <div id="clasificacion">
-                                <div id="prosegur-total" class="result-item">
-                                    Prosegur: 0 Ajustes - $0.00
+                            <span class="igual">
+                                <p class="total-summary" id="total-adjustments"></p>
+                                <div class="igual2">
+                                    <p class="total-error-importe-sf"></p>
+                                    <p class="comparison-ajustes">Prom. Mes Anterior <span class="percentage-change"
+                                            id="change-percentage"></span></p>
                                 </div>
+                            </span>
 
-                                <div id="redondeo-total" class="result-item">
-                                    Redondeo: 0 Ajustes - $0.00
-                                </div>
+                            <span id="suc-no-venta-total">0</span>
+                            <span id="suc-venta-total">0</span>
 
-                                <div id="operativo-total" class="result-item">
-                                    Operativo: 0 Ajustes - $0.00
-                                </div>
-
-                            </div>
                         </div>
-                
+                        <div id="chart"></div>
+                        <div id="clasificacion">
+                            <div id="prosegur-total" class="result-item">
+                                Prosegur: 0 Ajustes - $0.00
+                            </div>
+
+                            <div id="redondeo-total" class="result-item">
+                                Redondeo: 0 Ajustes - $0.00
+                            </div>
+
+                            <div id="operativo-total" class="result-item">
+                                Operativo: 0 Ajustes - $0.00
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
                 <div class="info-item">
                     <div class="container-index">
@@ -213,7 +214,7 @@
                             <div class="total-errors" id="total-movimientos-i"></div>
                             <p class="total-importe"><b id="total-importes"></b></p>
                             <p class="total-error-importe"><b id="total-movimientos-conciliados-importes"></b></p>
-                            <div class="comparison">Prom. mes previo <b id="comparison-movimientos"></b>
+                            <div class="comparison">Prom. Mes Anterior <b id="comparison-movimientos"></b>
                             </div>
                         </div>
                         <div class="chart-container">
@@ -226,7 +227,7 @@
                 <button id="cerrar-detalle" onclick="cerrarPanelDetalle()">&times;</button>
                 <div id="detalle-fallo-contenido"></div>
             </div>
-            
+
 
             <section id="info">
                 <div class="info-item">
@@ -239,7 +240,7 @@
                             <div class="total-errors" id="total-errors"></div>
                             <p class="total-error-importe"><b id="total-error-importes"></b></p>
                             <p class="total-error-importe"><b id="total-error-resuelto-importes"></b></p>
-                            <div class="comparison">Prom. mes previo <b id="comparison"></b></div>
+                            <div class="comparison">Prom. Mes Anterior <b id="comparison"></b></div>
                         </div>
                         <div class="chart-container">
                             <div id="errorChart"></div>
@@ -247,8 +248,20 @@
                     </div>
                 </div>
                 <div class="info-item-ajustesf">
+
+                    <div class="tabss-dropdown">
+                        <button class="tabss-dropbtn"><i class="fa-solid fa-chart-line"></i> Ver fallos</button>
+                        <div class="tabss-dropdown-content">
+                            <button class="tab-link active" onclick="openTab(event, 'tab-general')">Total
+                                codigos</button>
+                            <button class="tab-link" onclick="openTab(event, 'tab-codigo-3')">Codigo 3</button>
+                            <button class="tab-link" onclick="openTab(event, 'tab-codigo-2')">Codigo 2</button>
+                            <button class="tab-link" onclick="openTab(event, 'tab-codigo-1')">Codigo 1</button>
+                        </div>
+                    </div>
+
                     <div id="resumen-codigo-digital"></div>
-                    
+
                     <div class="tabs-container">
                         <div class="tab-content-fallos">
                             <div id="tab-general" class="tab-pane active">
@@ -271,14 +284,7 @@
                         <div id="resumen-codigo-2"></div>
                         <div id="resumen-codigo-1"></div>
                     </div>
-                    
-                    <div class="tabss">
-                        <button class="tab-link active" onclick="openTab(event, 'tab-general')">Total codigos</button>
-                        <button class="tab-link" onclick="openTab(event, 'tab-codigo-3')">Codigo 3</button>
-                        <button class="tab-link" onclick="openTab(event, 'tab-codigo-2')">Codigo 2</button>
-                        <button class="tab-link" onclick="openTab(event, 'tab-codigo-1')">Codigo 1</button>
-                    </div>
-                    
+
                 </div>
             </section>
 

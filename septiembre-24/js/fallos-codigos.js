@@ -65,9 +65,9 @@ const mostrarResumen = (resumen) => {
             const enlaceDetalle = `<a href="#" onclick="abrirPanelDetalle('${codigo}')">Ver fallos</a>`;
 
             div.innerHTML = `
-            <h3>Codigo ${codigo} - ${resumen[codigo].total} Fallos - ${enlaceDetalle}</h3>
-            <p>${faltantesHTML} - ${sobrantesHTML}</p>
-        `;
+                <h3>Codigo ${codigo} | ${resumen[codigo].total} Fallos | ${enlaceDetalle}</h3>
+                <p>${faltantesHTML} - ${sobrantesHTML}</p>
+            `;
 
             // Guardar los fallos detallados para usarlos en el panel
             div.dataset.fallos = JSON.stringify(resumen[codigo].fallos);
@@ -106,7 +106,7 @@ if (divTotalFallos) {
                 2, maximumFractionDigits: 2
         })} - <b style="color: ${colorSobrante};">${iconoSobrante}
                     $${totalSobrantes.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></b>
-            <div class="comparison-fallos">Prom. mes previo <b id="diferencia-porcentaje-total"></b></div>
+            <div class="comparison-fallos">Prom. Mes Anterior <b id="diferencia-porcentaje-total"></b></div>
         </div>
     </div>
 </div>`;
@@ -182,7 +182,7 @@ document.getElementById('diferencia-porcentaje-total').innerHTML = `${diferencia
 
     const opciones = {
         chart: {
-            height: 300,
+            height: 320,
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
@@ -308,7 +308,7 @@ function renderizarGraficoCodigo3(resumen) {
 
     const opciones = {
         chart: {
-            height: 300,
+            height: 320,
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
@@ -435,7 +435,7 @@ function renderizarGraficoCodigo2(resumen) {
 
     const opciones = {
         chart: {
-            height: 300,
+            height: 320,
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
@@ -562,7 +562,7 @@ function renderizarGraficoCodigo1(resumen) {
 
     const opciones = {
         chart: {
-            height: 300,
+            height: 320,
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },

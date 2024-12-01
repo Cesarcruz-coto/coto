@@ -117,19 +117,19 @@ fetch(apiURL)
 
         // Mostrar los resultados de las clasificaciones en la interfaz con estilos solo para los importes
         document.getElementById('prosegur-total').innerHTML = `
-Prosegur: ${cantidadProsegur} Ajustes <br> 
+Prosegur: ${cantidadProsegur}<br> 
 <i class="fa-solid ${importeProsegur > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up'}" style="color: ${importeProsegur > 0 ? '#b50000' : '#256528'};"></i>
 <span style="color: ${importeProsegur > 0 ? '#b50000' : '#256528'};">${formatCurrency(importeProsegur)}</span>
 `;
 
         document.getElementById('redondeo-total').innerHTML = `
-Redondeo: ${cantidadRedondeo} Ajustes <br> 
+Redondeo: ${cantidadRedondeo}<br> 
 <i class="fa-solid ${importeRedondeo > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up'}" style="color: ${importeRedondeo > 0 ? '#b50000' : '#256528'};"></i>
 <span style="color: ${importeRedondeo > 0 ? '#b50000' : '#256528'};">${formatCurrency(importeRedondeo)}</span>
 `;
 
         document.getElementById('operativo-total').innerHTML = `
-Operativo: ${cantidadOperativo} Ajustes <br> 
+Operativo: ${cantidadOperativo}<br> 
 <i class="fa-solid ${importeOperativo > 0 ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up'}" style="color: ${importeOperativo > 0 ? '#b50000' : '#256528'};"></i>
 <span style="color: ${importeOperativo > 0 ? '#b50000' : '#256528'};">${formatCurrency(importeOperativo)}</span>
 `;
@@ -142,7 +142,7 @@ Operativo: ${cantidadOperativo} Ajustes <br>
         const formattedAjusteNoVenta = formatCurrency(ajusteNoVenta);
 
         // Mostrar la cantidad de ajustes y el total de ajustes por sucursal de no venta
-        document.getElementById('suc-no-venta-total').innerHTML = `SUC No Venta: ${cantidadAjustesNoVenta} Ajustes <br>${noVentaIcon} <span style="font-weight: bold; color:${isNoVentaPositive ? '#256528' : '#b50000'}">${formattedAjusteNoVenta}</span>`;
+        document.getElementById('suc-no-venta-total').innerHTML = `SUC No Venta: ${cantidadAjustesNoVenta}<br>${noVentaIcon} <span style="font-weight: bold; color:${isNoVentaPositive ? '#256528' : '#b50000'}">${formattedAjusteNoVenta}</span>`;
 
         // Determinar el icono y el color para suc-venta-total
         const isVentaPositive = ajusteVenta < 0; // Cambiar la condición
@@ -152,7 +152,7 @@ Operativo: ${cantidadOperativo} Ajustes <br>
         const formattedAjusteVenta = formatCurrency(ajusteVenta);
 
         // Mostrar la cantidad de ajustes y el total de ajustes por sucursal de venta
-        document.getElementById('suc-venta-total').innerHTML = `SUC Venta: ${cantidadAjustesVenta} Ajustes <br>${ventaIcon} <span style="font-weight: bold; color:${isVentaPositive ? '#256528' : '#b50000'}">${formattedAjusteVenta}</span>`;
+        document.getElementById('suc-venta-total').innerHTML = `SUC Venta: ${cantidadAjustesVenta}<br>${ventaIcon} <span style="font-weight: bold; color:${isVentaPositive ? '#256528' : '#b50000'}">${formattedAjusteVenta}</span>`;
 
         // Determinar el icono y el color basados en el signo del importe total
         const isTotalPositive = totalImporte < 0; // Cambiar la condición
@@ -197,7 +197,7 @@ Operativo: ${cantidadOperativo} Ajustes <br>
              }
          ],
          chart: {
-             height: 300,
+             height: 320,
              type: 'area',
              zoom: { enabled: false },
              toolbar: { show: false },

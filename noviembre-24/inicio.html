@@ -17,7 +17,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="https://use.typekit.net/lrd7mts.css">
-
 </head>
 
 <body>
@@ -57,7 +56,7 @@
                         <button class="notification-btn">
                             <i class="fa-regular fa-bell fa-shake"></i>
                             <span class="notification-count" id="notification-count">0</span>
-                        </button> <i class="fa-solid fa-gear"></i> <a id="logout">Cerrar Sesion</a>
+                        </button> <i class="fa-solid fa-gear"></i> <a id="logout">salir</a>
                     </div>
                 </div>
             </div>
@@ -117,7 +116,7 @@
                     </div>
                     <div class="info-movimientos">
                         <div class="texto-principal">
-                            <span class="pendientes-numero">Mov. A Conciliar pendientes</span>
+                            <span class="pendientes-numero">Movimientos No Conciliados</span>
                         </div>
                         <div class="importe-movimientos">
                             <!-- Importe de los movimientos pendientes -->
@@ -133,7 +132,7 @@
                     </div>
                     <div class="info-movimientos">
                         <div class="texto-principal">
-                            <span class="pendientes-numero">EO. Sin Resolver pendientes</span>
+                            <span class="pendientes-numero">Errores No Resueltos</span>
                         </div>
                         <div class="importe-movimientos">
                             <!-- Importe de los movimientos pendientes -->
@@ -149,7 +148,7 @@
                     </div>
                     <div class="info-movimientos">
                         <div class="texto-principal">
-                            <span class="pendientes-numero">Total Fallos de cajas</span>
+                            <span class="pendientes-numero">Fallos Totales en Cajas</span>
                         </div>
                         <div class="importe-movimientos">
                             <!-- Importe de los movimientos pendientes -->
@@ -158,8 +157,6 @@
                     </div>
                 </div>
                 <div id="tooltip" class="tooltip" style="display:none;"></div>
-
-
 
             </section>
 
@@ -178,7 +175,7 @@
                                 <p class="total-summary" id="total-adjustments"></p>
                                 <div class="igual2">
                                     <p class="total-error-importe-sf"></p>
-                                    <p class="comparison-ajustes">Prom. mes previo <span class="percentage-change"
+                                    <p class="comparison-ajustes">Prom. Mes Anterior <span class="percentage-change"
                                             id="change-percentage"></span></p>
                                 </div>
                             </span>
@@ -215,7 +212,7 @@
                             <div class="total-errors" id="total-movimientos-i"></div>
                             <p class="total-importe"><b id="total-importes"></b></p>
                             <p class="total-error-importe"><b id="total-movimientos-conciliados-importes"></b></p>
-                            <div class="comparison">Prom. mes previo <b id="comparison-movimientos"></b>
+                            <div class="comparison">Prom. Mes Anterior <b id="comparison-movimientos"></b>
                             </div>
                         </div>
                         <div class="chart-container">
@@ -231,6 +228,7 @@
 
 
             <section id="info">
+
                 <div class="info-item">
                     <div class="container-index">
                         <div class="text-section">
@@ -241,14 +239,27 @@
                             <div class="total-errors" id="total-errors"></div>
                             <p class="total-error-importe"><b id="total-error-importes"></b></p>
                             <p class="total-error-importe"><b id="total-error-resuelto-importes"></b></p>
-                            <div class="comparison">Prom. mes previo <b id="comparison"></b></div>
+                            <div class="comparison">Prom. Mes Anterior <b id="comparison"></b></div>
                         </div>
                         <div class="chart-container">
                             <div id="errorChart"></div>
                         </div>
                     </div>
                 </div>
+
                 <div class="info-item-ajustesf">
+
+                    <div class="tabss-dropdown">
+                        <button class="tabss-dropbtn"><i class="fa-solid fa-chart-line"></i> Ver fallos</button>
+                        <div class="tabss-dropdown-content">
+                            <button class="tab-link active" onclick="openTab(event, 'tab-general')">Total
+                                codigos</button>
+                            <button class="tab-link" onclick="openTab(event, 'tab-codigo-3')">Codigo 3</button>
+                            <button class="tab-link" onclick="openTab(event, 'tab-codigo-2')">Codigo 2</button>
+                            <button class="tab-link" onclick="openTab(event, 'tab-codigo-1')">Codigo 1</button>
+                        </div>
+                    </div>
+
                     <div id="resumen-codigo-digital"></div>
 
                     <div class="tabs-container">
@@ -272,13 +283,6 @@
                         <div id="resumen-codigo-3"></div>
                         <div id="resumen-codigo-2"></div>
                         <div id="resumen-codigo-1"></div>
-                    </div>
-
-                    <div class="tabss">
-                        <button class="tab-link active" onclick="openTab(event, 'tab-general')">Total codigos</button>
-                        <button class="tab-link" onclick="openTab(event, 'tab-codigo-3')">Codigo 3</button>
-                        <button class="tab-link" onclick="openTab(event, 'tab-codigo-2')">Codigo 2</button>
-                        <button class="tab-link" onclick="openTab(event, 'tab-codigo-1')">Codigo 1</button>
                     </div>
 
                 </div>

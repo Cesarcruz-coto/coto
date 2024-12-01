@@ -14,9 +14,6 @@
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="../css/styles.css">
     <script src="https://kit.fontawesome.com/9a289aa4a3.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
     <link rel="stylesheet" href="https://use.typekit.net/lrd7mts.css">    
 
 </head>
@@ -42,9 +39,11 @@
 
             <ul>
                 <li><a href="inicio.html">Inicio</a></li>
-                <li><a href="aconciliar.html">Mov. Conciliados</a></li>
-                <li><a href="erroroperativo.html">Errores Operativos</a></li>
-                <li><a href="fallos.html">Fallos de Caja</a></li> <li><a href="gastos.html">Gastos</a></li>
+                        <li><a href="aconciliar.html">Mov. A Conciliar</a></li>
+                        <li><a href="erroroperativo.html">EO. Sin Resolver</a></li>
+                        <li><a href="fallos.html">Fallos de Caja</a></li>
+                        <li><a href="gastos.html">Gastos</a></li>
+                        <li><a href="../cajas/postulantes.html">Postulantes</a></li>
             </ul>
 
             <div class="perfil-container">
@@ -56,7 +55,7 @@
                     <div class="logout"><button class="notification-btn">
                         <i class="fa-regular fa-bell fa-shake"></i>
                         <span class="notification-count" id="notification-count">0</span>
-                      </button> <i class="fa-solid fa-gear"></i> <a id="logout">Cerrar Sesion</a></div>
+                      </button> <i class="fa-solid fa-gear"></i> <a id="logout">salir</a></div>
                 </div>
             </div>
         <!-- Menú hamburguesa -->
@@ -105,56 +104,88 @@
                 </div>
             </section>
 
-            <!-- Resumen de movimientos por mes/total -->
-
             <section id="info">
+                <div class="info-item">
+                    <br><br>
+                    <select id="sucursal-select">
+                        <option value="todas">Seleccionar sucursal</option>
+                    </select>
 
-                <div class="contenedor-movimientos">
-                    <form method="post" id="sheetdb-form"
-  action="https://sheetdb.io/api/v1/xsr7ejasp5q8s">
-    Nombre: <input name="data[nombre]">
-    Legajo: <input name="data[legajo]">
-    Comentario: <input name="data[comentario]">
-    <button type="submit">Enviar Feedback</button>
-</form>
+                    <br> <br> <br>
+                    <div id="resumen-sucursal" class="resumen">
+                        <!-- Aquí se mostrará el resumen de la sucursal seleccionada -->
+                    </div>
 
-<script>
-  var form = document.getElementById('sheetdb-form');
-  form.addEventListener("submit", e => {
-    e.preventDefault();
-    fetch(form.action, {
-        method : "POST",
-        body: new FormData(document.getElementById("sheetdb-form")),
-    }).then(
-        response => response.json()
-    ).then((html) => {
-      // you can put any JS code here
-      alert('success')
-    });
-  });
-</script>
-</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="container">
+                        <div class="comparison">Sucursales con mas</div>
+                        <h2>Fallos de Caja</h2>
+
+                        <div class="header">
+                            <div>#</div>
+                            <div>Suc</div>
+                            <div>T. Errores</div>
+                            <div>Legajo</div>
+                            <div>Errores</div>
+                            <div>Observacion</div>
+                            <div id="observacion" class="observacion">
+                                <button id="cerrar-observacion" class="cerrar-observacion">&times;</button>
+                            </div>
+
+                        </div>
+
+                        <div id="top-fallos">
+                            <!-- Las filas generadas por el script JavaScript aparecerán aquí -->
+                        </div>
+                        <button id="mostrar-mas-i">Ver más</button>
+                        <a href="#" id="enlace-exportar-fallos" title="Exportar a Excel">
+                            <i class="fa-solid fa-file-excel"></i> Generar Reporte
+                        </a>
+
+
+                    </div>
+                </div>
             </section>
 
+            <section id="feedback-container">
+                <button id="close-feedback-button" class="close-button">×</button>
+                <div class="form-wrapper">
+                    <form method="post" id="feedback-form" action="https://sheetdb.io/api/v1/xsr7ejasp5q8s">
+                        <div class="form-group">
+                            <label for="feedback-name">Nombre:</label>
+                            <input id="feedback-name" name="data[nombre]" required placeholder="Tu nombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback-legajo">Legajo:</label>
+                            <input id="feedback-legajo" name="data[legajo]" required placeholder="Tu legajo">
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback-comment">Comentario:</label>
+                            <textarea id="feedback-comment" name="data[comentario]" required
+                                placeholder="Escribe tu comentario"></textarea>
+                        </div>
+                        <button type="submit">Enviar Feedback</button>
+                    </form>
+                    <div class="alert alert-success" id="feedback-success-alert">¡Feedback enviado con éxito!</div>
+                    <div class="alert alert-error" id="feedback-error-alert">¡Hubo un error, inténtalo de nuevo!</div>
+                    <div id="feedback-loading" class="loading">Enviando feedback...</div> <!-- Cargando -->
+                </div>
+            </section>
+            <button id="toggle-feedback-button"><i class="fa-regular fa-comments fa-shake"></i> Feedback</button>
         </div>
     </div>
-
     <script src="js/scripts.js"></script>
     <script src="/notify.js"></script>
     <script src="js/top-axi.js" type="module" async></script>
-    <script src="js/resumen.js" type="module" async></script>
-    <script src="js/resumen-fallo.js" type="module" async></script>
-    <script src="js/top-eo.js" type="module" async></script>
-    <script src="js/evolutivo-sf.js" type="module" async></script>
-    <script src="js/evolutivo-eo-mac.js" type="module" async></script>
-    <script src="js/top-fallos.js" type="module" async></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts@4.0.0/dist/apexcharts.min.js" async></script>
+    <script src="js/fallos-suc.js" type="module" async></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
         import { usuarios } from 'https://cesarcruz-coto.github.io/coto/usuarios.js';  // Importa los usuarios desde el archivo
-
+    
         // Configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBjDElF__Bcgo137GGf6hPRXhEp4BatD10",
@@ -164,25 +195,25 @@
             messagingSenderId: "793331710217",
             appId: "1:793331710217:web:93d036faa48032a6f53bd8"
         };
-
+    
         const app = initializeApp(firebaseConfig);
         const auth = getAuth();
-
+    
         // Referencias a los elementos del perfil
         const nombreElement = document.getElementById("nombre");
         const puestoElement = document.getElementById("puesto");
         const legajoElement = document.getElementById("legajo");
         const perfilFotoElement = document.getElementById("perfilFoto");
-
+    
         // Verificar si hay un usuario autenticado
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 // Obtener el correo electrónico del usuario autenticado
                 const userEmail = user.email;
-
+    
                 // Buscar los datos del usuario en el JSON
                 const userData = usuarios.find(u => u.email === userEmail);
-
+    
                 if (userData) {
                     // Mostrar los datos en la interfaz
                     nombreElement.textContent = userData.nombre;
@@ -213,7 +244,6 @@
             });
         });
     </script>
-
 </body>
 
 </html>
