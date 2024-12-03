@@ -106,7 +106,7 @@ const obtenerDatos = async () => {
             series: [
                 {
                     name: '2023',
-                    data: [2780, 2444, 3154] // Datos para AGO, SEP, OCT
+                    data: [3154, 3100, 3581] // Datos para AGO, SEP, OCT
                 },
                 {
                 name: '2024',
@@ -135,7 +135,7 @@ const obtenerDatos = async () => {
                 },   
             },
             xaxis: {
-                categories: ['Sep', 'Oct', 'Nov'],
+                categories: ['Oct', 'Nov', 'Dic'],
                 labels: {
                     show: false // Ocultar etiquetas del eje x
                 },
@@ -218,7 +218,7 @@ const obtenerDatos = async () => {
             series: [
                 {
                     name: '2023',
-                    data: [789, 650, 832] // Datos para AGO, SEP, OCT
+                    data: [832, 814, 1009] // Datos para AGO, SEP, OCT
                 },
                 {
                 name: '2024',
@@ -248,7 +248,7 @@ const obtenerDatos = async () => {
                 },   
             },
             xaxis: {
-                categories: ['Sep', 'Oct', 'Nov'],
+                categories: ['Oct', 'Nov', 'Dic'],
                 labels: {
                     show: false // Ocultar etiquetas del eje x
                 },

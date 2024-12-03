@@ -126,7 +126,8 @@ function renderizarGraficoFallos(resumen) {
         'Ago': 1106,
         'Sep': 1063,
         'Oct': 708,
-        'Nov': 820
+        'Nov': 820,
+        'Dic': 708,
     };
 
     // Datos fijos para los fallos de 2024
@@ -140,7 +141,8 @@ function renderizarGraficoFallos(resumen) {
         'Jul': 640,
         'Ago': 360,
         'Sep': 358,
-        'Oct': 474
+        'Oct': 474,
+        'Nov': 447
     };
 
     const codigos = Object.keys(resumen);
@@ -150,7 +152,7 @@ function renderizarGraficoFallos(resumen) {
     const fallosPorMes2024 = Object.values(datosFijos2024).concat(totalFallosMesActual2024);
     const fallosPorMes2023 = Object.values(datosFijos2023);
 
-    const meses = Object.keys(datosFijos2024).concat("Nov");
+    const meses = Object.keys(datosFijos2024).concat("Dic");
 
     const percentageDifferencesFallos = fallosPorMes2024.map((current, index) => {
         const previous = fallosPorMes2023[index];
@@ -174,7 +176,7 @@ function renderizarGraficoFallos(resumen) {
     }
 
     // Accedes al total de fallos del mes anterior desde datosFijos2024 (esto depende de cómo lo obtienes)
-    const mesAnterior = datosFijos2024['Oct'];  // Asumiendo que 'SEP' es el mes anterior
+    const mesAnterior = datosFijos2024['Nov'];  // Asumiendo que 'SEP' es el mes anterior
 
     // Calcular la diferencia porcentual
     const diferencia = calcularDiferenciaPorcentual(totalFallosMesActual2024, mesAnterior);
@@ -283,7 +285,8 @@ function renderizarGraficoCodigo3(resumen) {
         'Ago': 107,
         'Sep': 119,
         'Oct': 136,
-        'Nov': 133
+        'Nov': 133,
+        'Dic': 133
     };
 
     const datosMensuales2024 = {
@@ -297,7 +300,8 @@ function renderizarGraficoCodigo3(resumen) {
         'Ago': 49,
         'Sep': 54,
         'Oct': 64,
-        'Nov': datosCodigo3.total // Fallos reales para noviembre
+        'Nov': 70,
+        'Dic': datosCodigo3.total // Fallos reales para noviembre
     };
 
     const meses = Object.keys(datosMensuales2024);
@@ -414,7 +418,8 @@ function renderizarGraficoCodigo2(resumen) {
         'Ago': 147,
         'Sep': 136,
         'Oct': 111,
-        'Nov': 102
+        'Nov': 102,
+        'Dic': 102
     };
 
     const datosMensuales2024 = {
@@ -427,8 +432,9 @@ function renderizarGraficoCodigo2(resumen) {
         'Jul': 150,
         'Ago': 165,
         'Sep': 143,
-        'Oct': 21,
-        'Nov': datosCodigo2.total // Fallos reales para noviembre
+        'Oct': 210,
+        'Nov': 189,
+        'Dic': datosCodigo2.total // Fallos reales para noviembre
     };
 
     const meses = Object.keys(datosMensuales2024);
@@ -545,7 +551,8 @@ function renderizarGraficoCodigo1(resumen) {
         'Ago': 852,
         'Sep': 808,
         'Oct': 461,
-        'Nov': 506
+        'Nov': 506,
+        'Dic': 506
     };
 
     const datosMensuales2024 = {
@@ -559,7 +566,8 @@ function renderizarGraficoCodigo1(resumen) {
         'Ago': 146,
         'Sep': 161,
         'Oct': 209,
-        'Nov': datosCodigo1.total // Fallos reales para noviembre
+        'Nov': 188,
+        'Dic': datosCodigo1.total // Fallos reales para noviembre
     };
 
     const meses = Object.keys(datosMensuales2024);

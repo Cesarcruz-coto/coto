@@ -13,11 +13,12 @@ const monthlyData = {
     'Julio': 591,
     'Agosto': 387,
     'Septiembre': 353,
-    'Octubre': 394
+    'Octubre': 394,
+    'Noviembre': 375
 };
 
 // Datos del año anterior
-const previousYearData = [2229, 1814, 1744, 1574, 1625, 1616, 1604, 1731, 1538, 1767, 1673];
+const previousYearData = [2229, 1814, 1744, 1574, 1625, 1616, 1604, 1731, 1538, 1767, 1673, 2323];
 
 // Lista de sucursales de no venta
 const sucursalesNoVenta = [50, 79, 93, 193, 229, 231, 507];
@@ -231,7 +232,7 @@ Operativo: ${cantidadOperativo}<br>
              }
          },
          xaxis: {
-             categories: [...monthAbbreviations, 'Nov'],
+             categories: [...monthAbbreviations, 'Dic'],
              labels: { show: true },
              axisBorder: { show: false },
              axisTicks: { show: false }

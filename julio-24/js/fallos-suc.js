@@ -136,14 +136,14 @@ async function obtenerTopFallosDeCaja() {
            <div class="card-container">
                <!-- Card 1: Resumen Sucursal -->
                <div class="card">
-                   <h2><i class="fas fa-store"></i> Sucursal ${sucursalSeleccionada}</h2>
+                   <h2>Sucursal ${sucursalSeleccionada}</h2>
                    <p>Cantidad de Fallos: <b>${resumenData.totalFallos}</b></p>
                    <p>Importe Total: <b>$${resumenData.totalImporte.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></p>
                </div>
    
                <!-- Card 2: Top empleados con más Fallos -->
                <div class="card">
-                   <h2><i class="fas fa-user"></i> Top empleados con más Fallos</h2>
+                   <h2>Top empleados con más Fallos</h2>
                    
                        ${top3Empleados.map(([empleado, empData]) => `
                           <div class="codigo-detalle">
@@ -157,7 +157,7 @@ async function obtenerTopFallosDeCaja() {
    
                <!-- Card 3: Total de errores por código -->
                <div class="card">
-                   <h2><i class="fas fa-exclamation-triangle"></i> Total de errores por código</h2>
+                   <h2>Total de errores por código</h2>
                    <div class="codigo-grid">
                        ${Object.entries(codigos).map(([codigoKey, { cantidad, legajos, importes }]) => `
                            <div class="codigo-column">

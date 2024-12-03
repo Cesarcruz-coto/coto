@@ -113,7 +113,7 @@ function generarGrafico(totales) {
             }
         },
         xaxis: {
-            categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov'], // Nombres de los meses abreviados
+            categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'], // Nombres de los meses abreviados
             labels: {
                 show: true // Mostrar etiquetas de los meses
             },
@@ -202,6 +202,7 @@ async function cargarYMostrarGastos() {
     const totalAgosto = 148319559.43; // Reemplaza con el total real de agosto
     const totalSeptiembre = 133832672.99; // Reemplaza con el total real de septiembre
     const totalOctubre = 143249471.59; // Reemplaza con el total real de Octubre
+    const totalNoviembre = 132685851.63; // Reemplaza con el total real de Octubre
     const totalMesActual = procesarGastos(gastosMesActual);
 
     // Generar el gráfico con los totales
@@ -216,6 +217,7 @@ async function cargarYMostrarGastos() {
         totalAgosto,
         totalSeptiembre,
         totalOctubre,
+        totalNoviembre,
         totalMesActual
     ]);
 }
