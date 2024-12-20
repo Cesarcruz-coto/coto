@@ -14,7 +14,7 @@ const monthlyData = {
     'Agosto': 387,
     'Septiembre': 353,
     'Octubre': 394,
-    'Noviembre': 375
+    'Noviembre': 378
 };
 
 // Datos del año anterior
