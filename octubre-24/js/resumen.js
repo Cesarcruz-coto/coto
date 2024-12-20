@@ -51,6 +51,16 @@ function analizarMovimientosConciliar(movimientos, mes) {
         }
     });
 
+     // Mostrar barra de carga si es el mes actual
+     if (mes === 'actual') {
+        mostrarBarraDeCarga(movimientos); // Llamada a la nueva función
+    }
+
+    // Calcular y mostrar la cantidad de conciliados si es el mes actual
+    if (mes === 'actual') {
+        mostrarAjustesConciliados(movimientos); // Llamada a la nueva función
+    }
+
     // Calcular el importe total de no compensados solo para el mes actual
     if (mes === 'actual') {
         importeNoCompensadosConciliarActual = listaPendientesConciliarActual.reduce((total, mov) => {
@@ -58,6 +68,57 @@ function analizarMovimientosConciliar(movimientos, mes) {
         }, 0);
     }
 }
+
+ // Función para calcular y mostrar la cantidad de ajustes conciliados
+function mostrarAjustesConciliados(movimientos) {
+    // Filtrar los movimientos compensados
+    const movimientosConciliados = movimientos.filter(mov =>
+        mov.compensado === true &&
+        (mov.TAjuste === 'Movimiento Conciliado' || mov.TAjuste === 'Movimiento De Caja Conciliado')
+    );
+
+    // Calcular la cantidad de conciliados
+    const cantidadConciliados = movimientosConciliados.length;
+
+    // Actualizar el DOM
+    document.getElementById('total-conciliados').textContent = cantidadConciliados;
+}
+
+// Función para mostrar la barra de carga con el porcentaje de ajustes compensados
+function mostrarBarraDeCarga(movimientos) {
+    // Calcular el total de movimientos relevantes (conciliados y pendientes)
+    const totalMovimientos = movimientos.filter(mov =>
+        mov.TAjuste === 'Movimiento A Conciliar' || 
+        mov.TAjuste === 'Movimiento Conciliado' ||
+        mov.TAjuste === 'Movimiento De Caja Conciliado'
+    ).length;
+
+    // Calcular el total de movimientos compensados
+    const totalCompensados = movimientos.filter(mov => mov.compensado === true).length;
+
+    // Calcular el porcentaje
+    const porcentajeCompensados = totalMovimientos > 0 ? (totalCompensados / totalMovimientos) * 100 : 0;
+
+    // Actualizar la barra de carga en el DOM
+    const barraCarga = document.getElementById('barra-carga-compensados');
+    barraCarga.innerHTML = `
+        <span style="width: ${porcentajeCompensados}%;display: flex;
+    height: 100%;
+    animation: progressbar 4s ease-in-out;
+    background-color: #311b92d1;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    font-size: .8em;
+    justify-content: center;
+    align-items: center;">
+            <p id="total-conciliados" style="padding:0 5px">0</p> Movimientos trazables <p id="total-conciliados" style="padding:0 5px">-</p> <b>${porcentajeCompensados.toFixed(2)}%</b>
+        </span>
+    `;
+
+}
+
+
 
 // Función para convertir el string del importe a número
 function convertirMontoConciliar(importe) {
@@ -138,12 +199,71 @@ function analizarMovimientosErrores(movimientos, mes) {
         }
     });
 
+// Mostrar barra de carga si es el mes actual
+     if (mes === 'actual') {
+        mostrarBarraDeCargaErrores(movimientos); // Llamada a la nueva función
+    }
+
+    // Calcular y mostrar la cantidad de conciliados si es el mes actual
+    if (mes === 'actual') {
+        mostrarAjustesConciliadosErrores(movimientos); // Llamada a la nueva función
+    }
+
     // Calcular el importe total de no compensados solo para el mes actual
     if (mes === 'actual') {
         importeNoCompensadosErroresActual = listaPendientesErroresActual.reduce((total, mov) => {
             return total + convertirMontoErrores(mov.Importe);
         }, 0);
     }
+}
+
+// Función para calcular y mostrar la cantidad de ajustes conciliados
+function mostrarAjustesConciliadosErrores(movimientos) {
+    // Filtrar los movimientos compensados
+    const movimientosConciliados = movimientos.filter(mov =>
+        mov.compensado === true &&
+        (mov.TAjuste === 'Error Operativo Resuelto' || mov.TAjuste === 'Error Operativo Caja Resuelto')
+    );
+
+    // Calcular la cantidad de conciliados
+    const cantidadConciliados = movimientosConciliados.length;
+
+    // Actualizar el DOM
+    document.getElementById('total-conciliados-errores').textContent = cantidadConciliados;
+}
+
+// Función para mostrar la barra de carga con el porcentaje de ajustes compensados
+function mostrarBarraDeCargaErrores(movimientos) {
+    // Calcular el total de movimientos relevantes (conciliados y pendientes)
+    const totalMovimientos = movimientos.filter(mov =>
+        mov.TAjuste === 'Error Operativo Sin Resolver' || 
+        mov.TAjuste === 'Error Operativo Resuelto' ||
+        mov.TAjuste === 'Error Operativo Caja Resuelto'
+    ).length;
+
+    // Calcular el total de movimientos compensados
+    const totalCompensados = movimientos.filter(mov => mov.compensado === true).length;
+
+    // Calcular el porcentaje
+    const porcentajeCompensadosErrores = totalMovimientos > 0 ? (totalCompensados / totalMovimientos) * 100 : 0;
+
+    // Actualizar la barra de carga en el DOM
+    const barraCargaErrores = document.getElementById('barra-carga-compensados-errores');
+    barraCargaErrores.innerHTML = `
+        <span style="width: ${porcentajeCompensadosErrores}%;display: flex;
+    height: 100%;
+    animation: progressbar 4s ease-in-out;
+    background-color: #311b92d1;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    font-size: .8em;
+    justify-content: center;
+    align-items: center;">
+            <p id="total-conciliados-errores" style="padding:0 5px">0</p> Movimientos trazables <p id="total-conciliados-errores" style="padding:0 5px">-</p> <b>${porcentajeCompensadosErrores.toFixed(2)}%</b>
+        </span>
+    `;
+
 }
 
 // Función para convertir el string del importe a número

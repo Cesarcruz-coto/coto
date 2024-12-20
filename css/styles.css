@@ -527,6 +527,10 @@ i.fa-solid.fa-triangle-exclamation {
   background: #ececec;
   background: linear-gradient(90deg, #f3f3f3 0, #fff 100%);
 }
+#barra-carga-div {
+  display: flex;
+  justify-content: space-around;
+}
 #pendientes-mes-actual,
 #pendientes-mes-anterior,
 #total-compensados,
@@ -2263,6 +2267,12 @@ i.fa-regular.fa-comments.fa-shake {
 .apexcharts-canvas{
   width: 100% !important;
 }
+
+@keyframes progressbar {
+  0% {width: 0%}
+  100% {width: 100%}
+  }
+
 @media (max-width: 768px) {
   .info-item {
     flex: 1 0 50%;
