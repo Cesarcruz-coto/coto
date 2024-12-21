@@ -178,7 +178,7 @@ document.getElementById('diferencia-porcentaje-total').innerHTML = `${diferencia
 
     const opciones = {
         chart: {
-            height: 320,
+            height: 340,
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
@@ -300,7 +300,7 @@ function renderizarGraficoCodigo3(resumen) {
 
     const opciones = {
         chart: {
-            height: 320,
+            height: 340,
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
@@ -423,7 +423,7 @@ function renderizarGraficoCodigo2(resumen) {
 
     const opciones = {
         chart: {
-            height: 320,
+            height: 340,
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
@@ -546,7 +546,7 @@ function renderizarGraficoCodigo1(resumen) {
 
     const opciones = {
         chart: {
-            height: 320,
+            height: 340,
             type: 'area',
             zoom: { enabled: false },
             toolbar: { show: false },
