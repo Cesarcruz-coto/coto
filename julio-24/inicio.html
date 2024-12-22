@@ -42,7 +42,7 @@
                 <li><a href="erroroperativo.html">EO. Sin Resolver</a></li>
                 <li><a href="fallos.html">Fallos de Caja</a></li>
                 <li><a href="gastos.html">Gastos</a></li>
-                <li><a href="../cajas/postulantes.html">Postulantes</a></li>
+                
             </ul>
 
             <div class="perfil-container">
@@ -109,58 +109,6 @@
             <!-- Resumen de movimientos por mes/total -->
 
             <section id="info">
-                <div class="contenedor-movimientos">
-                    <div class="icono">
-                        <!-- Icono grande -->
-                        <b id="total-pendientes-conciliar">0</b>
-                    </div>
-                    <div class="info-movimientos">
-                        <div class="texto-principal">
-                            <span class="pendientes-numero">Movimientos No Conciliados</span>
-                        </div>
-                        <div class="importe-movimientos">
-                            <!-- Importe de los movimientos pendientes -->
-                            <span id="total-importe-no-compensados-conciliar">0.00</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="contenedor-movimientos">
-                    <div class="icono">
-                        <!-- Icono grande -->
-                        <b id="total-pendientes-errores">0</b>
-                    </div>
-                    <div class="info-movimientos">
-                        <div class="texto-principal">
-                            <span class="pendientes-numero">Errores No Resueltos</span>
-                        </div>
-                        <div class="importe-movimientos">
-                            <!-- Importe de los movimientos pendientes -->
-                            <span id="total-importe-no-compensados-errores">0.00</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="contenedor-movimientos tooltip-container">
-                    <div class="icono">
-                        <!-- Icono grande -->
-                        <b id="total-ajustes-resumen">0</b>
-                    </div>
-                    <div class="info-movimientos">
-                        <div class="texto-principal">
-                            <span class="pendientes-numero">Fallos Totales en Cajas</span>
-                        </div>
-                        <div class="importe-movimientos">
-                            <!-- Importe de los movimientos pendientes -->
-                            <span id="importe-total-ajustes-resumen">0.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div id="tooltip" class="tooltip" style="display:none;"></div>
-
-            </section>
-
-            <section id="info">
                 <div class="info-item-ajustesf">
                     <div class="info-container">
                         <h2 class="report-title">Ajustes Sobrantes y Faltantes</h2>
@@ -218,12 +166,30 @@
                         <div class="chart-container">
                             <div id="movimientoChart"></div>
                         </div>
+                        <div class="contenedor-movimientos">
+                            <div class="icono">
+                                <!-- Icono grande -->
+                                <b id="total-pendientes-conciliar">0</b>
+                            </div>
+                            <div class="info-movimientos">
+                                <div class="texto-principal">
+                                    <span class="pendientes-numero">Mov. A Conciliar <br>
+                                        <p class="minium">PENDIENTES A CONCILIAR</p>
+                                    </span>
+                                </div>
+                                <div class="importe-movimientos">
+                                    <!-- Importe de los movimientos pendientes -->
+                                    <span id="total-importe-no-compensados-conciliar">0.00</span>
+                                </div>
+                            </div>
+                        </div>
                         <div id="barra-carga-div">
                             <div id="barra-carga-compensados"
                                 style="width: 100%; height: 25px; background-color: #c6c4c4; border-radius: 5px; overflow: hidden">
                                 <!-- La barra de progreso será cargada dinámicamente -->
                             </div>
                         </div>
+
                     </div>
             </section>
 
@@ -250,12 +216,30 @@
                         <div class="chart-container">
                             <div id="errorChart"></div>
                         </div>
+                        <div class="contenedor-movimientos">
+                            <div class="icono">
+                                <!-- Icono grande -->
+                                <b id="total-pendientes-errores">0</b>
+                            </div>
+                            <div class="info-movimientos">
+                                <div class="texto-principal">
+                                    <span class="pendientes-numero">Error Operativo Sin Resolver <br>
+                                        <p class="minium">PENDIENTES A RESOLVER</p>
+                                    </span>
+                                </div>
+                                <div class="importe-movimientos">
+                                    <!-- Importe de los movimientos pendientes -->
+                                    <span id="total-importe-no-compensados-errores">0.00</span>
+                                </div>
+                            </div>
+                        </div>
                         <div id="barra-carga-div">
                             <div id="barra-carga-compensados-errores"
                                 style="width: 100%; height: 25px; background-color: #c6c4c4; border-radius: 5px; overflow: hidden">
                                 <!-- La barra de progreso será cargada dinámicamente -->
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -296,6 +280,25 @@
                         <div id="resumen-codigo-2"></div>
                         <div id="resumen-codigo-1"></div>
                     </div>
+                    <br>
+                    <div class="contenedor-movimientos tooltip-container">
+                        <div class="icono">
+                            <!-- Icono grande -->
+                            <b id="total-ajustes-resumen">0</b>
+                        </div>
+                        <div class="info-movimientos">
+                            <div class="texto-principal">
+                                <span class="pendientes-numero">Fallos de Caja <br>
+                                    <p class="minium">SOBRANTE & FALTANTES</p>
+                                </span>
+                            </div>
+                            <div class="importe-movimientos">
+                                <!-- Importe de los movimientos pendientes -->
+                                <span id="importe-total-ajustes-resumen">0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tooltip" class="tooltip" style="display:none;"></div>
 
                 </div>
             </section>

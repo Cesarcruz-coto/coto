@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Aprobaciones</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="register" class="form-container">
+    <h2>Registro de Usuarios</h2>
+    <form id="register-form">
+      <input type="text" id="name" placeholder="Nombre completo" required />
+      <input type="email" id="email" placeholder="Correo" required />
+      <input type="password" id="password" placeholder="Contraseña" required />
+      <input type="number" id="legajo" placeholder="Legajo" required />
+      <button type="submit">Registrar</button>
+    </form>
+    <p>¿Ya tienes cuenta? <a href="#" onclick="showLogin()">Inicia sesión</a></p>
+  </div>
+
+  <div id="login" class="form-container hidden">
+    <h2>Iniciar Sesión</h2>
+    <form id="login-form">
+      <input type="email" id="email-login" placeholder="Correo" required />
+      <input type="password" id="password-login" placeholder="Contraseña" required />
+      <button type="submit">Iniciar Sesión</button>
+    </form>
+    <p>¿No tienes cuenta? <a href="#" onclick="showRegister()">Regístrate</a></p>
+  </div>
+
+  <div id="approvals" class="hidden">
+    <h2>Solicitudes de Aprobación</h2>
+    <button onclick="createRequest()">Crear Nueva Solicitud</button>
+
+    
+    <!-- Formulario para crear una nueva solicitud -->
+    <div id="new-request-form" class="hidden">
+      <h3>Crear Nueva Solicitud</h3>
+      <form id="request-form">
+        <label for="expense-type">Tipo de Gasto:</label>
+        <select id="expense-type">
+          <option value="flete-digital">Flete Digital</option>
+          <option value="seguro-la-estrella">Seguro La Estrella</option>
+          <option value="flete-cajas">Flete Cajas</option>
+        </select>
+        <br/>
+        <label for="invoice-upload">Cargar Factura:</label>
+        <input type="file" id="invoice-upload" accept="application/pdf,image/*" />
+        <br/>
+        <label for="expense-description">Breve Descripción:</label>
+        <textarea id="expense-description" placeholder="Escribe una breve descripción del gasto" required></textarea>
+        <br/>
+        <button type="submit">Crear Solicitud</button>
+      </form>
+    </div>
+
+    <div id="requests-container"></div>
+  </div>
+
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="apps.js"></script>
+</body>
+</html>

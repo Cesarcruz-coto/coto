@@ -530,6 +530,7 @@ i.fa-solid.fa-triangle-exclamation {
 #barra-carga-div {
   display: flex;
   justify-content: space-around;
+  margin-top: 10px;
 }
 #pendientes-mes-actual,
 #pendientes-mes-anterior,
@@ -1432,8 +1433,16 @@ a.ver-obs {
   flex: 1;
   display: flex;
   align-items: center;
+  background-color: #f3f3f3;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+.contenedor-movimientos-gastos {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
   margin: 5px;
-  background-color: #fff;
   padding: 10px 20px;
   border-radius: 5px;
 }
@@ -1448,7 +1457,7 @@ i.fa-solid.fa-chart-simple {
 }
 .icono {
   font-size: 2.5em;
-  color: #000;
+  color: #525151;
 }
 .info-movimientos,
 div.sucursal-detail-one div {
@@ -2266,6 +2275,11 @@ i.fa-regular.fa-comments.fa-shake {
 }
 .apexcharts-canvas{
   width: 100% !important;
+}
+.minium {
+  font-size: 0.7em;
+  color: #7a7979;
+  font-weight: 200;
 }
 
 @keyframes progressbar {

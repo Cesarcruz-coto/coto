@@ -198,7 +198,7 @@ Operativo: ${cantidadOperativo}<br>
              }
          ],
          chart: {
-             height: 340,
+             height: 420,
              type: 'area',
              zoom: { enabled: false },
              toolbar: { show: false },
