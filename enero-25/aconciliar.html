@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COTO - Gerencia de Recaudaciones</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../ico/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../ico/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../ico/favicon-16x16.png">
+  <link rel="manifest" href="../ico/site.webmanifest">
+  <link rel="mask-icon" href="../ico/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://kit.fontawesome.com/9a289aa4a3.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://use.typekit.net/lrd7mts.css">
+
+</head>
+
+<body>
+
+  <div id="loader">
+    <div class="loader-content">
+      <img src="https://cesarcruz-coto.github.io/coto/img/coto.png" alt="Cargando">
+      <div id="progress">0%</div>
+    </div>
+  </div>
+
+  <div id="container-main">
+    <div class="sidebar">
+      <img src="https://cesarcruz-coto.github.io/coto/img/coto.png" alt="">
+      <h1>Gerencia de<br>Recaudaciones</h1>
+
+
+
+      <ul>
+        <li><a href="inicio.html">Inicio</a></li>
+        <li><a href="aconciliar.html">Mov. A Conciliar</a></li>
+        <li><a href="erroroperativo.html">EO. Sin Resolver</a></li>
+        <li><a href="fallos.html">Fallos de Caja</a></li>
+        <li><a href="gastos.html">Gastos</a></li>
+        
+      </ul>
+
+      <div class="perfil-container">
+        <img id="perfilFoto" src="https://cesarcruz-coto.github.io/coto/img/invitado.png" alt="Foto de perfil"
+          class="perfil-foto">
+        <div class="perfil-info">
+          <div class="puesto" id="puesto">Puesto</div>
+          <div class="nombre" id="nombre">Nombre del Usuario</div>
+          <div class="legajo" id="legajo">Legajo</div>
+          <div class="logout"><button class="notification-btn">
+              <i class="fa-regular fa-bell fa-shake"></i>
+              <span class="notification-count" id="notification-count">0</span>
+            </button> <i class="fa-solid fa-gear"></i> <a id="logout">salir</a></div>
+        </div>
+      </div>
+      <!-- Menú hamburguesa -->
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div class="notification-container">
+
+      <div class="notification-panel" id="notification-panel">
+        <h4>Notificaciones</h4>
+        <ul id="notification-list"></ul>
+        <p class="no-notifications">No tienes notificaciones</p>
+      </div>
+    </div>
+    <div class="dashboard-container">
+      <section id="info">
+        <div class="info-item-fecha">
+          <div class="dropdown">
+            <p id="selected-month-display">Mes seleccionado: Ninguno</p>
+            <div class="dropdown-content" id="dropdown-content">
+              <div class="calendar-container">
+                <div class="calendar-header">
+                  <button id="prev-year" class="arrow">←</button>
+                  <span id="current-year-display"></span>
+                  <button id="next-year" class="arrow">→</button>
+                </div>
+                <div class="calendar-months">
+                  <!-- Los meses se generarán dinámicamente aquí -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="incidencias-container">
+          <div id="titulo-incidencias">
+            Incidencias Ms
+          </div>
+          <div id="incidencias-ms" class="marquee">
+            <!-- Aquí se agregarán los ajustes por incidencias -->
+          </div>
+        </div>
+      </section>
+      <section id="info">
+        <div class="info-item">
+          <div class="summary">
+            <p><strong>Movimientos A Conciliar:</strong> <span id="totalAConciliar">0</span></p>
+            <p><strong>Compensados:</strong> <span id="totalCompensados">0</span></p>
+            <p><strong>Pendientes A Compensar:</strong> <span id="totalPendientes">0</span></p>
+          </div>
+
+          <!-- Botón para exportar los movimientos no compensados a Excel -->
+          <button class="export-button" onclick="exportToExcel()"><i class="fa-solid fa-file-excel"></i> Generar Reporte
+            - No Compensados</button>
+
+          <!-- Tabs para seleccionar Compensados o No Compensados -->
+          <div class="tabs">
+            <div class="tab active" id="tab-compensados" onclick="showTab('compensados')">Movimientos Compensados</div>
+            <div class="tab" id="tab-noCompensados" onclick="showTab('noCompensados')">Movimientos No Compensados</div>
+          </div>
+
+          <!-- Contenido de las pestañas -->
+          <div class="tab-content active" id="compensados-tab">
+            <div class="container-eo">
+              <div class="movimientos-eo" id="compensados"></div>
+            </div>
+            <div class="pagination">
+              <button id="prevPageCompensados" onclick="prevPage('compensados')" disabled>Anterior</button>
+              <button id="nextPageCompensados" onclick="nextPage('compensados')">Siguiente</button>
+            </div>
+          </div>
+
+          <div class="tab-content" id="noCompensados-tab">
+
+            <div>
+              <input type="text" id="searchInputNoCompensados" placeholder="Buscar por SUC. movimientos no compensados"
+                oninput="buscarNoCompensados()">
+            </div>
+
+            <div class="container-eo">
+              <div class="movimientos-eo" id="noCompensados"></div>
+            </div>
+            <div class="pagination">
+              <button id="prevPageNoCompensados" onclick="prevPage('noCompensados')" disabled>Anterior</button>
+              <button id="nextPageNoCompensados" onclick="nextPage('noCompensados')">Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="feedback-container">
+        <button id="close-feedback-button" class="close-button">×</button>
+        <div class="form-wrapper">
+          <form method="post" id="feedback-form" action="https://sheetdb.io/api/v1/xsr7ejasp5q8s">
+            <div class="form-group">
+              <label for="feedback-name">Nombre:</label>
+              <input id="feedback-name" name="data[nombre]" required placeholder="Tu nombre">
+            </div>
+            <div class="form-group">
+              <label for="feedback-legajo">Legajo:</label>
+              <input id="feedback-legajo" name="data[legajo]" required placeholder="Tu legajo">
+            </div>
+            <div class="form-group">
+              <label for="feedback-comment">Comentario:</label>
+              <textarea id="feedback-comment" name="data[comentario]" required
+                placeholder="Escribe tu comentario"></textarea>
+            </div>
+            <button type="submit">Enviar Feedback</button>
+          </form>
+          <div class="alert alert-success" id="feedback-success-alert">¡Feedback enviado con éxito!</div>
+          <div class="alert alert-error" id="feedback-error-alert">¡Hubo un error, inténtalo de nuevo!</div>
+          <div id="feedback-loading" class="loading">Enviando feedback...</div> <!-- Cargando -->
+        </div>
+      </section>
+      <button id="toggle-feedback-button"><i class="fa-regular fa-comments fa-shake"></i> Feedback</button>
+    </div>
+  </div>
+
+  <script src="js/mov.js" type="module" async></script>
+  <script src="js/top-axi.js" type="module" async></script>
+  <script src="js/scripts.js"></script>
+  <script src="/notify.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+    import { usuarios } from 'https://cesarcruz-coto.github.io/coto/usuarios.js';  // Importa los usuarios desde el archivo
+
+    // Configuración de Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjDElF__Bcgo137GGf6hPRXhEp4BatD10",
+      authDomain: "recaudaciones-26766.firebaseapp.com",
+      projectId: "recaudaciones-26766",
+      storageBucket: "recaudaciones-26766.appspot.com",
+      messagingSenderId: "793331710217",
+      appId: "1:793331710217:web:93d036faa48032a6f53bd8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+
+    // Referencias a los elementos del perfil
+    const nombreElement = document.getElementById("nombre");
+    const puestoElement = document.getElementById("puesto");
+    const legajoElement = document.getElementById("legajo");
+    const perfilFotoElement = document.getElementById("perfilFoto");
+
+    // Verificar si hay un usuario autenticado
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Obtener el correo electrónico del usuario autenticado
+        const userEmail = user.email;
+
+        // Buscar los datos del usuario en el JSON
+        const userData = usuarios.find(u => u.email === userEmail);
+
+        if (userData) {
+          // Mostrar los datos en la interfaz
+          nombreElement.textContent = userData.nombre;
+          puestoElement.textContent = userData.puesto;
+          legajoElement.textContent = userData.legajo;
+          perfilFotoElement.src = userData.fotoPerfil;
+        } else {
+          alert("No se encontraron datos para este usuario.");
+        }
+      } else {
+        // Si no hay usuario autenticado, redirigir al login
+        window.location.href = '../index.html';
+      }
+    });
+
+    // Cerrar sesión
+    // Referencia al enlace de cerrar sesión
+    const logoutLink = document.getElementById("logout");
+
+    // Añadir evento click al enlace de cerrar sesión
+    logoutLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      signOut(auth).then(() => {
+        // Redirigir al login después de cerrar sesión
+        window.location.href = '../index.html';
+      }).catch((error) => {
+        console.error("Error al cerrar sesión:", error);
+      });
+    });
+  </script>
+
+</body>
+
+</html>

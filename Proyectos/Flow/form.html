@@ -229,20 +229,6 @@
                 </form>
             </div>
         </div>
-
-        <div id="filtros">
-            <label for="sucursalFilter">Filtrar por Sucursal:</label>
-            <select id="sucursalFilter" onchange="mostrarSolicitudesFiltradas()">
-                <option value="todas">Todas</option>
-            </select>
-        </div>
-
-        <div id="solicitudesContainer" class="card-container">
-            <header>
-                <h1>Solicitudes</h1>
-            </header>
-            <!-- Aquí se mostrarán las solicitudes -->
-        </div>
     </div>
 
     <button id="toggleButton">Enviar Solicitud</button>
@@ -284,9 +270,6 @@
                 // Verificar si el usuario está en la lista de autorizados
                 const userData = usuarios.find(u => u.email === userEmail);
                 isAdmin = !!userData; // true si el usuario está en la lista, false si no
-
-                await cargarSucursales(); // Cargar sucursales al iniciar
-                await mostrarSolicitudesFiltradas(); // Actualizar la lista de solicitudes
             }
         });
 
@@ -345,8 +328,6 @@
                 showNotification("Solicitud enviada con éxito", "success");
                 // Limpiar el formulario después de enviar
                 document.getElementById("solicitudForm").reset();
-                await cargarSucursales(); // Actualizar las sucursales después de enviar
-                await mostrarSolicitudesFiltradas(); // Actualizar la lista de solicitudes
             } catch (error) {
                 console.error("Error al enviar la solicitud: ", error);
                 alert("Error al enviar la solicitud: " + error.message);
@@ -354,96 +335,6 @@
                 submitButton.disabled = false; // Rehabilitar el botón al finalizar
             }
         }
-
-        // Función para cargar sucursales
-        async function cargarSucursales() {
-            const sucursalFilter = document.getElementById("sucursalFilter");
-
-            // Limpiar opciones previas
-            sucursalFilter.innerHTML = '';
-
-            const querySnapshot = await getDocs(collection(db, "solicitudes"));
-
-            const sucursales = new Set();
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                sucursales.add(data.sucursal); // Agregar sucursal única
-            });
-
-            // Convertir el Set a un array, ordenar alfabéticamente y agregar al select
-            const sortedSucursales = Array.from(sucursales).sort();
-            sortedSucursales.forEach(sucursal => {
-                const option = document.createElement("option");
-                option.value = sucursal;
-                option.textContent = sucursal;
-                sucursalFilter.appendChild(option);
-            });
-
-            // Agregar opción "Todas" al principio
-            const allOption = document.createElement("option");
-            allOption.value = "todas";
-            allOption.textContent = "Todas";
-            sucursalFilter.insertBefore(allOption, sucursalFilter.firstChild);
-        }
-
-        // Función para mostrar las solicitudes filtradas
-        window.mostrarSolicitudesFiltradas = async function () {
-            const sucursalFilter = document.getElementById("sucursalFilter").value;
-            const solicitudesContainer = document.getElementById("solicitudesContainer");
-
-            // Limpiar el contenedor para evitar duplicados
-            solicitudesContainer.innerHTML = ''; // Limpiar el contenedor
-
-            const querySnapshot = await getDocs(collection(db, "solicitudes"));
-
-            // Crear un array para almacenar las solicitudes
-            const solicitudes = [];
-
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                // Si el filtro está activado y no coincide con la sucursal, saltar la solicitud
-                if (sucursalFilter !== "todas" && data.sucursal !== sucursalFilter) {
-                    return;
-                }
-                // Agregar la solicitud al array, incluyendo el ID del documento
-                solicitudes.push({ id: doc.id, ...data });
-            });
-
-            // Ordenar las solicitudes por fecha de forma ascendente
-            solicitudes.sort((a, b) => a.fecha.toDate() - b.fecha.toDate());
-
-            // Mostrar las solicitudes ordenadas
-            solicitudes.forEach(solicitud => {
-                const solicitudElement = document.createElement("div");
-                solicitudElement.classList.add("solicitud-card"); // Clase de tarjeta
-
-                solicitudElement.innerHTML = `
-        <p><strong>Nombre:</strong> ${solicitud.nombre}</p>
-        <p><strong>Legajo:</strong> ${solicitud.legajo}</p>
-        <p><strong>Sucursal:</strong> ${solicitud.sucursal}</p>
-        <p><strong>Puesto:</strong> ${solicitud.puesto}</p>
-        <p><strong>Descripcion:</strong> ${solicitud.descripcion}</p>
-        <p><strong>Importe:</strong> $${solicitud.importe}</p>
-        <p><strong>Estado:</strong> ${solicitud.estado}</p>
-        <p><strong>Fecha:</strong> ${solicitud.fecha.toDate().toLocaleString()}</p>
-        ${solicitud.archivoURL ? `<p><strong>Archivo:</strong> <a href="${solicitud.archivoURL}" target="_blank">Ver archivo</a></p>` : ''}
-        ${solicitud.estado === "aprobado" ? `
-            <p class="aprobado-info"><strong>Aprobado por:</strong> ${solicitud.aprobadoPor}</p>
-            <p class="aprobado-info"><strong>Fecha de aprobación:</strong> ${solicitud.fechaAprobacion.toDate().toLocaleString()}</p>
-        ` : ''}
-        ${solicitud.estado === "pendiente" && isAdmin ? `
-            <button onclick="aprobarSolicitud('${solicitud.id}')">Aprobar</button>
-            <button onclick="rechazarSolicitud('${solicitud.id}')">Rechazar</button>
-        ` : ''}
-        `;
-
-                // Agregar el elemento de solicitud al contenedor
-                solicitudesContainer.appendChild(solicitudElement);
-            });
-        }
-
-        
-
 
         // Función para mostrar notificaciones
         const notificationQueue = [];
@@ -471,39 +362,6 @@
                 isNotificationVisible = false;
                 displayNextNotification(); // Mostrar la siguiente notificación
             }, 3000);
-        }
-
-
-        // Función para aprobar una solicitud
-        window.aprobarSolicitud = async function (id) {
-            const solicitudRef = doc(db, "solicitudes", id);
-            try {
-                await updateDoc(solicitudRef, {
-                    estado: "aprobado",
-                    aprobadoPor: auth.currentUser.email, // Guardar el email del aprobador
-                    fechaAprobacion: new Date() // Guardar la fecha de aprobación
-                });
-                showNotification("Solicitud aprobada.", "success");
-                await mostrarSolicitudesFiltradas(); // Actualizar la lista de solicitudes
-            } catch (error) {
-                console.error("Error al aprobar la solicitud: ", error);
-                alert("Error al aprobar la solicitud: " + error.message);
-            }
-        }
-
-        // Función para rechazar una solicitud
-        window.rechazarSolicitud = async function (id) {
-            const solicitudRef = doc(db, "solicitudes", id);
-            try {
-                await updateDoc(solicitudRef, {
-                    estado: "rechazada"
-                });
-                showNotification("Solicitud rechazada.", "error");
-                await mostrarSolicitudesFiltradas(); // Actualizar la lista de solicitudes
-            } catch (error) {
-                console.error("Error al rechazar la solicitud: ", error);
-                alert("Error al rechazar la solicitud: " + error.message);
-            }
         }
 
         // Mostrar y ocultar el formulario al hacer clic en el botón
