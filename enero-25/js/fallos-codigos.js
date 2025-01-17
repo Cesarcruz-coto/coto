@@ -116,7 +116,6 @@ const mostrarResumen = (resumen) => {
 function renderizarGraficoFallos(resumen) {
     // Datos fijos para los fallos de 2023
     const datosFijos2023 = {
-        'Ene': 1300,
         'Feb': 1100,
         'Mar': 972,
         'Abr': 878,
@@ -128,11 +127,11 @@ function renderizarGraficoFallos(resumen) {
         'Oct': 708,
         'Nov': 820,
         'Dic': 708,
+        'Ene': 418
     };
 
     // Datos fijos para los fallos de 2024
     const datosFijos2024 = {
-        'Ene': 418,
         'Feb': 453,
         'Mar': 459,
         'Abr': 495,
@@ -142,7 +141,8 @@ function renderizarGraficoFallos(resumen) {
         'Ago': 360,
         'Sep': 358,
         'Oct': 474,
-        'Nov': 447
+        'Nov': 447,
+        'Dic': 732
     };
 
     const codigos = Object.keys(resumen);
@@ -152,7 +152,7 @@ function renderizarGraficoFallos(resumen) {
     const fallosPorMes2024 = Object.values(datosFijos2024).concat(totalFallosMesActual2024);
     const fallosPorMes2023 = Object.values(datosFijos2023);
 
-    const meses = Object.keys(datosFijos2024).concat("Dic");
+    const meses = Object.keys(datosFijos2024).concat("Ene");
 
     const percentageDifferencesFallos = fallosPorMes2024.map((current, index) => {
         const previous = fallosPorMes2023[index];
@@ -176,7 +176,7 @@ function renderizarGraficoFallos(resumen) {
     }
 
     // Accedes al total de fallos del mes anterior desde datosFijos2024 (esto depende de cómo lo obtienes)
-    const mesAnterior = datosFijos2024['Nov'];  // Asumiendo que 'SEP' es el mes anterior
+    const mesAnterior = datosFijos2024['Dic'];  // Asumiendo que 'SEP' es el mes anterior
 
     // Calcular la diferencia porcentual
     const diferencia = calcularDiferenciaPorcentual(totalFallosMesActual2024, mesAnterior);
@@ -238,14 +238,17 @@ function renderizarGraficoFallos(resumen) {
         tooltip: {
             theme: 'dark',
             y: {
-                formatter: function (value, { seriesIndex, dataPointIndex }) {
-                    let result = `${value}`;
-                    if (seriesIndex === 1) {
-                        const percentage = percentageDifferencesFallos[dataPointIndex];
-                        console.log(`Tooltip para 2024 - Mes: ${meses[dataPointIndex]}, Valor: ${value}, Porcentaje: ${percentage}`);
-                        result += ` (${percentage})`;
-                    }
-                    return result;
+                formatter: function(value, { seriesIndex, dataPointIndex }) {
+                    // Definir nombres de meses por serie
+                    const monthNames2023 = ['2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2024'];
+                    const monthNames2024 = ['2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2025'];
+    
+                    // Determinar el nombre correcto según la serie
+                    const monthNames =
+                        seriesIndex === 0 ? monthNames2023 : monthNames2024;
+    
+                    // Retornar el nombre del mes con el valor
+                    return `${monthNames[dataPointIndex]}: ${value}`;
                 }
             }
         },
@@ -260,8 +263,8 @@ function renderizarGraficoFallos(resumen) {
         },
         colors: ['#bdbdbd', '#311b92'],
         series: [
-            { name: '2023', data: fallosPorMes2023 },
-            { name: '2024', data: fallosPorMes2024 }
+            { name: '', data: fallosPorMes2023 },
+            { name: '', data: fallosPorMes2024 }
         ]
     };
 
@@ -275,7 +278,6 @@ function renderizarGraficoCodigo3(resumen) {
 
     // Datos fijos para los meses (puedes adaptarlo según los datos reales)
     const datosMensuales2023 = {
-        'Ene': 100,
         'Feb': 104,
         'Mar': 73,
         'Abr': 87,
@@ -286,11 +288,11 @@ function renderizarGraficoCodigo3(resumen) {
         'Sep': 119,
         'Oct': 136,
         'Nov': 133,
-        'Dic': 133
+        'Dic': 133,
+        'Ene': 104
     };
 
     const datosMensuales2024 = {
-        'Ene': 104,
         'Feb': 125,
         'Mar': 125,
         'Abr': 135,
@@ -301,7 +303,8 @@ function renderizarGraficoCodigo3(resumen) {
         'Sep': 54,
         'Oct': 64,
         'Nov': 70,
-        'Dic': datosCodigo3.total // Fallos reales para noviembre
+        'Dic': 119,
+        'Ene': datosCodigo3.total // Fallos reales para noviembre
     };
 
     const meses = Object.keys(datosMensuales2024);
@@ -334,8 +337,8 @@ function renderizarGraficoCodigo3(resumen) {
             },
         },
         series: [
-            { name: '2023', data: fallosPorMes2023 },
-            { name: '2024', data: fallosPorMes2024 }
+            { name: '', data: fallosPorMes2023 },
+            { name: '', data: fallosPorMes2024 }
         ],
         dataLabels: { enabled: false },
         stroke: {
@@ -374,12 +377,17 @@ function renderizarGraficoCodigo3(resumen) {
         tooltip: {
             theme: 'dark',
             y: {
-                formatter: function (value, { seriesIndex, dataPointIndex }) {
-                    if (seriesIndex === 1) { // Mostrar solo para 2024
-                        const diferencia = diferenciasPorcentuales[dataPointIndex];
-                        return `${value} fallos (${diferencia}% respecto a 2023)`;
-                    }
-                    return `${value} fallos`; // Para 2023
+                formatter: function(value, { seriesIndex, dataPointIndex }) {
+                    // Definir nombres de meses por serie
+                    const monthNames2023 = ['2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2024'];
+                    const monthNames2024 = ['2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2025'];
+    
+                    // Determinar el nombre correcto según la serie
+                    const monthNames =
+                        seriesIndex === 0 ? monthNames2023 : monthNames2024;
+    
+                    // Retornar el nombre del mes con el valor
+                    return `${monthNames[dataPointIndex]}: ${value}`;
                 }
             }
         },
@@ -408,7 +416,6 @@ function renderizarGraficoCodigo2(resumen) {
 
     // Datos fijos para los meses
     const datosMensuales2023 = {
-        'Ene': 289,
         'Feb': 124,
         'Mar': 76,
         'Abr': 117,
@@ -419,11 +426,11 @@ function renderizarGraficoCodigo2(resumen) {
         'Sep': 136,
         'Oct': 111,
         'Nov': 102,
-        'Dic': 102
+        'Dic': 102,
+        'Ene': 106
     };
 
-    const datosMensuales2024 = {
-        'Ene': 106,
+    const datosMensuales2024 = {  
         'Feb': 122,
         'Mar': 120,
         'Abr': 134,
@@ -434,7 +441,8 @@ function renderizarGraficoCodigo2(resumen) {
         'Sep': 143,
         'Oct': 210,
         'Nov': 189,
-        'Dic': datosCodigo2.total // Fallos reales para noviembre
+        'Dic': 354,
+        'Ene': datosCodigo2.total
     };
 
     const meses = Object.keys(datosMensuales2024);
@@ -467,8 +475,8 @@ function renderizarGraficoCodigo2(resumen) {
             },
         },
         series: [
-            { name: '2023', data: fallosPorMes2023 },
-            { name: '2024', data: fallosPorMes2024 }
+            { name: '', data: fallosPorMes2023 },
+            { name: '', data: fallosPorMes2024 }
         ],
         dataLabels: { enabled: false },
         stroke: {
@@ -507,12 +515,17 @@ function renderizarGraficoCodigo2(resumen) {
         tooltip: {
             theme: 'dark',
             y: {
-                formatter: function (value, { seriesIndex, dataPointIndex }) {
-                    if (seriesIndex === 1) { // Mostrar solo para 2024
-                        const diferencia = diferenciasPorcentuales[dataPointIndex];
-                        return `${value} fallos (${diferencia}% respecto a 2023)`;
-                    }
-                    return `${value} fallos`; // Para 2023
+                formatter: function(value, { seriesIndex, dataPointIndex }) {
+                    // Definir nombres de meses por serie
+                    const monthNames2023 = ['2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2024'];
+                    const monthNames2024 = ['2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2025'];
+    
+                    // Determinar el nombre correcto según la serie
+                    const monthNames =
+                        seriesIndex === 0 ? monthNames2023 : monthNames2024;
+    
+                    // Retornar el nombre del mes con el valor
+                    return `${monthNames[dataPointIndex]}: ${value}`;
                 }
             }
         },
@@ -541,7 +554,6 @@ function renderizarGraficoCodigo1(resumen) {
 
     // Datos fijos para los meses
     const datosMensuales2023 = {
-        'Ene': 911,
         'Feb': 744,
         'Mar': 462,
         'Abr': 674,
@@ -552,11 +564,11 @@ function renderizarGraficoCodigo1(resumen) {
         'Sep': 808,
         'Oct': 461,
         'Nov': 506,
-        'Dic': 506
+        'Dic': 506,
+        'Ene': 208
     };
 
     const datosMensuales2024 = {
-        'Ene': 208,
         'Feb': 212,
         'Mar': 211,
         'Abr': 226,
@@ -567,7 +579,8 @@ function renderizarGraficoCodigo1(resumen) {
         'Sep': 161,
         'Oct': 209,
         'Nov': 188,
-        'Dic': datosCodigo1.total // Fallos reales para noviembre
+        'Dic': 259,
+        'Ene': datosCodigo1.total
     };
 
     const meses = Object.keys(datosMensuales2024);
@@ -600,8 +613,8 @@ function renderizarGraficoCodigo1(resumen) {
             },
         },
         series: [
-            { name: '2023', data: fallosPorMes2023 },
-            { name: '2024', data: fallosPorMes2024 }
+            { name: '', data: fallosPorMes2023 },
+            { name: '', data: fallosPorMes2024 }
         ],
         dataLabels: { enabled: false },
         stroke: {
@@ -640,12 +653,17 @@ function renderizarGraficoCodigo1(resumen) {
         tooltip: {
             theme: 'dark',
             y: {
-                formatter: function (value, { seriesIndex, dataPointIndex }) {
-                    if (seriesIndex === 1) { // Mostrar solo para 2024
-                        const diferencia = diferenciasPorcentuales[dataPointIndex];
-                        return `${value} fallos (${diferencia}% respecto a 2023)`;
-                    }
-                    return `${value} fallos`; // Para 2023
+                formatter: function(value, { seriesIndex, dataPointIndex }) {
+                    // Definir nombres de meses por serie
+                    const monthNames2023 = ['2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2024'];
+                    const monthNames2024 = ['2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2025'];
+    
+                    // Determinar el nombre correcto según la serie
+                    const monthNames =
+                        seriesIndex === 0 ? monthNames2023 : monthNames2024;
+    
+                    // Retornar el nombre del mes con el valor
+                    return `${monthNames[dataPointIndex]}: ${value}`;
                 }
             }
         },

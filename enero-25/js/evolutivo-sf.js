@@ -4,7 +4,6 @@ const apiURL = apis.apiAjusteSFActual;
 
 // Datos fijos por mes
 const monthlyData = {
-    'Enero': 2196,
     'Febrero': 1815,
     'Marzo': 1859,
     'Abril': 2284,
@@ -14,11 +13,24 @@ const monthlyData = {
     'Agosto': 387,
     'Septiembre': 353,
     'Octubre': 394,
-    'Noviembre': 378
+    'Noviembre': 378,
+    'Diciembre': 496
 };
 
 // Datos del año anterior
-const previousYearData = [2229, 1814, 1744, 1574, 1625, 1616, 1604, 1731, 1538, 1767, 1673, 2323];
+const previousYearData = [1814,
+    1744,
+    1574,
+    1625,
+    1616,
+    1604,
+    1731,
+    1538,
+    1767,
+    1673,
+    2323,
+    2196
+    ];
 
 // Lista de sucursales de no venta
 const sucursalesNoVenta = [50, 79, 93, 193, 229, 231, 507];
@@ -190,11 +202,11 @@ Operativo: ${cantidadOperativo}<br>
      var options = {
          series: [
              {
-                 name: 'Ajustes - 2023',
+                 name: '',
                  data: previousYearData // Agregar los datos del año anterior
              },
              {
-                 name: 'Ajustes - 2024',
+                 name: '',
                  data: cmovimientos
              }
          ],
@@ -232,7 +244,7 @@ Operativo: ${cantidadOperativo}<br>
              }
          },
          xaxis: {
-             categories: [...monthAbbreviations, 'Dic'],
+             categories: [...monthAbbreviations, 'Ene'],
              labels: { show: true },
              axisBorder: { show: false },
              axisTicks: { show: false }
@@ -261,21 +273,22 @@ Operativo: ${cantidadOperativo}<br>
              show: false
          },
          tooltip: {
-             theme: 'dark',
-             y: {
-                 formatter: function (value, { seriesIndex, dataPointIndex }) {
-                     let result = `${value}`; // Mostrar solo el valor por defecto
-                     
-                     // Mostrar el porcentaje solo para 2024 y 2025
-                     if (seriesIndex === 1) { // Para 2024
-                         const percentage = percentageDifferences[dataPointIndex]; // Obtener el porcentaje de 2024 vs 2023
-                         result += ` (${percentage})`; // Agregar el porcentaje
-                     }
-     
-                     return result;
-                 }
-             }
-         },
+            theme: 'dark',
+            y: {
+                formatter: function(value, { seriesIndex, dataPointIndex, w }) {
+                    // Definir nombres de meses por serie
+                    const monthNames2023 = ['2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2024'];
+                    const monthNames2024 = ['2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2025'];
+    
+                    // Determinar el nombre correcto según la serie
+                    const monthNames =
+                        seriesIndex === 0 ? monthNames2023 : monthNames2024;
+    
+                    // Retornar el nombre del mes con el valor
+                    return `${monthNames[dataPointIndex]}: ${value}`;
+                }
+            }
+        },
          fill: {
              type: 'gradient',
              gradient: {

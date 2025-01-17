@@ -105,11 +105,11 @@ const obtenerDatos = async () => {
         const errorChartOptions = {
             series: [
                 {
-                    name: '2023',
-                    data: [3154, 3100, 3581] // Datos para AGO, SEP, OCT
+                    name: '',
+                    data: [3100, 3581, 3326] // Datos para AGO, SEP, OCT
                 },
                 {
-                name: '2024',
+                name: '',
                 data: [
                     calcularDatosErrores(dataErroresJulio).cantidadErrores,
                     calcularDatosErrores(dataErroresAgosto).cantidadErrores,
@@ -135,7 +135,7 @@ const obtenerDatos = async () => {
                 },   
             },
             xaxis: {
-                categories: ['Oct', 'Nov', 'Dic'],
+                categories: ['Nov', 'Dic', 'Ene'],
                 labels: {
                     show: false // Ocultar etiquetas del eje x
                 },
@@ -206,7 +206,21 @@ const obtenerDatos = async () => {
                 }
             },
             tooltip: {
-                theme: 'dark'
+                theme: 'dark',
+                y: {
+                    formatter: function(value, { seriesIndex, dataPointIndex, w }) {
+                        // Definir nombres de meses por serie
+                        const monthNames2023 = ['2023', '2023', '2024'];
+                        const monthNames2024 = ['2024', '2024', '2025'];
+        
+                        // Determinar el nombre correcto según la serie
+                        const monthNames =
+                            seriesIndex === 0 ? monthNames2023 : monthNames2024;
+        
+                        // Retornar el nombre del mes con el valor
+                        return `${monthNames[dataPointIndex]}: ${value}`;
+                    }
+                }
             },
             toolbar: {
                 show: false // Ocultar menú de descarga
@@ -217,11 +231,11 @@ const obtenerDatos = async () => {
         const movimientoChartOptions = {
             series: [
                 {
-                    name: '2023',
-                    data: [832, 814, 1009] // Datos para AGO, SEP, OCT
+                    name: '',
+                    data: [814, 1009, 988] // Datos para AGO, SEP, OCT
                 },
                 {
-                name: '2024',
+                name: '',
                 data: [
                     calcularDatosMovimientos(dataMovimientosJulio).cantidadMovimientos,
                     calcularDatosMovimientos(dataMovimientosAgosto).cantidadMovimientos,
@@ -248,7 +262,7 @@ const obtenerDatos = async () => {
                 },   
             },
             xaxis: {
-                categories: ['Oct', 'Nov', 'Dic'],
+                categories: ['Nov', 'Dic', 'Ene'],
                 labels: {
                     show: false // Ocultar etiquetas del eje x
                 },
@@ -331,7 +345,21 @@ const obtenerDatos = async () => {
                   }
             },
             tooltip: {
-                theme: 'dark'
+                theme: 'dark',
+                y: {
+                    formatter: function(value, { seriesIndex, dataPointIndex, w }) {
+                        // Definir nombres de meses por serie
+                        const monthNames2023 = ['2023', '2023', '2024'];
+                        const monthNames2024 = ['2024', '2024', '2025'];
+        
+                        // Determinar el nombre correcto según la serie
+                        const monthNames =
+                            seriesIndex === 0 ? monthNames2023 : monthNames2024;
+        
+                        // Retornar el nombre del mes con el valor
+                        return `${monthNames[dataPointIndex]}: ${value}`;
+                    }
+                }
             },
             toolbar: {
                 show: false // Ocultar menú de descarga
