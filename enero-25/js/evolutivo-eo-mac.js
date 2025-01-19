@@ -137,7 +137,7 @@ const obtenerDatos = async () => {
             xaxis: {
                 categories: ['Nov', 'Dic', 'Ene'],
                 labels: {
-                    show: false // Ocultar etiquetas del eje x
+                    show: true // Ocultar etiquetas del eje x
                 },
                 axisBorder: {
                     show: false // Eliminar la línea debajo del eje X
@@ -264,7 +264,7 @@ const obtenerDatos = async () => {
             xaxis: {
                 categories: ['Nov', 'Dic', 'Ene'],
                 labels: {
-                    show: false // Ocultar etiquetas del eje x
+                    show: true // Ocultar etiquetas del eje x
                 },
                 axisBorder: {
                     show: false // Eliminar la línea debajo del eje X

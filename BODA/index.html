@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Nos Casamos!</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://kit.fontawesome.com/9a289aa4a3.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Inicio -->
+    <div id="inicio" class="inicio">
+
+        <div class="container">
+            <!-- Contenedor del texto y el cursor -->
+            <div class="typewriter the-nautigal-regular">
+                <span id="text"></span>
+                <span class="cursor"></span>
+            </div>
+
+            <!-- Contenedor del ícono de la carta (oculto inicialmente) -->
+            <div class="carta" onclick="abrirInvitacion()" style="display: none;">
+                <img src="https://images.vexels.com/media/users/3/197267/isolated/preview/1cf8975266b8e3be48afc5b3dddd3202-linda-carta-de-san-valentin-plana.png"
+                    alt="">
+                <p>TE INVITAN</p>
+                <h2 class="the-nautigal-regular">Cesar y Fiorella</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Sitio Principal -->
+    <div id="contenido" class="contenido">
+        <!-- Portada -->
+        <section id="portada">
+
+            <div class="slider">
+                <div class="slide"> <img
+                        src="https://cdn0.matrimonio.com.pe/article-real-wedding/173/3_2/1280/jpg/138893.webp"
+                        alt="Imagen 1"> </div>
+            </div>
+            <div class="mensaje-fijo">
+                <h1>¡Nos Casamos!</h1>
+                <p>y queremos compartirlo contigo.</p>
+            </div>
+
+        </section>
+
+        <!-- Agenda la Fecha -->
+        <section id="agenda-fecha">
+            <div class="display">
+                <p>AGENDA LA FECHA</p>
+                <h2>15 de Marzo</h2>
+                <div id="contador" class="contador"></div>
+                <br>
+                <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=¡Nos+Casamos!&dates=20250316T180000Z/20250316T220000Z&details=Únete+a+nosotros+para+celebrar+nuestra+boda&location=Nombre+del+Lugar,+Dirección,+Ciudad&sf=true&output=xml"
+                    target="_blank" class="btn-calendario fa-shake-body">
+                    AGENDAR FECHA
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Detalles del Evento -->
+        <section id="detalles-evento">
+
+            <div class="iconos">
+                <div class="icono">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3253/3253642.png" alt="">
+                    <h3>Ceremonia</h3>
+                    <p>Sede Central - Registro Civil</p>
+                    <p>Uruguay 753, Cdad. Autónoma de Buenos Aires</p>
+                    <p>13 de Marzo - 14:00</p>
+                    <a href="#" class="btn-mapa btn" data-mapa="direccion1">¿Cómo llegar?</a>
+
+                </div>
+                <div class="icono">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1274/1274415.png" alt="">
+                    <h3>Festejo</h3>
+                    <p>Quinta Catalina's</p>
+                    <p>Gdor. Arias 3302, Glew, Provincia de Buenos Aires</p>
+                    <p>15 de Marzo - 18:00</p>
+                    <a href="#" class="btn-mapa btn" data-mapa="direccion2">¿Cómo llegar?</a>
+                </div>
+            </div>
+
+
+            <!-- Modal Box -->
+            <div id="modal" class="modal">
+                <div class="modal-contenido">
+                    <span id="cerrarModal" class="cerrar">&times;</span>
+                    <!-- Mapa de Google -->
+                    <iframe id="iframeMapa" width="100%" height="450" style="border:0;" allowfullscreen=""
+                        loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Nuestra Historia -->
+        <section id="nuestra-historia">
+            <div class="display">
+
+                <div class="contenido">
+                    <img src="https://image-tc.galaxy.tf/wijpeg-3lujebfrl6ak3gtqcz3gs0ng/6-weddings-result.jpg"
+                        alt="Nuestra historia">
+                    <div class="display2">
+                        <h2>Nuestra Historia</h2>
+                        <p>Había una vez dos almas que parecían destinadas a encontrarse en el momento perfecto. xxxx,
+                            una joven artista que pintaba paisajes de su ciudad, y Hugo, un escritor que se refugiaba en
+                            las palabras para escapar de la rutina. Se conocieron una tarde de primavera en una
+                            cafetería local, cuando ambos buscaban refugio de la lluvia en sus pequeños mundos.</p>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Participación de los Invitados -->
+        <section id="participacion">
+            <div class="iconos">
+                <div class="icono">
+                    <i class="fa-brands fa-spotify"></i>
+                    <h3>Nuestra Playlist</h3>
+                    <p>Agrega nuestra playlist y recomendá canciones.</p>
+                    <a href="https://open.spotify.com/playlist/73wVNE0gXKddJewLqjtYpg?si=Bi3jfJMkSLmS1kaLC0ju2w"
+                        target="_blank" class="btn-vestimenta btn">
+                        IR A SPOTIFY
+                    </a>
+                </div>
+                <div class="icono">
+                    <i class="fab fa-instagram"></i>
+                    <h3>#NosCasamos</h3>
+                    <p>Sumate compartiendo fotos y videos con nuestro hashtag.</p>
+                    <a href="https://www.instagram.com/explore/tags/noscasamos/" target="_blank"
+                        class="btn-vestimenta btn">
+                        IR A INSTAGRAM
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Regalos -->
+        <section id="regalos">
+
+            <div class="iconos">
+                <div class="icono">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3663/3663716.png" alt="" style="width:10%">
+                    <h3>Regalos</h3>
+                    <p>Tenemos la mayoría de las cosas que necesitamos para la vida y el amor. Si desea bendecirnos con un
+                        obsequio, siempre podemos usar obsequios en efectivo cuando nos mudemos a nuestro nuevo lugar.
+                        De cualquier manera, ¡apreciaríamos sus oraciones y buenos deseos mientras comenzamos este viaje
+                        juntos!</p>
+
+                        <p>
+                            <strong>Alias CBU:</strong>
+                            <span id="aliasCBU">alias.banco.ejemplo</span>
+                            <button class="btn-copy" onclick="copyToClipboard('#aliasCBU')"><i class="fa-regular fa-copy fa-shake"></i></button>
+                        </p>
+                        <p>
+                            <strong>CBU:</strong>
+                            <span id="cbu">1234567890123456789012</span>
+                            <button class="btn-copy" onclick="copyToClipboard('#cbu')"><i class="fa-regular fa-copy fa-shake"></i></button>
+                        </p>
+                       
+                        <a href="https://link.mercadopago.com.ar/seriesoriginals" target="_blank" class="mercadopago-link btn">Enviar dinero con MercadoPago</a>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Confirmación de Asistencia -->
+        <section id="confirmacion">
+            <div class="display">
+                <h2>Confirmación de Asistencia</h2>
+                <p>Esperamos contar con tu presencia. No olvides confirmar tu asistencia.</p>
+
+                <!-- Enlace para abrir el modal -->
+                <a href="#" id="openModal" class="btn">Confirmar asistencia</a>
+
+                <!-- Modal box -->
+                <div id="modalbox-asistencia" class="modalbox">
+                    <div class="modal-content">
+                        <span id="closeModal" class="close">&times;</span>
+
+                        <form method="post" id="feedback-form" action="https://sheetdb.io/api/v1/xsr7ejasp5q8s">
+                            <label for="feedback-name">Apellido y Nombre</label>
+                            <input
+                              id="feedback-name"
+                              name="data[nombre]"
+                              required
+                              placeholder="Tu nombre"
+                              aria-label="Apellido y Nombre"
+                            />
+                          
+                            <label for="feedback-assist">¿Asistirás?</label>
+                            <select id="feedback-assist" name="data[asistencia]" required aria-label="¿Asistirás?">
+                              <option value="">Selecciona una opción</option>
+                              <option value="Asistiré">Asistiré</option>
+                              <option value="No asistiré">No asistiré</option>
+                            </select>
+                          
+                            <label for="feedback-comment">Comentario</label>
+                            <textarea
+                              id="feedback-comment"
+                              name="data[comentario]"
+                              required
+                              placeholder="Escribe tu comentario"
+                              aria-label="Comentario"
+                            ></textarea>
+                          
+                            <button type="submit" class="btn">CONFIRMAR ASISTENCIA</button>
+                          </form>
+
+                        <!-- Mensajes de estado -->
+                        <div id="feedback-loading" style="display: none;">Tu respuesta está siendo enviada...</div>
+                        <div id="feedback-success-alert" style="display: none;">Respuesta enviada con éxito.</div>
+                        <div id="feedback-error-alert" style="display: none;">Hubo un error al enviar tu respuesta.
+                            Intenta de nuevo.</div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!-- Scripts -->
+ 
+    <script src="js/scripts.js"></script>
+ 
+</body>
+
+</html>

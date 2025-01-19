@@ -192,7 +192,7 @@ Operativo: ${cantidadOperativo}<br>
      const monthAbbreviations = months.map(month => {
          return month.slice(0, 3); // Abreviar los primeros 3 caracteres de cada mes
      });
- 
+
      const percentageDifferences = cmovimientos.map((current, index) => {
          const previous = previousYearData[index];
          const difference = ((current - previous) / previous) * 100; // Cálculo del porcentaje de 2024 vs 2023
@@ -272,20 +272,24 @@ Operativo: ${cantidadOperativo}<br>
          legend: {
              show: false
          },
-         tooltip: {
+        tooltip: {
             theme: 'dark',
             y: {
                 formatter: function(value, { seriesIndex, dataPointIndex, w }) {
                     // Definir nombres de meses por serie
-                    const monthNames2023 = ['2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2024'];
+                    const monthNames2023 = ['2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023'];
                     const monthNames2024 = ['2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2025'];
-    
+        
                     // Determinar el nombre correcto según la serie
-                    const monthNames =
-                        seriesIndex === 0 ? monthNames2023 : monthNames2024;
-    
-                    // Retornar el nombre del mes con el valor
-                    return `${monthNames[dataPointIndex]}: ${value}`;
+                    const monthNames = seriesIndex === 0 ? monthNames2023 : monthNames2024;
+        
+                    // Obtener el porcentaje de diferencia solo si es para el año 2024 (serieIndex 1)
+                    const percentageDifference = seriesIndex === 1 ? percentageDifferences[dataPointIndex] : '';
+        
+                    // Retornar el nombre del mes, el valor actual y el porcentaje de diferencia solo si es 2024
+                    return seriesIndex === 1 
+                        ? `${monthNames[dataPointIndex]}: ${value}<br>% comp.: ${percentageDifference}`
+                        : `${monthNames[dataPointIndex]}: ${value}`;
                 }
             }
         },

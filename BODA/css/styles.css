@@ -1,0 +1,617 @@
+body {
+  font-family: "Montserrat", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+  background-color: #ffe3fb;
+}
+
+h1 {
+  font-family: "Alex Brush", serif;
+  font-weight: 550;
+  font-style: normal;
+  /*text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra */
+}
+
+.the-nautigal-regular {
+  font-family: "Alex Brush", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2.5em;
+  line-height: 0.8em;
+}
+
+i {
+  font-size: 4em;
+}
+
+.fa-shake-body {
+  animation: shake 0.8s ease-in-out infinite;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+}
+
+.inicio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  transition: opacity 1s ease-out;
+  background-color: #ffe4e4;
+}
+
+.carta {
+  /* background: white; */
+  padding: 20px;
+  /* border: 2px solid #d1c4e9; */
+  /* border-radius: 10px; */
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.3s, opacity 1s ease-out;
+}
+
+i.fa-regular.fa-envelope.fa-shake {
+  font-size: 6.5em;
+}
+
+.carta:hover {
+  transform: scale(1.1);
+}
+
+.oculto {
+  opacity: 0; /* Hace que el elemento se desvanezca */
+  pointer-events: none; /* Evita la interacción cuando está oculto */
+}
+
+.contenido {
+  display: none;
+}
+
+.contenido.activo {
+  display: block;
+  background-color: #fafafa;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+/* Estilo general del slider */
+.slider {
+  position: relative;
+  overflow: hidden; /* Oculta las imágenes que salen del contenedor */
+  width: 100%;
+  height: 100vh; /* Altura fija del slider */
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 100%; /* Las imágenes inician fuera de la vista */
+  transition: transform 1s ease, opacity 1s ease; /* Animaciones suaves */
+}
+
+.slide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 0 1800px rgb(0, 0, 0); /* Sombra interna */
+  pointer-events: none; /* Permite interactuar con la imagen debajo */
+  z-index: 1; /* Coloca la sombra por encima de la imagen */
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajusta la imagen para que ocupe todo el espacio */
+}
+
+.slide.activa {
+  left: 0; /* Posición visible en el slider */
+  opacity: 1; /* Hace visible la imagen activa */
+  z-index: 1;
+}
+
+.slide.inactiva {
+  opacity: 0; /* Se desvanece cuando pasa a ser inactiva */
+  z-index: 0;
+}
+
+/* Mensaje fijo sobre el slider */
+.mensaje-fijo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 2;
+  width: 80%;
+}
+
+.mensaje-fijo h1 {
+  font-size: 8.5rem;
+  margin: 0;
+}
+
+#agenda-fecha h1 {
+  font-size: 5.5rem;
+  margin: 0;
+}
+
+.mensaje-fijo-intro h1 {
+  font-size: 5.5rem;
+  margin: 0;
+}
+
+.mensaje-fijo p {
+  margin: 0;
+}
+
+section {
+  width: 100%;
+  height: 100vh; /* Cada sección ocupa toda la pantalla */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Estilo del contador */
+.contador {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* font-family: Arial, sans-serif; */
+  /* font-size: 4em; */
+  color: #333;
+  text-align: center;
+  gap: 40px;
+}
+
+.contador .tiempo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contador .valor {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #691eff;
+}
+
+.contador .unidad {
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: #777;
+}
+
+.btn-calendario {
+  display: inline-block;
+  padding: 15px 25px;
+  background-color: #ffa3f9;
+  color: #9f619b;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-calendario:hover,
+.btn:hover {
+  background-color: #f39fed; /* Azul más oscuro */
+}
+
+.btn {
+  display: inline-block;
+  padding: 15px 25px;
+  background-color: #ffa3f9;
+  color: #9f619b;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.iconos {
+  display: flex;
+  justify-content: space-between; /* Espaciado igual entre las cajas */
+  gap: 10px; /* Espaciado entre las cajas */
+  padding: 20px;
+  flex-wrap: wrap; /* Permite que las cajas se ajusten en otra línea si es necesario */
+}
+
+.typewriter {
+  color: #1c1c1c;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 30px;
+  background-color: #333;
+  animation: blink 0.7s steps(2, start) infinite;
+  margin-left: 5px;
+}
+
+@keyframes blink {
+  50% {
+    background-color: transparent;
+  }
+}
+
+.carta img {
+  width: 30%;
+  animation: bounce 1.5s infinite; /* Aplicamos el efecto de rebote */
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0); /* Posición original */
+  }
+  40% {
+    transform: translateY(-25px); /* Rebote hacia arriba */
+  }
+  60% {
+    transform: translateY(-15px); /* Rebote más pequeño */
+  }
+}
+
+.icono {
+  flex: 1; /* Las cajas se distribuyen uniformemente */
+  min-width: 30%; /* Mínimo ancho en pantallas grandes */
+  color: rgb(35, 35, 35);
+  text-align: center;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* Diseño responsivo para dispositivos móviles */
+@media (max-width: 768px) {
+  .icono {
+    min-width: 100%; /* Cada caja ocupa toda la pantalla */
+  }
+}
+
+/* Modal */
+.modal {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  opacity: 0; /* Empieza invisible */
+  transition: opacity 0.5s ease; /* Transición de suavidad */
+}
+
+.modal.mostrar {
+  display: flex; /* Mostrar el modal */
+  opacity: 1; /* Cambiar a visible */
+}
+
+.modal-contenido {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  transform: scale(0.9); /* Inicio reducido */
+  transition: transform 0.5s ease; /* Suavidad al aparecer */
+}
+
+.modal.mostrar .modal-contenido {
+  transform: scale(1); /* Crece suavemente */
+}
+
+.icono img {
+  width: 30%;
+}
+
+#agenda-fecha h2 {
+  margin: 0 0 10px 0;
+  font-size: 4.5em;
+}
+
+/* Botón de cerrar */
+.cerrar {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+.cerrar:hover {
+  color: #ff0000;
+}
+
+/* Sección principal */
+#nuestra-historia {
+  background-color: #f9f9f9; /* Color de fondo suave */
+  text-align: center; /* Centra el encabezado */
+}
+
+#nuestra-historia h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #333; /* Color de texto */
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/* Contenedor del contenido */
+#nuestra-historia .contenido {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto; /* Centra el contenido horizontalmente */
+}
+
+/* Estilo de la imagen */
+#nuestra-historia .contenido img {
+  max-width: 100%; /* Asegura que la imagen no se desborde */
+  width: 50%; /* La imagen ocupará la mitad del contenedor */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  object-fit: cover;
+}
+
+/* Estilo del texto */
+#nuestra-historia .contenido p {
+  font-size: 1.2rem;
+  color: #555; /* Color de texto */
+  line-height: 1.5; /* Mejora la legibilidad */
+  text-align: justify;
+}
+
+/* Diseño para pantallas pequeñas */
+@media (max-width: 768px) {
+  #nuestra-historia .contenido {
+    flex-direction: column; /* Cambia a una columna en lugar de fila */
+  }
+
+  #nuestra-historia .contenido img,
+  #nuestra-historia .contenido p {
+    width: 100%; /* Imagen y texto ocupan todo el ancho */
+  }
+
+  #nuestra-historia h2 {
+    font-size: 2rem;
+  }
+
+  #nuestra-historia .contenido p {
+    font-size: 1rem; /* Texto más pequeño en móviles */
+  }
+}
+
+.display-banco {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Estilos del modal */
+.modalbox {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding-top: 60px;
+}
+
+.modal-content {
+  background-color: white;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  text-align: center;
+}
+
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* max-width: 400px; */
+    margin: 20px auto;
+    padding: 20px;
+    /* border: 1px solid #ccc; */
+    border-radius: 10px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    /* background-color: #f9f9f9; */
+}
+
+  form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    align-self: flex-start;
+  }
+
+  form input,
+  form textarea,
+  form select {
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  form input:focus,
+  form textarea:focus,
+  form select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+
+  form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  /* Add responsiveness */
+  @media (max-width: 480px) {
+    form {
+      padding: 15px;
+    }
+
+    form input,
+    form textarea,
+    form select {
+      font-size: 12px;
+    }
+}
+
+button {
+  color: rgb(255, 109, 187);
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+
+/* Mensaje de agradecimiento */
+#mensajeAgradecimiento {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Estilos generales para móviles */
+@media (max-width: 768px) {
+    body {
+      font-size: 16px; /* Texto base más pequeño */
+    }
+  
+    h1,
+    h2,
+    h3 {
+      font-size: 1.5rem; /* Reducir encabezados */
+      margin: 0.5rem 0;
+    }
+  
+    .mensaje-fijo h1 {
+      font-size: 3rem; /* Reducir tamaño del texto en el slider */
+    }
+  
+    .mensaje-fijo p {
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+  
+    .btn,
+    .btn-calendario {
+      padding: 10px 15px;
+      font-size: 0.9rem; /* Reducir tamaño de botones */
+    }
+  
+    .iconos {
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center; /* Centrar iconos */
+    }
+  
+    .icono img {
+      width: 50%; /* Asegurar que las imágenes se adapten */
+    }
+  
+    .contador {
+      gap: 20px; /* Reducir separación entre los contadores */
+    }
+  
+    .contador .valor {
+      font-size: 2rem; /* Reducir el tamaño del contador */
+    }
+  
+    #nuestra-historia .contenido {
+      flex-direction: column; /* Cambiar a disposición en columna */
+      gap: 10px;
+      padding: 15px;
+    }
+  
+    #nuestra-historia .contenido img {
+      width: 100%;
+    }
+  
+    #nuestra-historia .contenido p {
+      font-size: 1rem;
+    }
+  
+    /* Modal en pantallas pequeñas */
+    .modal-contenido {
+      width: 95%; /* Reducir ancho del modal */
+      padding: 15px;
+    }
+  
+    .close {
+      font-size: 20px; /* Reducir tamaño del botón de cerrar */
+    }
+  }
+  

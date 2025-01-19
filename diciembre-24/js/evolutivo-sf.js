@@ -190,11 +190,11 @@ Operativo: ${cantidadOperativo}<br>
      var options = {
          series: [
              {
-                 name: 'Ajustes - 2023',
+                 name: '',
                  data: previousYearData // Agregar los datos del año anterior
              },
              {
-                 name: 'Ajustes - 2024',
+                 name: '',
                  data: cmovimientos
              }
          ],
@@ -261,21 +261,26 @@ Operativo: ${cantidadOperativo}<br>
              show: false
          },
          tooltip: {
-             theme: 'dark',
-             y: {
-                 formatter: function (value, { seriesIndex, dataPointIndex }) {
-                     let result = `${value}`; // Mostrar solo el valor por defecto
-                     
-                     // Mostrar el porcentaje solo para 2024 y 2025
-                     if (seriesIndex === 1) { // Para 2024
-                         const percentage = percentageDifferences[dataPointIndex]; // Obtener el porcentaje de 2024 vs 2023
-                         result += ` (${percentage})`; // Agregar el porcentaje
-                     }
-     
-                     return result;
-                 }
-             }
-         },
+            theme: 'dark',
+            y: {
+                formatter: function(value, { seriesIndex, dataPointIndex, w }) {
+                    // Definir nombres de meses por serie
+                    const monthNames2023 = ['2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023'];
+                    const monthNames2024 = ['2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024'];
+        
+                    // Determinar el nombre correcto según la serie
+                    const monthNames = seriesIndex === 0 ? monthNames2023 : monthNames2024;
+        
+                    // Obtener el porcentaje de diferencia solo si es para el año 2024 (serieIndex 1)
+                    const percentageDifference = seriesIndex === 1 ? percentageDifferences[dataPointIndex] : '';
+        
+                    // Retornar el nombre del mes, el valor actual y el porcentaje de diferencia solo si es 2024
+                    return seriesIndex === 1 
+                        ? `${monthNames[dataPointIndex]}: ${value}<br>% comp.: ${percentageDifference}`
+                        : `${monthNames[dataPointIndex]}: ${value}`;
+                }
+            }
+        },
          fill: {
              type: 'gradient',
              gradient: {
