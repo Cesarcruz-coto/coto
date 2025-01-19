@@ -537,6 +537,9 @@ button {
   cursor: pointer;
 }
 
+i.fa-regular.fa-copy.fa-shake {
+    font-size: 1.3em;
+}
 
 /* Mensaje de agradecimiento */
 #mensajeAgradecimiento {
