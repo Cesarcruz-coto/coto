@@ -113,7 +113,7 @@ function generarGrafico(totales) {
             }
         },
         xaxis: {
-            categories: ['Ene'], // Nombres de los meses abreviados
+            categories: ['Feb 24', 'Mar 24', 'Abr 24', 'May 24', 'Jun 24', 'Jul 24', 'Ago 24', 'Sep 24', 'Oct 24', 'Nov 24', 'Dic 24', 'Ene 25'], // Nombres de los meses abreviados
             labels: {
                 show: true // Mostrar etiquetas de los meses
             },
@@ -193,31 +193,33 @@ async function cargarYMostrarGastos() {
 
     // Datos fijos para los meses de enero a septiembre
     //const totalEnero = 121361354.00; // Reemplaza con el total real de enero
-    //const totalFebrero = 116995940.00; // Reemplaza con el total real de febrero
-    //const totalMarzo = 124213343.00; // Reemplaza con el total real de marzo
-    //const totalAbril = 126031472.00; // Reemplaza con el total real de abril
-    //const totalMayo = 151567979.00; // Reemplaza con el total real de mayo
-    //const totalJunio = 123899209.29; // Reemplaza con el total real de junio
-    //const totalJulio = 140745488.00; // Reemplaza con el total real de julio
-    //const totalAgosto = 148319559.43; // Reemplaza con el total real de agosto
-    //const totalSeptiembre = 133832672.99; // Reemplaza con el total real de septiembre
-    //const totalOctubre = 143249471.59; // Reemplaza con el total real de Octubre
-    //const totalNoviembre = 132685851.63; // Reemplaza con el total real de Octubre
+    const totalFebrero = 116995940.00; // Reemplaza con el total real de febrero
+    const totalMarzo = 124213343.00; // Reemplaza con el total real de marzo
+    const totalAbril = 126031472.00; // Reemplaza con el total real de abril
+    const totalMayo = 151567979.00; // Reemplaza con el total real de mayo
+    const totalJunio = 123899209.29; // Reemplaza con el total real de junio
+    const totalJulio = 140745488.00; // Reemplaza con el total real de julio
+    const totalAgosto = 148319559.43; // Reemplaza con el total real de agosto
+    const totalSeptiembre = 133832672.99; // Reemplaza con el total real de septiembre
+    const totalOctubre = 143249471.59; // Reemplaza con el total real de Octubre
+    const totalNoviembre = 132685851.63; // Reemplaza con el total real de Octubre
+    const totalDiciembre = 132685851.63; // Reemplaza con el total real de Octubre
     const totalMesActual = procesarGastos(gastosMesActual);
 
     // Generar el gráfico con los totales
     generarGrafico([
         //totalEnero,
-        //totalFebrero,
-        //totalMarzo,
-        //totalAbril,
-        //totalMayo,
-        //totalJunio,
-        //totalJulio,
-        //totalAgosto,
-        //totalSeptiembre,
-        //totalOctubre,
-        //totalNoviembre,
+        totalFebrero,
+        totalMarzo,
+        totalAbril,
+        totalMayo,
+        totalJunio,
+        totalJulio,
+        totalAgosto,
+        totalSeptiembre,
+        totalOctubre,
+        totalNoviembre,
+        totalDiciembre,
         totalMesActual
     ]);
 }
