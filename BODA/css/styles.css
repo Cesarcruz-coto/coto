@@ -293,6 +293,7 @@ section {
 .icono {
   flex: 1; /* Las cajas se distribuyen uniformemente */
   min-width: 30%; /* Mínimo ancho en pantallas grandes */
+  max-width: 800px;
   color: rgb(35, 35, 35);
   text-align: center;
   padding: 20px;
@@ -453,12 +454,13 @@ section {
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 50%;
+  width: 90%;
+  max-width: 800px;
   text-align: center;
 }
 
 .close {
-  color: #aaa;
+  color: #ffffff;
   font-size: 28px;
   font-weight: bold;
   position: absolute;
@@ -546,6 +548,28 @@ i.fa-regular.fa-copy.fa-shake {
   text-align: center;
   margin-top: 20px;
 }
+
+#detalles-evento {
+    background-image: url("https://img.freepik.com/vector-gratis/moderno-fondo-diseno-textura-acuarela-rosa-suave_1055-23036.jpg?t=st=1737341032~exp=1737344632~hmac=dcebd45d7b0ff3edba699be80c6b7b96d719fe8d6c357a7350f1878547deb5cd&w=900");
+    background-size: cover; /* Hace que la imagen cubra todo el contenedor */
+    background-position: center; /* Centra la imagen dentro del contenedor */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+#participacion {
+    background-image: url("https://img.freepik.com/vector-gratis/fondo-floral_23-2148021949.jpg?t=st=1737342616~exp=1737346216~hmac=7883700160040e43f8625ce9fd502e36cc4d9a1f8714b2650564c831568ed49a&w=740");
+    background-size: cover; /* Hace que la imagen cubra todo el contenedor */
+    background-position: center; /* Centra la imagen dentro del contenedor */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+#confirmacion {
+    background-image: url("../img/flow2.jpg");
+    background-size: cover; /* Hace que la imagen cubra todo el contenedor */
+    background-position: center; /* Centra la imagen dentro del contenedor */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
 
 /* Estilos generales para móviles */
 @media (max-width: 768px) {

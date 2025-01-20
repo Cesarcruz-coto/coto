@@ -100,15 +100,6 @@ const obtenerDatos = async () => {
         const porcentajeCambioMovimientos = ((diferenciaMovimientos / cantidadMovimientosAgosto) * 100).toFixed(2);
         const signoMovimientos = diferenciaMovimientos > 0 ? "+" : "";
         document.getElementById('comparison-movimientos').innerText = `${signoMovimientos} ${porcentajeCambioMovimientos}%`;
-        
-        const calcularVariacionPorcentual = (serie2023, serie2024) => {
-            return serie2024.map((current, index) => {
-                const previous = serie2023[index];
-                if (previous === 0) return 'N/A'; // Evitar división por cero
-                const difference = ((current - previous) / previous) * 100;
-                return difference.toFixed(2); // Mantener 2 decimales
-            });
-        };
 
         // Mostrar gráficos con ApexCharts
         const errorChartOptions = {

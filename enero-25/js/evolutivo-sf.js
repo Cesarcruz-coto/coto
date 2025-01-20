@@ -277,7 +277,7 @@ Operativo: ${cantidadOperativo}<br>
             y: {
                 formatter: function(value, { seriesIndex, dataPointIndex, w }) {
                     // Definir nombres de meses por serie
-                    const monthNames2023 = ['2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023'];
+                    const monthNames2023 = ['2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2023', '2024'];
                     const monthNames2024 = ['2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2024', '2025'];
         
                     // Determinar el nombre correcto según la serie
