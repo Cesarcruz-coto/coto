@@ -1,6 +1,6 @@
 const textElement = document.getElementById("text");
 const cartaElement = document.querySelector(".carta");
-const text = "Dos almas se unirán para escribir su historia de amor...";
+const text = "Una historia de amor escrita con el corazón está a punto de comenzar...";
 const typingSpeed = 100; // Velocidad de escritura en milisegundos
 
 let index = 0;
