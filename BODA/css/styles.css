@@ -18,11 +18,13 @@ body {
   font-family: Arial, sans-serif;
 }
 
-ol, ul {
+ol,
+ul {
   list-style: none; /* Quitar viñetas de listas */
 }
 
-img, picture {
+img,
+picture {
   max-width: 100%;
 }
 
@@ -30,7 +32,6 @@ table {
   border-collapse: collapse; /* Quitar bordes entre celdas */
   width: 100%;
 }
-
 
 body {
   font-family: "Montserrat", serif;
@@ -49,67 +50,66 @@ h1 {
 }
 
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: transparent;
-    transition: background-color 0.3s ease;
-    z-index: 1000;
-    padding: 15px 20px;
-    box-shadow: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+  padding: 15px 20px;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
 }
 
 header.scrolled {
-    background-color: #333;
-    color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #333;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 header h1 {
-    margin: 0;
-    font-size: 1.5rem;
+  margin: 0;
+  font-size: 1.5rem;
 }
 
 html {
-    scroll-behavior: smooth;
-  }
+  scroll-behavior: smooth;
+}
 
 nav {
-    display: flex;
-    gap: 50px;
-    color: #fff;
+  display: flex;
+  gap: 50px;
+  color: #fff;
 }
 
 nav a {
-    text-decoration: none;
-    color: inherit;
-    font-size: 1rem;
-    transition: color 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  font-size: 1rem;
+  transition: color 0.3s ease;
 }
 
 nav a:hover {
-    color: #ff45f9;
+  color: #ff45f9;
 }
 
 .button-nav {
-    padding: 10px 15px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .button-nav:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
-
 
 .the-nautigal-regular {
   font-family: "Alex Brush", serif;
@@ -181,22 +181,22 @@ i.fa-regular.fa-envelope.fa-shake {
 }
 
 .fecha-span {
-    margin-left: 15px;
-    margin-right: 15px;
-    height: 50px;
-    width: 1px;
-    background: rgba(20, 20, 20, 0.2);
+  margin-left: 15px;
+  margin-right: 15px;
+  height: 50px;
+  width: 1px;
+  background: rgb(255, 255, 255);
 }
 
 .fecha-display {
-    display: flex;
-    gap: 30px;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
 }
 
 .carta h2 {
-    font-size: 1.1em;
+  font-size: 0.8em;
 }
 
 .contenido.activo {
@@ -256,7 +256,7 @@ i.fa-regular.fa-envelope.fa-shake {
 /* Mensaje fijo sobre el slider */
 .mensaje-fijo {
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -269,6 +269,7 @@ i.fa-regular.fa-envelope.fa-shake {
 
 .mensaje-fijo h1 {
   font-size: 8.5rem;
+  line-height: 8.5rem;
   margin: 0;
 }
 
@@ -304,7 +305,7 @@ section {
   /* font-size: 4em; */
   color: #521750;
   text-align: center;
-  gap: 40px;
+  gap: 60px;
 }
 
 .fecha-display div {
@@ -320,7 +321,7 @@ section {
 }
 
 .contador .valor {
-  font-size: 2.5rem;
+  font-size: 5.5rem;
   font-weight: bold;
   color: #521750;
 }
@@ -331,25 +332,30 @@ section {
   color: #521750;
 }
 
-
 .btn-calendario {
   display: inline-block;
   padding: 15px 25px;
-  
+
   color: #521750;
   font-weight: bold;
   text-decoration: none;
   font-size: 1rem;
   border-radius: 5px;
-background: linear-gradient(90deg, #f7b7a3, #d16ba5);
+  background: linear-gradient(90deg, #f7b7a3, #d16ba5);
   background-size: 200% 200%;
   animation: gradientMove 3s ease infinite;
 }
 
 @keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .btn-calendario:hover,
@@ -372,17 +378,17 @@ background: linear-gradient(90deg, #f7b7a3, #d16ba5);
 }
 
 .btn-nav {
-    display: inline-block;
-    padding: 8px 25px;
-    background-color: transparent;
-    border: 2px solid #f39fed;
-    color: #f39fed;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 1rem;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
+  display: inline-block;
+  padding: 8px 25px;
+  background-color: transparent;
+  border: 2px solid #f39fed;
+  color: #f39fed;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
 
 .iconos {
   display: flex;
@@ -585,7 +591,7 @@ background: linear-gradient(90deg, #f7b7a3, #d16ba5);
 .modalbox {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 9999;
   left: 0;
   top: 0;
   width: 100%;
@@ -622,60 +628,60 @@ background: linear-gradient(90deg, #f7b7a3, #d16ba5);
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* max-width: 400px; */
-    margin: 20px auto;
-    padding: 20px;
-    /* border: 1px solid #ccc; */
-    border-radius: 10px;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-    /* background-color: #f9f9f9; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* max-width: 400px; */
+  margin: 20px auto;
+  padding: 20px;
+  /* border: 1px solid #ccc; */
+  border-radius: 10px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  /* background-color: #f9f9f9; */
 }
 
-  form label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    align-self: flex-start;
+form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  align-self: flex-start;
+}
+
+form input,
+form textarea,
+form select {
+  margin-bottom: 15px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Add responsiveness */
+@media (max-width: 480px) {
+  form {
+    padding: 15px;
   }
 
   form input,
   form textarea,
   form select {
-    margin-bottom: 15px;
-    padding: 10px;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    box-sizing: border-box;
+    font-size: 12px;
   }
-
-  form input:focus,
-  form textarea:focus,
-  form select:focus {
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  }
-
-  form textarea {
-    resize: vertical;
-    min-height: 80px;
-  }
-
-  /* Add responsiveness */
-  @media (max-width: 480px) {
-    form {
-      padding: 15px;
-    }
-
-    form input,
-    form textarea,
-    form select {
-      font-size: 12px;
-    }
 }
 
 button {
@@ -686,7 +692,7 @@ button {
 }
 
 i.fa-regular.fa-copy.fa-shake {
-    font-size: 1.3em;
+  font-size: 1.3em;
 }
 
 /* Mensaje de agradecimiento */
@@ -696,101 +702,113 @@ i.fa-regular.fa-copy.fa-shake {
 }
 
 #agenda-fecha {
-  background-image: url('./../img/section3.jpg'); /* Cambia esto por la URL de tu imagen */
+  background-image: url("./../img/section3.jpg"); /* Cambia esto por la URL de tu imagen */
   background-position: center; /* Centra la imagen en el contenedor */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
   background-size: cover; /* Ajusta la imagen para que cubra todo el contenedor */
 }
 
+#regalos {
+  background-image: url("./../img/section5.jpg"); /* Cambia esto por la URL de tu imagen */
+  background-position: left; /* Centra la imagen en el contenedor */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-size: cover; /* Ajusta la imagen para que cubra todo el contenedor */
+}
+
+
+
 #detalles-evento {
-    background-color: #fedefc;
+  background-color: #fedefc;
 }
 
 #participacion {
-    background-color: #fedefc;
+  background-color: #fedefc;
 }
 
 #confirmacion {
-    background-color: #fedefc;
+  background-image: url("./../img/section6.jpg"); /* Cambia esto por la URL de tu imagen */
+  background-position: top; /* Centra la imagen en el contenedor */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-size: cover; /* Ajusta la imagen para que cubra todo el contenedor */
+
 }
 
 i.fa-solid.fa-heart.fa-beat {
-    font-size: 0.5em;
-    color: #ff4f69;
+  font-size: 0.5em;
+  color: #ff4f69;
 }
 
 /* Estilos generales para móviles */
 @media (max-width: 768px) {
-    body {
-      font-size: 16px; /* Texto base más pequeño */
-    }
-  
-    h1,
-    h2,
-    h3 {
-      font-size: 1.5rem; /* Reducir encabezados */
-      margin: 0.5rem 0;
-    }
-  
-    .mensaje-fijo h1 {
-      font-size: 3rem; /* Reducir tamaño del texto en el slider */
-    }
+  body {
+    font-size: 16px; /* Texto base más pequeño */
+  }
 
-    nav {
-      display: none;
+  h1,
+  h2,
+  h3 {
+    font-size: 1.5rem; /* Reducir encabezados */
+    margin: 0.5rem 0;
   }
-  
-    .mensaje-fijo p {
-      font-size: 1rem;
-      margin-top: 10px;
-    }
-  
-    .btn,
-    .btn-calendario {
-      padding: 10px 15px;
-      font-size: 0.9rem; /* Reducir tamaño de botones */
-    }
-  
-    .iconos {
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center; /* Centrar iconos */
-    }
-  
-    .icono img {
-      width: 20%; /* Asegurar que las imágenes se adapten */
-    }
-  
-    .contador {
-      gap: 20px; /* Reducir separación entre los contadores */
-    }
-  
-    .contador .valor {
-      font-size: 2rem; /* Reducir el tamaño del contador */
-    }
-  
-    #nuestra-historia .contenido {
-      flex-direction: column; /* Cambiar a disposición en columna */
-      gap: 10px;
-      padding: 15px;
-    }
-  
-    #nuestra-historia .contenido img {
-      width: 100%;
-    }
-  
-    #nuestra-historia .contenido p {
-      font-size: 1rem;
-    }
-  
-    /* Modal en pantallas pequeñas */
-    .modal-contenido {
-      width: 95%; /* Reducir ancho del modal */
-      padding: 15px;
-    }
-  
-    .close {
-      font-size: 20px; /* Reducir tamaño del botón de cerrar */
-    }
+
+  .mensaje-fijo h1 {
+    font-size: 3rem; /* Reducir tamaño del texto en el slider */
   }
-  
+
+  nav {
+    display: none;
+  }
+
+  .mensaje-fijo p {
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+
+  .btn,
+  .btn-calendario {
+    padding: 10px 15px;
+    font-size: 0.9rem; /* Reducir tamaño de botones */
+  }
+
+  .iconos {
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center; /* Centrar iconos */
+  }
+
+  .icono img {
+    width: 20%; /* Asegurar que las imágenes se adapten */
+  }
+
+  .contador {
+    gap: 20px; /* Reducir separación entre los contadores */
+  }
+
+  .contador .valor {
+    font-size: 1.5rem; /* Reducir el tamaño del contador */
+  }
+
+  #nuestra-historia .contenido {
+    flex-direction: column; /* Cambiar a disposición en columna */
+    gap: 10px;
+    padding: 15px;
+  }
+
+  #nuestra-historia .contenido img {
+    width: 100%;
+  }
+
+  #nuestra-historia .contenido p {
+    font-size: 1rem;
+  }
+
+  /* Modal en pantallas pequeñas */
+  .modal-contenido {
+    width: 95%; /* Reducir ancho del modal */
+    padding: 15px;
+  }
+
+  .close {
+    font-size: 20px; /* Reducir tamaño del botón de cerrar */
+  }
+}
