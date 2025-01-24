@@ -1,46 +1,16 @@
-const textElement = document.getElementById("text");
-const cartaElement = document.querySelector(".carta");
-const text = "Una historia de amor escrita con el corazón está a punto de comenzar...";
-const typingSpeed = 100; // Velocidad de escritura en milisegundos
-
-let index = 0;
-
-function typeEffect() {
-  if (index < text.length) {
-    textElement.innerHTML += text.charAt(index); // Agrega una letra al texto
-    index++;
-    setTimeout(typeEffect, typingSpeed); // Llama a la función nuevamente
-  } else {
-    // Espera un momento después de escribir el texto antes de ocultarlo
-    setTimeout(() => {
-      textElement.parentElement.style.display = "none"; // Oculta el contenedor del texto
-      cartaElement.style.display = "block"; // Muestra el contenedor de la carta
-    }, 1000); // Tiempo de espera antes de mostrar la carta (1 segundo)
-  }
-}
-
-// Inicia el efecto de escritura
-typeEffect();
-
-
-function abrirInvitacion() {
-  alert("¡Abriste la invitación!");
-}
-
-
 function abrirInvitacion() {
     const inicio = document.getElementById('inicio');
     const contenido = document.getElementById('contenido');
-  
+
     if (inicio && contenido) {
       // Añade la clase para el efecto de desvanecimiento
       inicio.classList.add('oculto');
-  
+
       // Espera a que termine la animación antes de mostrar el contenido
       setTimeout(() => {
-        inicio.style.display = 'none'; // Oculta completamente el div
+        inicio.style.display = 'none'; // Oculta completamente la carta
         contenido.classList.add('activo'); // Muestra el contenido
-      }, 1000); // El tiempo debe coincidir con la duración de la transición en CSS (1s)
+      }, 1000); // El tiempo debe coincidir con la duración de la transición en CSS
     } else {
       console.error('No se encontraron los elementos con los IDs "inicio" o "contenido".');
     }
@@ -167,6 +137,16 @@ window.addEventListener("click", (e) => {
     iframeMapa.src = ""; // Limpia el iframe
   }
 });
+
+const header = document.getElementById('header');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
 
     // Función para copiar al portapapeles
     function copyToClipboard(selector) {

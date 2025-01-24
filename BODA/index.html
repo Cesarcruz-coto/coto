@@ -20,35 +20,37 @@
     <div id="inicio" class="inicio">
 
         <div class="container">
-            <!-- Contenedor del texto y el cursor -->
-            <div class="typewriter the-nautigal-regular">
-                <span id="text"></span>
-                <span class="cursor"></span>
-            </div>
-
-            <!-- Contenedor del ícono de la carta (oculto inicialmente) -->
-            <div class="carta" onclick="abrirInvitacion()" style="display: none;">
+            <!-- Contenedor del ícono de la carta -->
+            <div class="carta" id="inicio" onclick="abrirInvitacion()">
                 <img src="https://images.vexels.com/media/users/3/197267/isolated/preview/1cf8975266b8e3be48afc5b3dddd3202-linda-carta-de-san-valentin-plana.png"
-                    alt="">
-                <h2 class="the-nautigal-regular">César y Fiorella tienen algo especial para ti...</h2>
-
+                    alt="Carta de San Valentín">
+                <h2>ABRIR INVITACIÓN</h2>
             </div>
         </div>
-
     </div>
 
     <!-- Sitio Principal -->
     <div id="contenido" class="contenido">
+
+        <header id="header">
+            <nav>
+                <a href="#">Inicio</a>
+                <a href="#">fecha</a>
+                <a href="#">Ubicacion</a>
+                <a href="#">Asistencia</a>
+            </nav>
+            <a href="#confirmacion" class="btn-nav">Confirmar asistencia</a>
+        </header>
+
         <!-- Portada -->
         <section id="portada">
 
             <div class="slider">
-                <div class="slide"> <img
-                        src="https://cdn0.matrimonio.com.pe/article-real-wedding/173/3_2/1280/jpg/138893.webp"
-                        alt="Imagen 1"> </div>
+                <div class="slide"> <img src="img/section1.jpg" alt="Imagen 1"> </div>
             </div>
             <div class="mensaje-fijo">
-                <h1>¡Nos Casamos!</h1>
+                <h2>¡NOS CASAMOS!</h2>
+                <h1>Fiore <i class="fa-solid fa-heart fa-beat"></i> Cesar</h1>
                 <p>Y no podríamos imaginar este día sin ti.</p>
             </div>
 
@@ -56,9 +58,23 @@
 
         <!-- Agenda la Fecha -->
         <section id="agenda-fecha">
+            
             <div class="display">
                 <p>¡Agenda esta fecha especial!</p>
-                <h2>15 de Marzo</h2>
+                <div class="fecha-display">
+                    <div>
+                        <p>Marzo</p>
+                    </div>
+                    <span class="fecha-span"></span>
+                    <div>
+                        <h2 class="fa-shake">15</h2>
+                    </div>
+                    <span class="fecha-span"></span>
+                    <div>
+                        <p>2025</p>
+                    </div>
+                </div>
+
                 <div id="contador" class="contador"></div>
                 <br>
                 <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=¡Nos+Casamos!&dates=20250316T180000Z/20250316T220000Z&details=Únete+a+nosotros+para+celebrar+nuestra+boda&location=Nombre+del+Lugar,+Dirección,+Ciudad&sf=true&output=xml"
@@ -156,22 +172,27 @@
                 <div class="icono">
                     <img src="https://cdn-icons-png.flaticon.com/512/3663/3663716.png" alt="" style="width:10%">
                     <h3>¡Gracias por ser parte de nuestra felicidad!</h3>
-                    <p>Estamos llenos de emoción por comenzar este nuevo capítulo juntos. Tenerlos a nuestro lado en este día tan especial significa todo para nosotros. ❤️
-                        Si desean ayudarnos de una manera especial, cualquier contribución para nuestra luna de miel o nuestro futuro hogar será profundamente agradecida.
+                    <p>Estamos llenos de emoción por comenzar este nuevo capítulo juntos. Tenerlos a nuestro lado en
+                        este día tan especial significa todo para nosotros. ❤️
+                        Si desean ayudarnos de una manera especial, cualquier contribución para nuestra luna de miel o
+                        nuestro futuro hogar será profundamente agradecida.
                         Pero lo más valioso para nosotros es su cariño, su compañía y sus buenos deseos.</p>
 
-                        <p>
-                            <strong>Alias:</strong>
-                            <span id="aliasCBU">alias.banco.ejemplo</span>
-                            <button class="btn-copy" onclick="copyToClipboard('#aliasCBU')"><i class="fa-regular fa-copy fa-shake"></i></button>
-                        </p>
-                        <p>
-                            <strong>CBU:</strong>
-                            <span id="cbu">1234567890123456789012</span>
-                            <button class="btn-copy" onclick="copyToClipboard('#cbu')"><i class="fa-regular fa-copy fa-shake"></i></button>
-                        </p>
-                       
-                        <a href="https://link.mercadopago.com.ar/seriesoriginals" target="_blank" class="mercadopago-link btn">Enviar con MercadoPago</a>
+                    <p>
+                        <strong>Alias:</strong>
+                        <span id="aliasCBU">alias.banco.ejemplo</span>
+                        <button class="btn-copy" onclick="copyToClipboard('#aliasCBU')"><i
+                                class="fa-regular fa-copy fa-shake"></i></button>
+                    </p>
+                    <p>
+                        <strong>CBU:</strong>
+                        <span id="cbu">1234567890123456789012</span>
+                        <button class="btn-copy" onclick="copyToClipboard('#cbu')"><i
+                                class="fa-regular fa-copy fa-shake"></i></button>
+                    </p>
+
+                    <a href="https://link.mercadopago.com.ar/seriesoriginals" target="_blank"
+                        class="mercadopago-link btn">Enviar con MercadoPago</a>
 
                 </div>
             </div>
@@ -194,32 +215,22 @@
 
                         <form method="post" id="feedback-form" action="https://sheetdb.io/api/v1/xsr7ejasp5q8s">
                             <label for="feedback-name">Apellido y Nombre</label>
-                            <input
-                              id="feedback-name"
-                              name="data[nombre]"
-                              required
-                              placeholder="Tu nombre"
-                              aria-label="Apellido y Nombre"
-                            />
-                          
+                            <input id="feedback-name" name="data[nombre]" required placeholder="Tu nombre"
+                                aria-label="Apellido y Nombre" />
+
                             <label for="feedback-assist">¿Asistirás?</label>
                             <select id="feedback-assist" name="data[asistencia]" required aria-label="¿Asistirás?">
-                              <option value="">Selecciona una opción</option>
-                              <option value="Asistiré">Asistiré</option>
-                              <option value="No asistiré">No asistiré</option>
+                                <option value="">Selecciona una opción</option>
+                                <option value="Asistiré">Asistiré</option>
+                                <option value="No asistiré">No asistiré</option>
                             </select>
-                          
+
                             <label for="feedback-comment">Comentario</label>
-                            <textarea
-                              id="feedback-comment"
-                              name="data[comentario]"
-                              required
-                              placeholder="Escribe tu comentario"
-                              aria-label="Comentario"
-                            ></textarea>
-                          
+                            <textarea id="feedback-comment" name="data[comentario]" required
+                                placeholder="Escribe tu comentario" aria-label="Comentario"></textarea>
+
                             <button type="submit" class="btn">CONFIRMAR ASISTENCIA</button>
-                          </form>
+                        </form>
 
                         <!-- Mensajes de estado -->
                         <div id="feedback-loading" style="display: none;">Tu respuesta está siendo enviada...</div>
@@ -235,9 +246,11 @@
         </section>
 
     </div>
-    
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles"></script>
+
+
     <script src="js/scripts.js"></script>
- 
+
 </body>
 
 </html>
