@@ -16,6 +16,38 @@ function abrirInvitacion() {
     }
   }
 
+// Selecciona el contenedor de partículas
+const particlesContainer = document.querySelector('.particles');
+
+// Función para crear pétalos de rosas
+function createPetals(numPetals) {
+  for (let i = 0; i < numPetals; i++) {
+    const petal = document.createElement('div');
+    petal.classList.add('particle');
+
+    // Propiedades aleatorias
+    const size = Math.random() * 20 + 20; // Tamaño entre 20px y 40px
+    petal.style.width = `${size}px`;
+    petal.style.height = `${size}px`;
+
+    // Posición inicial aleatoria
+    petal.style.top = `${Math.random() * 100}vh`; // Posición vertical
+    petal.style.left = `${Math.random() * 100}vw`; // Posición horizontal
+
+    // Animación
+    const duration = Math.random() * 10 + 5; // Duración entre 5s y 15s
+    petal.style.animation = `moveParticles ${duration}s linear infinite`;
+
+    // Agregar pétalo al contenedor
+    particlesContainer.appendChild(petal);
+  }
+}
+
+// Generar pétalos (ajusta el número aquí)
+createPetals(50);
+
+
+
   document.addEventListener("DOMContentLoaded", () => {
     const slides = document.querySelectorAll(".slide");
     let currentIndex = 0;
@@ -43,64 +75,87 @@ function abrirInvitacion() {
   });
   
 
-  // Configura la fecha objetivo para la cuenta regresiva
-const fechaObjetivo = new Date("2025-03-16T00:00:00").getTime(); // Cambia la fecha aquí
+     // Configura la fecha objetivo para la cuenta regresiva
+     const fechaObjetivo = new Date("2025-03-15T18:00:00").getTime(); // Cambia la fecha aquí
 
-function iniciarContador() {
-  const contadorDiv = document.getElementById("contador");
-
-  if (!contadorDiv) {
-    console.error("El elemento con ID 'contador' no se encontró.");
-    return;
-  }
-
-  function actualizarContador() {
-    const ahora = new Date().getTime();
-    const diferencia = fechaObjetivo - ahora;
-
-    if (diferencia <= 0) {
-      // Si el tiempo ha llegado, muestra un mensaje
-      contadorDiv.innerHTML = "<p>¡Llegó el gran día!</p>";
-      clearInterval(intervalo);
-      return;
-    }
-
-    // Calcula los días, horas, minutos y segundos restantes
-    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-    const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
-    const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
-
-    // Actualiza el contenido del div
-    contadorDiv.innerHTML = `
-      <div class="tiempo">
-        <span class="valor">${dias}</span>
-        <span class="unidad">Días</span>
-      </div>
-      <div class="tiempo">
-        <span class="valor">${horas}</span>
-        <span class="unidad">Horas</span>
-      </div>
-      <div class="tiempo">
-        <span class="valor">${minutos}</span>
-        <span class="unidad">Minutos</span>
-      </div>
-      <div class="tiempo">
-        <span class="valor">${segundos}</span>
-        <span class="unidad">Segundos</span>
-      </div>
-    `;
-  }
-
-  // Actualiza el contador cada segundo
-  const intervalo = setInterval(actualizarContador, 1000);
-
-  // Llama a la función una vez para evitar esperar el primer segundo
-  actualizarContador();
-}
-
-// Inicia el contador al cargar la página
-document.addEventListener("DOMContentLoaded", iniciarContador);
+     function iniciarContador() {
+       const contadorDiv = document.getElementById("contador");
+ 
+       if (!contadorDiv) {
+         console.error("El elemento con ID 'contador' no se encontró.");
+         return;
+       }
+ 
+       function lanzarConfeti() {
+         // Efecto de confeti
+         confetti({
+           particleCount: 100,
+           spread: 70,
+           origin: { y: 0.6 },
+         });
+ 
+         // Repite varias explosiones
+         const duracion = 7000; // Duración total del confeti
+         const intervaloConfeti = setInterval(() => {
+           confetti({
+             particleCount: 100,
+             spread: 70,
+             origin: { y: 0.6 },
+           });
+         }, 500);
+ 
+         setTimeout(() => clearInterval(intervaloConfeti), duracion);
+       }
+ 
+       function actualizarContador() {
+         const ahora = new Date().getTime();
+         const diferencia = fechaObjetivo - ahora;
+ 
+         if (diferencia <= 0) {
+           // Si el tiempo ha llegado, muestra un mensaje y lanza confeti
+           contadorDiv.innerHTML = "<h2>¡Llegó el gran día!</h2>";
+           lanzarConfeti();
+           clearInterval(intervalo);
+           return;
+         }
+ 
+         // Calcula los días, horas, minutos y segundos restantes
+         const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+         const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+         const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+         const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+ 
+         // Actualiza el contenido del div
+         contadorDiv.innerHTML = `
+           <div class="tiempo">
+             <span class="valor">${dias}</span>
+             <span class="unidad">Días</span>
+           </div>
+           <div class="tiempo">
+             <span class="valor">${horas}</span>
+             <span class="unidad">Horas</span>
+           </div>
+           <div class="tiempo">
+             <span class="valor">${minutos}</span>
+             <span class="unidad">Minutos</span>
+           </div>
+           <div class="tiempo">
+             <span class="valor">${segundos}</span>
+             <span class="unidad">Segundos</span>
+           </div>
+         `;
+       }
+ 
+       // Actualiza el contador cada segundo
+       const intervalo = setInterval(actualizarContador, 1000);
+ 
+       // Llama a la función una vez para evitar esperar el primer segundo
+       actualizarContador();
+     }
+ 
+     // Inicia el contador al cargar la página
+     document.addEventListener("DOMContentLoaded", iniciarContador);
+ 
 
   // Selección de elementos
 const enlacesMapa = document.querySelectorAll(".btn-mapa"); // Todos los enlaces con mapas
@@ -257,4 +312,5 @@ form.addEventListener("submit", function(e) {
     event.preventDefault();
     alert('Gracias por confirmar tu asistencia.');
   }
+  
   
