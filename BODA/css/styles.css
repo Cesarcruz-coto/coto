@@ -210,7 +210,6 @@ i.fa-regular.fa-envelope.fa-shake {
   background-color: #f7b7a338;
 }
 
-
 .shadow {
   position: absolute;
   top: 0;
@@ -238,9 +237,9 @@ i.fa-regular.fa-envelope.fa-shake {
 /* Estilo de cada partícula (pétalo de rosa) */
 .particle {
   position: absolute;
-  width: 40px; /* Tamaño base ajustable */
-  height: 40px;
-  background-image: url('./../img/petalo.webp'); /* Cambia esto a la URL de tu imagen */
+  width: 20px; /* Tamaño base ajustable */
+  height: 20px;
+  background-image: url("https://static.vecteezy.com/system/resources/thumbnails/046/391/269/small_2x/pink-cherry-blossom-petal-png.png"); /* Cambia esto a la URL de tu imagen */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -260,14 +259,11 @@ i.fa-regular.fa-envelope.fa-shake {
   }
 }
 
-
 /* Slider para asegurarte que quede debajo */
 .slider {
   position: relative;
   z-index: 0; /* Colocado debajo de las partículas */
 }
-
-
 
 .contenido.activo {
   display: block;
@@ -387,6 +383,15 @@ i.fa-regular.fa-envelope.fa-shake {
 section {
   width: 100%;
   height: 100vh; /* Cada sección ocupa toda la pantalla */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+#no-ninos {
+  width: 100%;
+  height: 15vh; /* Cada sección ocupa toda la pantalla */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -627,11 +632,15 @@ section {
 }
 
 #nuestra-historia h2 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
+  font-size: 2rem;
   color: #333; /* Color de texto */
   text-transform: uppercase;
   font-weight: bold;
+}
+
+.display2 {
+  padding: 20px;
+  background-color: #ffffff75;
 }
 
 /* Contenedor del contenido */
@@ -641,7 +650,7 @@ section {
   justify-content: center;
   gap: 20px;
   max-width: 900px;
-    width: 100%;
+  width: 100%;
   margin: 0 auto; /* Centra el contenido horizontalmente */
 }
 
@@ -649,17 +658,14 @@ section {
 #nuestra-historia .contenido img {
   max-width: 100%; /* Asegura que la imagen no se desborde */
   width: 50%; /* La imagen ocupará la mitad del contenedor */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
   object-fit: cover;
 }
 
 /* Estilo del texto */
 #nuestra-historia .contenido p {
-  font-size: 1.2rem;
-  color: #555; /* Color de texto */
-  line-height: 1.5; /* Mejora la legibilidad */
-  text-align: justify;
+  font-size: 0.9rem;
+  color: #000000; /* Color de texto */
+  text-align: center;
 }
 
 /* Diseño para pantallas pequeñas */
@@ -711,9 +717,9 @@ section {
   max-width: 800px;
   text-align: center;
   position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .close {
@@ -806,8 +812,12 @@ i.fa-regular.fa-copy.fa-shake {
   margin-top: 20px;
 }
 
+.display {
+  z-index: 2;
+}
+
 #agenda-fecha {
-  background-image: url("./../img/section2.jpg"); /* Cambia esto por la URL de tu imagen */
+  background-image: url("./../img/section9.jpg"); /* Cambia esto por la URL de tu imagen */
   background-position: center; /* Centra la imagen en el contenedor */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
   background-size: cover; /* Ajusta la imagen para que cubra todo el contenedor */
@@ -828,7 +838,7 @@ i.fa-regular.fa-copy.fa-shake {
 }
 
 #participacion {
-  background-color: #fedefc;
+  background: #fff;
 }
 
 #confirmacion {
@@ -836,13 +846,157 @@ i.fa-regular.fa-copy.fa-shake {
   background-position: center; /* Centra la imagen en el contenedor */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
   background-size: cover; /* Ajusta la imagen para que cubra todo el contenedor */
+}
 
+#itinerario {
+  background-image: url("./../img/section11.jpg"); /* Cambia esto por la URL de tu imagen */
+  background-position: center; /* Centra la imagen en el contenedor */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-size: cover; /* Ajusta la imagen para que cubra todo el contenedor */
+}
+
+#nuestra-historia {
+  background-image: url("./../img/section12.jpg"); /* Cambia esto por la URL de tu imagen */
+  background-position: center; /* Centra la imagen en el contenedor */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-size: cover; /* Ajusta la imagen para que cubra todo el contenedor */
 }
 
 i.fa-solid.fa-heart.fa-beat {
   font-size: 0.5em;
   color: #ff4f69;
   margin: 0 20px 0 30px;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  margin: 40px 0;
+  gap: 20px;
+  z-index: 1;
+  flex-wrap: nowrap;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #f7b7a3, #d16ba5);
+  background-size: 200% 200%;
+  animation: gradientMove 3s ease infinite;
+  top: 50%;
+  left: 0;
+  z-index: 0;
+}
+
+.timeline-item {
+  position: relative;
+  background: linear-gradient(289deg, #af6e93, #f7b7a3);
+  background-size: 200% 200%;
+  animation: gradientMove 3s ease infinite;
+  border: 0 solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  width: 200px;
+  z-index: 1;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-item:nth-child(odd) {
+  align-self: flex-start;
+  margin-top: -180px;
+  margin-left: -80px;
+}
+
+.timeline-item:nth-child(even) {
+  align-self: flex-end;
+  margin-bottom: -180px;
+  margin-left: -80px;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(90deg, #f7b7a3, #d16ba5);
+  background-size: 200% 200%;
+  animation: gradientMove 3s ease infinite;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* Puntos alternados */
+.timeline-item:nth-child(odd)::before {
+  bottom: -14px; /* Punto abajo */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.timeline-item:nth-child(even)::before {
+  top: -14px; /* Punto arriba */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.timeline-item h2 {
+  font-size: 0.9rem;
+  color: #521750;
+  margin: 0 0 10px;
+}
+
+.timeline-item p {
+  font-size: 0.8rem;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Diseño responsive: vertical en móviles */
+@media (max-width: 768px) {
+  .timeline {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .timeline-item h2 {
+    font-size: 0.8rem;
+    color: #521750;
+    margin: 0 0 10px;
+  }
+  
+  .timeline-item p {
+    font-size: 0.7rem;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .timeline::before {
+    width: 4px;
+    height: 100%;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+  }
+
+  .timeline-item {
+    margin: 0;
+    align-self: center;
+    padding: 10px;
+  }
+
+  .timeline-item:nth-child(odd),
+  .timeline-item:nth-child(even) {
+    margin: 0;
+  }
+
+  .timeline-item::before {
+    top: -14px; /* Puntos se colocan arriba en vertical */
+  }
 }
 
 /* Estilos generales para móviles */

@@ -26,7 +26,7 @@ function createPetals(numPetals) {
     petal.classList.add('particle');
 
     // Propiedades aleatorias
-    const size = Math.random() * 20 + 20; // Tamaño entre 20px y 40px
+    const size = Math.random() * 10 + 10; // Tamaño entre 20px y 40px
     petal.style.width = `${size}px`;
     petal.style.height = `${size}px`;
 
@@ -76,7 +76,7 @@ createPetals(50);
   
 
      // Configura la fecha objetivo para la cuenta regresiva
-     const fechaObjetivo = new Date("2025-03-15T18:00:00").getTime(); // Cambia la fecha aquí
+     const fechaObjetivo = new Date("2025-03-15T10:00:00").getTime(); // Cambia la fecha aquí
 
      function iniciarContador() {
        const contadorDiv = document.getElementById("contador");
